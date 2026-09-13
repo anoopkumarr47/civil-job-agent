@@ -28,12 +28,15 @@ SCHEMA = {
         "strengths": {"type": "array", "items": {"type": "string"}},
         "gaps": {"type": "array", "items": {"type": "string"}},
     },
-    "required": ["matched", "score", "role_family", "permit_path", "relocation_fit", "reason", "strengths", "gaps"],
+    "required": [
+        "matched", "score", "role_family", "permit_path",
+        "relocation_fit", "reason", "strengths", "gaps",
+    ],
     "additionalProperties": False,
 }
 
 SYSTEM = """Screen Republic of Ireland civil-engineering vacancies for an India-based candidate.
-Candidate: B.Tech Civil Engineering (2018), 6.5+ years; strongest in highways/roads/infrastructure; Civil 3D, AutoCAD, highway alignment, DPRs, plan/profile/cross-sections, estimates/BOQ/tenders, site supervision, QA/QC and contractor/consultant/utility coordination.
+Candidate: B.Tech Civil Engineering (2018), 6.5+ years; strongest in highways/roads/infrastructure; Civil 3D, AutoCAD, highway alignment, DPRs, plan/profile/cross-sections, estimates, BOQ, tenders, site supervision, QA/QC and contractor/consultant/utility coordination.
 
 Prioritise experienced highway/roads/transport/civil-design/site/resident/project/infrastructure roles. Reject graduate/intern roles, unrelated disciplines and explicit no-sponsorship/existing-right-to-work blockers. Penalise mandatory Chartered status, excessive experience thresholds and specialist structural/geotechnical roles outside the CV.
 
@@ -45,16 +48,16 @@ JSON_CONTRACT = """Return exactly one JSON object and no prose with exactly thes
 matched boolean; score integer 0-100; role_family string; permit_path one of critical_skills/general/unclear/not_eligible; relocation_fit one of high/medium/low; reason string; strengths string[]; gaps string[]."""
 
 EVIDENCE_KEYWORDS = (
-    "require", "essential", "desirable", "qualification", "experience", "year", "civil", "highway",
-    "road", "transport", "resident", "site engineer", "project engineer", "infrastructure",
-    "civil 3d", "autocad", "alignment", "design", "construction", "supervision", "chartered",
-    "salary", "remuneration", "€", "contract", "permanent", "fixed term", "fixed-term",
-    "sponsor", "visa", "work permit", "right to work", "relocation", "irish experience",
+    "require", "essential", "desirable", "qualification", "experience", "year",
+    "civil", "highway", "road", "transport", "resident", "site engineer",
+    "project engineer", "infrastructure", "civil 3d", "autocad", "alignment",
+    "design", "construction", "supervision", "chartered", "salary", "remuneration",
+    "€", "contract", "permanent", "fixed term", "fixed-term", "sponsor", "visa",
+    "work permit", "right to work", "relocation", "irish experience",
 )
 
 
 def compact_job_evidence(job: Job, max_chars: int) -> str:
-    """Select decision-relevant vacancy evidence instead of sending the whole page."""
     text = normalize_space(job.text)
     if not text:
         return ""
@@ -65,83 +68,42 @@ def compact_job_evidence(job: Job, max_chars: int) -> str:
     def add(piece: str) -> None:
         piece = normalize_space(piece)
         key = piece.casefold()
-        if not piece or key in seen:
-            return
-        seen.add(key)
-        pieces.append(piece)
+        if piece and key not in seen:
+            seen.add(key)
+            pieces.append(piece)
 
-    # Keep a short opening fragment because many ATS pages put the role summary first.
-    add(text[:600])
-
-    # Prefer sentence/section fragments containing evidence that can change the decision.
+    add(text[:800])
     fragments = re.split(r"(?<=[.!?])\s+|\s*[|•·]\s*|\n+", text)
     for fragment in fragments:
         lowered = fragment.casefold()
         if any(keyword in lowered for keyword in EVIDENCE_KEYWORDS):
-            add(fragment[:700])
+            add(fragment[:900])
 
-    joined = "\n".join(pieces)
-    return joined[:max_chars]
-
-
-def _parse_wait_seconds(value: str | None) -> float | None:
-    if not value:
-        return None
-    match = re.search(r"([0-9]+(?:\.[0-9]+)?)", value)
-    return float(match.group(1)) if match else None
+    return "\n".join(pieces)[:max_chars]
 
 
 class AIClient:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.http = HttpClient()
+        self.cerebras_available = bool(
+            settings.cerebras_api_key and settings.cerebras_model and settings.cerebras_api_url
+        )
         self.groq_available = bool(settings.ai_api_key and settings.ai_model and settings.ai_api_url)
         self.gemini_available = bool(settings.gemini_api_key and settings.gemini_model)
-        self.available = self.groq_available or self.gemini_available
-        self.disabled_reason: str | None = None
-        self._next_allowed_at = 0.0
-        self._last_request_at = 0.0
+        self.available = self.cerebras_available or self.groq_available or self.gemini_available
         self.calls_by_model: dict[str, int] = {}
-
-    def _disable(self, reason: str) -> None:
-        self.available = False
-        self.disabled_reason = reason
-        logger.warning("AI disabled for remainder of run: %s", reason)
-
-    def _pace(self) -> None:
-        now = time.monotonic()
-        floor = self._last_request_at + self.settings.ai_min_interval_seconds
-        target = max(floor, self._next_allowed_at)
-        if target > now:
-            delay = target - now
-            logger.info("AI quota pacing: sleeping %.1fs before next request", delay)
-            time.sleep(delay)
-
-    def _remember_rate_headers(self, response: requests.Response) -> None:
-        self._last_request_at = time.monotonic()
-        remaining_raw = response.headers.get("x-ratelimit-remaining-tokens")
-        reset_raw = response.headers.get("x-ratelimit-reset-tokens")
-        retry_raw = response.headers.get("retry-after")
-
-        try:
-            remaining = int(float(remaining_raw)) if remaining_raw is not None else None
-        except ValueError:
-            remaining = None
-
-        if remaining is not None and remaining < self.settings.ai_token_reserve:
-            wait = _parse_wait_seconds(reset_raw) or _parse_wait_seconds(retry_raw)
-            if wait:
-                self._next_allowed_at = max(self._next_allowed_at, time.monotonic() + wait)
-                logger.info(
-                    "AI token budget low (%s remaining); delaying %.1fs until quota reset",
-                    remaining,
-                    wait,
-                )
+        self._last_cerebras_at = 0.0
+        self._last_groq_at = 0.0
 
     @staticmethod
     def _schema_generation_error(detail: str) -> bool:
         lowered = detail.casefold()
-        return "json_validate_failed" in lowered or "failed to validate json" in lowered or "generated json does not match" in lowered
+        return (
+            "json_validate_failed" in lowered
+            or "failed to validate json" in lowered
+            or "generated json does not match" in lowered
+        )
 
     @staticmethod
     def _canonicalize(data: object) -> object:
@@ -149,7 +111,7 @@ class AIClient:
             return data
         normalized = dict(data)
         permit = str(normalized.get("permit_path", "")).strip().casefold().replace("-", "_").replace(" ", "_")
-        permit_aliases = {
+        aliases = {
             "critical_skills_plausible": "critical_skills",
             "critical_skills_salary_met": "critical_skills",
             "critical_skills_duration_unconfirmed": "critical_skills",
@@ -163,8 +125,7 @@ class AIClient:
             "noteligible": "not_eligible",
             "ineligible": "not_eligible",
         }
-        if permit in permit_aliases:
-            normalized["permit_path"] = permit_aliases[permit]
+        normalized["permit_path"] = aliases.get(permit, permit)
         relocation = str(normalized.get("relocation_fit", "")).strip().casefold()
         if relocation in RELOCATION:
             normalized["relocation_fit"] = relocation
@@ -175,7 +136,10 @@ class AIClient:
         data = AIClient._canonicalize(data)
         if not isinstance(data, dict):
             raise ValueError("AI output must be an object")
-        expected = {"matched", "score", "role_family", "permit_path", "relocation_fit", "reason", "strengths", "gaps"}
+        expected = {
+            "matched", "score", "role_family", "permit_path",
+            "relocation_fit", "reason", "strengths", "gaps",
+        }
         if set(data) != expected:
             raise ValueError("AI output has missing or unexpected fields")
         if type(data["matched"]) is not bool:
@@ -206,11 +170,10 @@ class AIClient:
             source="ai-refined",
         )
 
-    def _messages(self, job: Job, preliminary: Assessment, *, json_fallback: bool) -> list[dict[str, str]]:
-        system = SYSTEM + "\n\n" + JSON_CONTRACT
+    def _messages(self, job: Job, preliminary: Assessment) -> list[dict[str, str]]:
         evidence = compact_job_evidence(job, self.settings.ai_max_evidence_chars)
         return [
-            {"role": "system", "content": system},
+            {"role": "system", "content": SYSTEM + "\n\n" + JSON_CONTRACT},
             {
                 "role": "user",
                 "content": json.dumps(
@@ -230,56 +193,184 @@ class AIClient:
             },
         ]
 
-    def _call(self, job: Job, preliminary: Assessment, *, model: str, strict_schema: bool) -> Assessment:
+    @staticmethod
+    def _reasoning_effort(job: Job, preliminary: Assessment, threshold: int) -> str:
+        title = job.title.casefold()
+        senior = any(term in title for term in ("senior", "principal", "lead", "associate"))
+        near_threshold = abs(preliminary.score - threshold) <= 10
+        permit_uncertain = preliminary.permit_path in {
+            "general_or_unclear",
+            "critical_skills_duration_unconfirmed",
+            "public_sector_pay_scale_review",
+        }
+        important_gap = any(
+            term in gap.casefold()
+            for gap in preliminary.gaps
+            for term in ("chartered", "irish experience", "posting asks for", "require about")
+        )
+        return "high" if senior or near_threshold or permit_uncertain or important_gap else "medium"
+
+    def _pace_cerebras(self) -> None:
+        delay = self.settings.cerebras_min_interval_seconds - (time.monotonic() - self._last_cerebras_at)
+        if delay > 0:
+            time.sleep(delay)
+
+    def _pace_groq(self) -> None:
+        delay = self.settings.ai_min_interval_seconds - (time.monotonic() - self._last_groq_at)
+        if delay > 0:
+            time.sleep(delay)
+
+    def _openai_compatible_call(
+        self,
+        *,
+        provider: str,
+        url: str,
+        api_key: str,
+        model: str,
+        job: Job,
+        preliminary: Assessment,
+        reasoning_effort: str,
+        strict_schema: bool = True,
+    ) -> Assessment:
+        if provider == "cerebras":
+            self._pace_cerebras()
+        else:
+            self._pace_groq()
+
         payload = {
             "model": model,
-            "messages": self._messages(job, preliminary, json_fallback=not strict_schema),
+            "messages": self._messages(job, preliminary),
             "temperature": 0,
-            "max_tokens": 700,
-            "reasoning_effort": "low",
+            "max_tokens": 900,
+            "reasoning_effort": reasoning_effort,
             "response_format": (
                 {
                     "type": "json_schema",
-                    "json_schema": {"name": "civil_job_fit", "strict": True, "schema": SCHEMA},
+                    "json_schema": {
+                        "name": "civil_job_fit",
+                        "strict": True,
+                        "schema": SCHEMA,
+                    },
                 }
                 if strict_schema
                 else {"type": "json_object"}
             ),
         }
-        self._pace()
-        self.calls_by_model[model] = self.calls_by_model.get(model, 0) + 1
+        key = f"{provider}:{model}"
+        self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
         try:
             response = self.http.request(
                 "POST",
-                self.settings.ai_api_url,
+                url,
                 timeout=self.settings.ai_timeout,
                 attempts=3,
-                headers={"Authorization": f"Bearer {self.settings.ai_api_key}", "Content-Type": "application/json"},
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
                 json=payload,
             )
         finally:
-            # Preserve a minimum inter-request interval even when the final attempt raises.
-            self._last_request_at = time.monotonic()
+            if provider == "cerebras":
+                self._last_cerebras_at = time.monotonic()
+            else:
+                self._last_groq_at = time.monotonic()
 
-        self._remember_rate_headers(response)
         raw = response.json()["choices"][0]["message"]["content"]
         if not isinstance(raw, str):
-            raise ValueError("AI content is not a string")
-        return self._validate(json.loads(raw))
+            raise ValueError(f"{provider} content is not a string")
+        result = self._validate(json.loads(raw))
+        result.source = f"ai-{provider}"
+        return result
 
-    def _call_with_json_recovery(self, job: Job, preliminary: Assessment, model: str) -> Assessment:
+    def _provider_json_recovery(
+        self,
+        *,
+        provider: str,
+        url: str,
+        api_key: str,
+        model: str,
+        job: Job,
+        preliminary: Assessment,
+        reasoning_effort: str,
+    ) -> Assessment:
         try:
-            return self._call(job, preliminary, model=model, strict_schema=True)
+            return self._openai_compatible_call(
+                provider=provider,
+                url=url,
+                api_key=api_key,
+                model=model,
+                job=job,
+                preliminary=preliminary,
+                reasoning_effort=reasoning_effort,
+                strict_schema=True,
+            )
         except requests.HTTPError as exc:
             status = exc.response.status_code if exc.response is not None else None
             detail = exc.response.text[:800] if exc.response is not None else str(exc)
             if status == 400 and self._schema_generation_error(detail):
-                logger.warning("%s strict schema generation failed; retrying in JSON-object mode", model)
-                return self._call(job, preliminary, model=model, strict_schema=False)
+                logger.warning("%s strict schema generation failed; retrying JSON-object mode", provider)
+                return self._openai_compatible_call(
+                    provider=provider,
+                    url=url,
+                    api_key=api_key,
+                    model=model,
+                    job=job,
+                    preliminary=preliminary,
+                    reasoning_effort=reasoning_effort,
+                    strict_schema=False,
+                )
             raise
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
-            logger.warning("%s response validation failed; retrying in JSON-object mode: %s", model, exc)
-            return self._call(job, preliminary, model=model, strict_schema=False)
+            logger.warning("%s validation failed; retrying JSON-object mode: %s", provider, exc)
+            return self._openai_compatible_call(
+                provider=provider,
+                url=url,
+                api_key=api_key,
+                model=model,
+                job=job,
+                preliminary=preliminary,
+                reasoning_effort=reasoning_effort,
+                strict_schema=False,
+            )
+
+    def _cerebras_call(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        threshold: int,
+    ) -> Assessment:
+        if not self.settings.cerebras_api_key:
+            raise RuntimeError("Cerebras API key is not configured")
+        return self._provider_json_recovery(
+            provider="cerebras",
+            url=self.settings.cerebras_api_url,
+            api_key=self.settings.cerebras_api_key,
+            model=self.settings.cerebras_model,
+            job=job,
+            preliminary=preliminary,
+            reasoning_effort=self._reasoning_effort(job, preliminary, threshold),
+        )
+
+    def _groq_call(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        reasoning_effort: str = "medium",
+    ) -> Assessment:
+        if not self.settings.ai_api_key:
+            raise RuntimeError("Groq API key is not configured")
+        return self._provider_json_recovery(
+            provider="groq",
+            url=self.settings.ai_api_url,
+            api_key=self.settings.ai_api_key,
+            model=self.settings.ai_model,
+            job=job,
+            preliminary=preliminary,
+            reasoning_effort=reasoning_effort,
+        )
 
     def _gemini_call(self, job: Job, preliminary: Assessment) -> Assessment:
         if not self.settings.gemini_api_key:
@@ -292,32 +383,26 @@ class AIClient:
         )
         payload = {
             "systemInstruction": {"parts": [{"text": SYSTEM + "\n\n" + JSON_CONTRACT}]},
-            "contents": [
-                {
-                    "role": "user",
-                    "parts": [
-                        {
-                            "text": json.dumps(
-                                {
-                                    "preliminary": preliminary.to_dict(),
-                                    "job": {
-                                        "title": job.title,
-                                        "company": job.company,
-                                        "location": job.location,
-                                        "salary": job.salary_text,
-                                        "evidence": evidence,
-                                    },
-                                },
-                                ensure_ascii=False,
-                                separators=(",", ":"),
-                            )
-                        }
-                    ],
-                }
-            ],
+            "contents": [{
+                "role": "user",
+                "parts": [{"text": json.dumps(
+                    {
+                        "preliminary": preliminary.to_dict(),
+                        "job": {
+                            "title": job.title,
+                            "company": job.company,
+                            "location": job.location,
+                            "salary": job.salary_text,
+                            "evidence": evidence,
+                        },
+                    },
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                )}],
+            }],
             "generationConfig": {
                 "temperature": 0,
-                "maxOutputTokens": 700,
+                "maxOutputTokens": 900,
                 "responseMimeType": "application/json",
                 "responseSchema": SCHEMA,
             },
@@ -335,8 +420,7 @@ class AIClient:
             },
             json=payload,
         )
-        body = response.json()
-        candidates = body.get("candidates") or []
+        candidates = response.json().get("candidates") or []
         if not candidates:
             raise ValueError("Gemini returned no candidates")
         parts = candidates[0].get("content", {}).get("parts", [])
@@ -345,41 +429,80 @@ class AIClient:
         result.source = "ai-gemini"
         return result
 
-    def _groq_call(self, job: Job, preliminary: Assessment, *, model: str) -> Assessment:
-        result = self._call_with_json_recovery(job, preliminary, model)
-        result.source = "ai-groq"
-        return result
+    @staticmethod
+    def _needs_second_opinion(
+        job: Job,
+        preliminary: Assessment,
+        primary: Assessment,
+        threshold: int,
+    ) -> bool:
+        title = job.title.casefold()
+        senior = any(term in title for term in ("senior", "principal", "lead", "associate"))
+        near_threshold = abs(primary.score - threshold) <= 8
+        permit_unclear = primary.permit_path == "unclear"
+        changed_decision = preliminary.matched != primary.matched
+        risky_match = primary.matched and (
+            senior
+            or primary.relocation_fit != "high"
+            or preliminary.role_family in {
+                "project_engineer",
+                "design_engineer",
+                "civil_infrastructure_engineer",
+                "site_engineer",
+                "infrastructure_engineer",
+            }
+        )
+        return near_threshold or permit_unclear or changed_decision or risky_match
 
     @staticmethod
     def _consolidate(
         preliminary: Assessment,
-        first: Assessment,
-        second: Assessment,
+        assessments: list[Assessment],
         threshold: int,
     ) -> Assessment:
-        """Preserve plausible candidates when independent providers disagree."""
-        scores = [first.score, second.score]
-        agreement = first.matched == second.matched
-        if agreement:
-            matched = first.matched
-            score = round(sum(scores) / 2)
-        else:
-            strongest = max(first.score, second.score)
-            matched = strongest >= threshold and preliminary.score >= threshold - 8
-            score = strongest if matched else round(sum(scores) / 2)
+        if not assessments:
+            return preliminary
+        if len(assessments) == 1:
+            return assessments[0]
 
-        permit = first.permit_path if first.permit_path == second.permit_path else "unclear"
-        relocation = (
-            first.relocation_fit
-            if first.relocation_fit == second.relocation_fit
-            else "medium"
-        )
-        strengths = list(dict.fromkeys(first.strengths + second.strengths))[:8]
-        gaps = list(dict.fromkeys(first.gaps + second.gaps))[:6]
-        if not agreement:
-            gaps = list(dict.fromkeys(gaps + ["AI providers disagreed; manual review recommended"]))[:6]
+        matched_votes = sum(1 for item in assessments if item.matched)
+        matched = matched_votes >= (len(assessments) // 2 + 1)
+        if not matched and any(item.matched for item in assessments):
+            strongest = max(item.score for item in assessments if item.matched)
+            if strongest >= threshold + 6 and preliminary.score >= threshold - 8:
+                matched = True
 
-        role_family = first.role_family if first.role_family == second.role_family else preliminary.role_family
+        scores = sorted(item.score for item in assessments)
+        score = scores[len(scores) // 2] if len(scores) % 2 else round(sum(scores) / len(scores))
+
+        permit_values = [item.permit_path for item in assessments]
+        permit = max(set(permit_values), key=permit_values.count)
+        if permit_values.count(permit) == 1:
+            permit = "unclear"
+
+        relocation_values = [item.relocation_fit for item in assessments]
+        relocation = max(set(relocation_values), key=relocation_values.count)
+        if relocation_values.count(relocation) == 1:
+            relocation = "medium"
+
+        role_values = [item.role_family for item in assessments]
+        role_family = max(set(role_values), key=role_values.count)
+        if role_values.count(role_family) == 1:
+            role_family = preliminary.role_family
+
+        strengths = list(dict.fromkeys(
+            strength for item in assessments for strength in item.strengths
+        ))[:8]
+        gaps = list(dict.fromkeys(
+            gap for item in assessments for gap in item.gaps
+        ))[:6]
+
+        disagree = len({item.matched for item in assessments}) > 1
+        if disagree:
+            gaps = list(dict.fromkeys(
+                gaps + ["AI providers disagreed; retained for conservative manual review"]
+            ))[:6]
+
         return Assessment(
             matched=matched,
             score=max(0, min(100, score)),
@@ -387,49 +510,12 @@ class AIClient:
             permit_path=permit,
             relocation_fit=relocation,
             reason=(
-                "Independent AI providers agreed on the assessment."
-                if agreement
-                else "Independent AI providers disagreed; the result preserves a plausible candidate for manual review."
+                "Independent AI providers were consolidated into a majority/median assessment."
             ),
             strengths=strengths,
             gaps=gaps,
             source="ai-consensus",
         )
-
-    def _preferred_provider(self, job: Job) -> str:
-        if self.groq_available and self.gemini_available:
-            return "gemini" if int(job.identity_key[:8], 16) % 2 else "groq"
-        if self.gemini_available:
-            return "gemini"
-        return "groq"
-
-    def _provider_call(
-        self,
-        provider: str,
-        job: Job,
-        preliminary: Assessment,
-        *,
-        second_opinion: bool = False,
-    ) -> Assessment:
-        if provider == "gemini":
-            return self._gemini_call(job, preliminary)
-        model = self.settings.ai_escalation_model if second_opinion else self.settings.ai_model
-        return self._groq_call(job, preliminary, model=model)
-
-    @staticmethod
-    def _needs_escalation(job: Job, preliminary: Assessment, primary: Assessment, threshold: int) -> bool:
-        """Reserve 120B for decisions where a second opinion can change notification safety."""
-        title = job.title.casefold()
-        senior = any(term in title for term in ("senior", "principal", "lead", "associate"))
-        near_threshold = abs(primary.score - threshold) <= 4
-        permit_unclear = primary.permit_path == "unclear"
-        contested = preliminary.matched != primary.matched and abs(primary.score - threshold) <= 8
-        risky_borderline_match = primary.matched and primary.score <= threshold + 8 and (
-            senior
-            or primary.relocation_fit == "medium"
-            or preliminary.role_family in {"project_engineer", "design_engineer", "civil_infrastructure_engineer"}
-        )
-        return near_threshold or permit_unclear or contested or risky_borderline_match
 
     def refine(self, job: Job, preliminary: Assessment, *, threshold: int = 76) -> Assessment:
         if not self.available:
@@ -438,62 +524,70 @@ class AIClient:
             preliminary.provisional = True
             return preliminary
 
-        preferred = self._preferred_provider(job)
-        alternate = "gemini" if preferred == "groq" else "groq"
-        alternate_available = self.gemini_available if alternate == "gemini" else self.groq_available
+        assessments: list[Assessment] = []
 
-        try:
-            primary = self._provider_call(preferred, job, preliminary)
-        except Exception as primary_exc:
-            logger.warning("%s primary provider failed for %s: %s", preferred, job.title, primary_exc)
-            if alternate_available:
-                try:
-                    fallback = self._provider_call(alternate, job, preliminary, second_opinion=(alternate == "groq"))
-                    fallback.source = f"ai-{alternate}-fallback"
-                    return fallback
-                except Exception as fallback_exc:
-                    if self.settings.ai_required:
-                        raise RuntimeError(
-                            f"Both AI providers failed. {preferred}: {primary_exc}; {alternate}: {fallback_exc}"
-                        ) from fallback_exc
-                    preliminary.provisional = True
-                    return preliminary
+        # 1) Cerebras is the preferred primary and gets the richest reasoning budget.
+        if self.cerebras_available:
+            try:
+                primary = self._cerebras_call(job, preliminary, threshold=threshold)
+                assessments.append(primary)
+            except Exception as exc:
+                logger.warning("Cerebras primary failed for %s: %s", job.title, exc)
+
+        # 2) If Cerebras is absent/failed, Groq becomes the first fallback.
+        if not assessments and self.groq_available:
+            try:
+                assessments.append(self._groq_call(job, preliminary, reasoning_effort="medium"))
+            except Exception as exc:
+                logger.warning("Groq fallback failed for %s: %s", job.title, exc)
+
+        # 3) Gemini is tertiary fallback if the two preferred providers are unavailable.
+        if not assessments and self.gemini_available:
+            try:
+                assessments.append(self._gemini_call(job, preliminary))
+            except Exception as exc:
+                logger.warning("Gemini fallback failed for %s: %s", job.title, exc)
+
+        if not assessments:
             if self.settings.ai_required:
-                raise RuntimeError(f"AI provider {preferred} failed: {primary_exc}") from primary_exc
+                raise RuntimeError(f"All configured AI providers failed for {job.title}")
             preliminary.provisional = True
             return preliminary
 
-        if self._needs_escalation(job, preliminary, primary, threshold):
-            if alternate_available:
+        primary = assessments[0]
+
+        # 4) Borderline/high-risk Cerebras decisions get independent Groq review.
+        if self._needs_second_opinion(job, preliminary, primary, threshold):
+            if primary.source != "ai-groq" and self.groq_available:
                 try:
-                    logger.info("Requesting independent %s second opinion: %s", alternate, job.title)
-                    second = self._provider_call(
-                        alternate,
-                        job,
-                        preliminary,
-                        second_opinion=(alternate == "groq"),
+                    logger.info("Requesting Groq independent review: %s", job.title)
+                    assessments.append(
+                        self._groq_call(job, preliminary, reasoning_effort="high")
                     )
-                    return self._consolidate(preliminary, primary, second, threshold)
-                except Exception as second_exc:
-                    logger.warning("Independent second opinion failed for %s: %s", job.title, second_exc)
-                    return primary
-
-            if (
-                preferred == "groq"
-                and self.settings.ai_escalation_model
-                and self.settings.ai_escalation_model != self.settings.ai_model
-            ):
+                except Exception as exc:
+                    logger.warning("Groq independent review failed for %s: %s", job.title, exc)
+            elif primary.source != "ai-gemini" and self.gemini_available:
                 try:
-                    logger.info(
-                        "Escalating borderline/high-risk vacancy from %s to %s: %s",
-                        self.settings.ai_model,
-                        self.settings.ai_escalation_model,
-                        job.title,
-                    )
-                    second = self._groq_call(job, preliminary, model=self.settings.ai_escalation_model)
-                    return self._consolidate(preliminary, primary, second, threshold)
-                except Exception as second_exc:
-                    logger.warning("Groq escalation failed for %s: %s", job.title, second_exc)
+                    logger.info("Requesting Gemini independent review: %s", job.title)
+                    assessments.append(self._gemini_call(job, preliminary))
+                except Exception as exc:
+                    logger.warning("Gemini independent review failed for %s: %s", job.title, exc)
 
-        return primary
+        # 5) If the first two providers disagree materially, optional Gemini breaks the tie.
+        if (
+            len(assessments) >= 2
+            and self.gemini_available
+            and all(item.source != "ai-gemini" for item in assessments)
+            and (
+                assessments[0].matched != assessments[1].matched
+                or assessments[0].permit_path != assessments[1].permit_path
+                or abs(assessments[0].score - assessments[1].score) >= 12
+            )
+        ):
+            try:
+                logger.info("Requesting Gemini tie-break review: %s", job.title)
+                assessments.append(self._gemini_call(job, preliminary))
+            except Exception as exc:
+                logger.warning("Gemini tie-break review failed for %s: %s", job.title, exc)
 
+        return self._consolidate(preliminary, assessments, threshold)
