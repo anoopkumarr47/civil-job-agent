@@ -124,3 +124,15 @@ def test_refine_uses_primary_then_escalation(settings, monkeypatch):
 
     assert calls == ["openai/gpt-oss-20b", "openai/gpt-oss-120b"]
     assert result.score == 88
+
+
+def test_ai_canonicalizes_known_permit_aliases():
+    data = valid()
+    data["permit_path"] = "critical_skills_plausible"
+    result = AIClient._validate(data)
+    assert result.permit_path == "critical_skills"
+
+    data = valid()
+    data["permit_path"] = "general_employment_permit"
+    result = AIClient._validate(data)
+    assert result.permit_path == "general"
