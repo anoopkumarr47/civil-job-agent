@@ -40,7 +40,12 @@
         "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=project+engineer+civil",
         "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=transportation+engineer",
         "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=setting+out+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=infrastructure+engineer"
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=infrastructure+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=construction+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=drainage+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=water+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=assistant+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=civil+inspector"
       ],
       "allowed_hosts": [
         "jobsireland.ie",
