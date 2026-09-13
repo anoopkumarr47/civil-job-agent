@@ -7,7 +7,7 @@ from .ai import AIClient
 from .config import Settings, load_json
 from .models import Assessment, Job, SourceReport
 from .notify import send_email
-from .scoring import POLICY_VERSION, preliminary_assessment, should_ai_refine
+from .scoring import POLICY_VERSION, enforce_final_policy, preliminary_assessment, should_ai_refine
 from .sources import ConfiguredWebBoard, GmailJobAlertSource
 from .state import StateStore
 
@@ -72,6 +72,19 @@ def run(settings: Settings) -> int:
     if settings.dry_run:
         logger.info("DRY RUN: state will not be loaded/written and email will not be sent")
     else:
+        missing = [
+            name
+            for name, value in (
+                ("EMAIL_ADDRESS", settings.email_address),
+                ("EMAIL_PASSWORD", settings.email_password),
+                ("EMAIL_TO", settings.email_to),
+            )
+            if not value
+        ]
+        if missing:
+            raise RuntimeError(
+                "Production mode requires email configuration; missing: " + ", ".join(missing)
+            )
         state.load()
 
     sources = _build_sources(settings, sources_cfg)
@@ -105,6 +118,7 @@ def run(settings: Settings) -> int:
         assessment = preliminary_assessment(job, profile)
         if should_ai_refine(assessment):
             assessment = ai.refine(job, assessment)
+        assessment = enforce_final_policy(assessment, profile)
         state.record(job, assessment, profile_version, POLICY_VERSION)
 
     assessments: dict[str, Assessment] = {}
