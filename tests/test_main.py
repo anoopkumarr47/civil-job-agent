@@ -26,10 +26,22 @@ class EmptySource:
 
 
 def test_empty_sources_do_not_count_as_healthy_coverage(settings, monkeypatch):
+    from dataclasses import replace
+    dry = replace(settings, dry_run=True)
     monkeypatch.setattr(main, "_build_sources", lambda *_: [EmptySource()])
     try:
-        main.run(settings)
+        main.run(dry)
     except RuntimeError as exc:
         assert "produced candidate jobs" in str(exc)
     else:
         raise AssertionError("empty sources should not pass source-health gate")
+
+
+def test_production_requires_mail_settings(settings, monkeypatch):
+    monkeypatch.setattr(main, "_build_sources", lambda *_: [FakeSource()])
+    try:
+        main.run(settings)
+    except RuntimeError as exc:
+        assert "Production mode requires email configuration" in str(exc)
+    else:
+        raise AssertionError("production without mail settings should fail")
