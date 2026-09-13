@@ -23,7 +23,7 @@ LinkedIn/Indeed accounts are never automated or logged into by the scraper. The 
 
 Each vacancy is assessed for professional fit, experience fit, CV skill overlap, hard blockers such as graduate/no-sponsorship roles, Republic of Ireland location, Critical Skills/General Employment Permit plausibility, salary when available, relocation support and contract duration.
 
-Current configured thresholds are EUR 40,904 for the standard relevant-degree Critical Skills route and EUR 36,605 for the general General Employment Permit threshold. These are configuration values and should be reviewed when government rules change.
+Current configured thresholds are EUR 40,909 for the standard relevant-degree Critical Skills route and EUR 36,605 for the general General Employment Permit threshold. These are configuration values and should be reviewed when government rules change.
 
 ## Required GitHub Actions secrets
 
