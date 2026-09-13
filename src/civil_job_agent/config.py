@@ -18,6 +18,10 @@ def _env_int(name: str, default: int) -> int:
     return int(os.environ.get(name, str(default)))
 
 
+def _env_float(name: str, default: float) -> float:
+    return float(os.environ.get(name, str(default)))
+
+
 @dataclass(frozen=True)
 class Settings:
     state_file: str
@@ -28,8 +32,12 @@ class Settings:
     ai_api_url: str
     ai_api_key: str | None
     ai_model: str
+    ai_escalation_model: str
     ai_timeout: int
     ai_required: bool
+    ai_min_interval_seconds: float
+    ai_token_reserve: int
+    ai_max_evidence_chars: int
     email_address: str | None
     email_password: str | None
     email_to: str | None
@@ -49,9 +57,17 @@ class Settings:
             max_links_per_source=_env_int("MAX_LINKS_PER_SOURCE", 120),
             ai_api_url=os.environ.get("AI_API_URL", "https://api.groq.com/openai/v1/chat/completions"),
             ai_api_key=os.environ.get("AI_API_KEY") or os.environ.get("GROQ_API_KEY"),
-            ai_model=os.environ.get("AI_MODEL", "openai/gpt-oss-120b"),
+            ai_model=os.environ.get("AI_PRIMARY_MODEL", "openai/gpt-oss-20b"),
+            ai_escalation_model=(
+                os.environ.get("AI_ESCALATION_MODEL")
+                or os.environ.get("AI_MODEL")
+                or "openai/gpt-oss-120b"
+            ),
             ai_timeout=_env_int("AI_TIMEOUT", 90),
             ai_required=_env_bool("AI_REQUIRED", False),
+            ai_min_interval_seconds=max(0.0, _env_float("AI_MIN_INTERVAL_SECONDS", 4.0)),
+            ai_token_reserve=max(0, _env_int("AI_TOKEN_RESERVE", 2400)),
+            ai_max_evidence_chars=max(1200, _env_int("AI_MAX_EVIDENCE_CHARS", 3600)),
             email_address=sender,
             email_password=os.environ.get("EMAIL_PASSWORD"),
             email_to=os.environ.get("EMAIL_TO") or sender,
