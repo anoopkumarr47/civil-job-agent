@@ -1,0 +1,73 @@
+name: Ireland Civil Job Agent
+
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run discovery/classification without email or state persistence"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ireland-civil-job-agent
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  discover-rank-notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+          python -m playwright install --with-deps chromium
+
+      - name: Tests
+        run: pytest
+
+      - name: Run agent
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
+          AI_REQUIRED: "false"
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          STATE_FILE: "job_state.json"
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+          MAIL_LOOKBACK_DAYS: "3"
+          MAX_LINKS_PER_SOURCE: "120"
+          MIN_SUCCESSFUL_SOURCES: "2"
+        run: python -m civil_job_agent.main
+
+      - name: Persist state
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ ! -f job_state.json ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add job_state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update civil job state [skip ci]"
+          for attempt in 1 2 3; do
+            git pull --rebase && git push && exit 0
+            sleep $((attempt * 3))
+          done
+          exit 1
