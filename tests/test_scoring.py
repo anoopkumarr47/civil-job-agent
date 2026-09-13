@@ -170,3 +170,23 @@ def test_mandatory_irish_experience_blocks_match(profile):
     result = preliminary_assessment(candidate, profile)
     assert not result.matched
     assert any("irish experience" in gap.casefold() for gap in result.gaps)
+
+
+def test_clear_high_confidence_highway_role_skips_ai(profile):
+    candidate = job(
+        "Highway Engineer",
+        "Civil 3D road design horizontal alignment vertical alignment permanent",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.score >= 92
+    assert not should_ai_refine(candidate, result)
+
+
+def test_low_scoring_role_does_not_burn_ai_quota(profile):
+    candidate = job(
+        "Project Engineer",
+        "Minimum 15 years experience in civil infrastructure.",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.score < 68
+    assert not should_ai_refine(candidate, result)
