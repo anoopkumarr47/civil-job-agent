@@ -54,6 +54,12 @@ TITLE_FAMILIES: tuple[tuple[str, str, int], ...] = (
     (r"\bcivil project engineer\b", "project_engineer", 92),
     (r"\bproject engineer\b", "project_engineer", 85),
     (r"\bcivil engineer\b", "civil_engineer", 88),
+    (r"\bconstruction engineer\b", "construction_engineer", 84),
+    (r"\bdrainage engineer\b", "drainage_engineer", 84),
+    (r"\bwater(?:\/wastewater)? engineer\b", "water_engineer", 80),
+    (r"\bcivil inspector\b", "civil_inspector", 82),
+    (r"\b(?:road|highway|works) inspector\b", "civil_inspector", 78),
+    (r"\bassistant engineer\b", "assistant_engineer", 80),
     (r"\bdesign engineer\b", "design_engineer", 78),
     (r"\bsite development engineer\b", "site_development_engineer", 86),
 )
