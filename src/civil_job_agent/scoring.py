@@ -261,7 +261,7 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
 
     mandatory_chartered = (
         _has(r"(?:must be|must hold|is required|required:)\s+(?:a\s+)?chartered", text)
-        or _has(r"chartered (?:engineer|status) (?:is )?(?:required|essential|mandatory)", text)
+        or _has(r"chartered (?:engineer(?: status)?|status) (?:is )?(?:required|essential|mandatory)", text)
     )
     if mandatory_chartered:
         score = min(score - 14, 70)
