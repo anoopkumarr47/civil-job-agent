@@ -45,10 +45,27 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
           python -m playwright install --with-deps chromium
-      - name: Public-source dry run
+      - name: Validate integration secrets
         env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$GROQ_API_KEY"
+          test -n "$EMAIL_ADDRESS"
+          test -n "$EMAIL_PASSWORD"
+
+      - name: Full integration dry run
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
+          AI_REQUIRED: "true"
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
           DRY_RUN: "true"
-          AI_REQUIRED: "false"
           MIN_SUCCESSFUL_SOURCES: "2"
           MAX_LINKS_PER_SOURCE: "40"
+          MAIL_LOOKBACK_DAYS: "3"
         run: python -m civil_job_agent.main
