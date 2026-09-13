@@ -95,7 +95,9 @@ class AIClient:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.http = HttpClient()
-        self.available = bool(settings.ai_api_key and settings.ai_model and settings.ai_api_url)
+        self.groq_available = bool(settings.ai_api_key and settings.ai_model and settings.ai_api_url)
+        self.gemini_available = bool(settings.gemini_api_key and settings.gemini_model)
+        self.available = self.groq_available or self.gemini_available
         self.disabled_reason: str | None = None
         self._next_allowed_at = 0.0
         self._last_request_at = 0.0
@@ -279,6 +281,151 @@ class AIClient:
             logger.warning("%s response validation failed; retrying in JSON-object mode: %s", model, exc)
             return self._call(job, preliminary, model=model, strict_schema=False)
 
+    def _gemini_call(self, job: Job, preliminary: Assessment) -> Assessment:
+        if not self.settings.gemini_api_key:
+            raise RuntimeError("Gemini API key is not configured")
+        evidence = compact_job_evidence(job, self.settings.ai_max_evidence_chars)
+        url = (
+            "https://generativelanguage.googleapis.com/v1beta/models/"
+            + self.settings.gemini_model
+            + ":generateContent"
+        )
+        payload = {
+            "systemInstruction": {"parts": [{"text": SYSTEM + "\n\n" + JSON_CONTRACT}]},
+            "contents": [
+                {
+                    "role": "user",
+                    "parts": [
+                        {
+                            "text": json.dumps(
+                                {
+                                    "preliminary": preliminary.to_dict(),
+                                    "job": {
+                                        "title": job.title,
+                                        "company": job.company,
+                                        "location": job.location,
+                                        "salary": job.salary_text,
+                                        "evidence": evidence,
+                                    },
+                                },
+                                ensure_ascii=False,
+                                separators=(",", ":"),
+                            )
+                        }
+                    ],
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0,
+                "maxOutputTokens": 700,
+                "responseMimeType": "application/json",
+                "responseSchema": SCHEMA,
+            },
+        }
+        key = f"gemini:{self.settings.gemini_model}"
+        self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
+        response = self.http.request(
+            "POST",
+            url,
+            timeout=self.settings.ai_timeout,
+            attempts=3,
+            headers={
+                "x-goog-api-key": self.settings.gemini_api_key,
+                "Content-Type": "application/json",
+            },
+            json=payload,
+        )
+        body = response.json()
+        candidates = body.get("candidates") or []
+        if not candidates:
+            raise ValueError("Gemini returned no candidates")
+        parts = candidates[0].get("content", {}).get("parts", [])
+        raw = "".join(str(part.get("text", "")) for part in parts if isinstance(part, dict))
+        result = self._validate(json.loads(raw))
+        result.source = "ai-gemini"
+        return result
+
+    def _groq_call(self, job: Job, preliminary: Assessment, *, model: str) -> Assessment:
+        result = self._call_with_json_recovery(job, preliminary, model)
+        result.source = "ai-groq"
+        return result
+
+    @staticmethod
+    def _consolidate(
+        preliminary: Assessment,
+        first: Assessment,
+        second: Assessment,
+        threshold: int,
+    ) -> Assessment:
+        """Preserve plausible candidates when independent providers disagree."""
+        scores = [first.score, second.score]
+        agreement = first.matched == second.matched
+        if agreement:
+            matched = first.matched
+            score = round(sum(scores) / 2)
+        else:
+            strongest = max(first.score, second.score)
+            matched = strongest >= threshold and preliminary.score >= threshold - 8
+            score = strongest if matched else round(sum(scores) / 2)
+
+        if first.permit_path == second.permit_path:
+            permit = first.permit_path
+        elif "not_eligible" in {first.permit_path, second.permit_path}:
+            permit = "unclear"
+        elif "critical_skills" in {first.permit_path, second.permit_path}:
+            permit = "critical_skills"
+        elif "general" in {first.permit_path, second.permit_path}:
+            permit = "general"
+        else:
+            permit = "unclear"
+
+        relocation_rank = {"low": 0, "medium": 1, "high": 2}
+        relocation = max(
+            (first.relocation_fit, second.relocation_fit),
+            key=lambda value: relocation_rank.get(value, 0),
+        )
+        strengths = list(dict.fromkeys(first.strengths + second.strengths))[:8]
+        gaps = list(dict.fromkeys(first.gaps + second.gaps))[:6]
+        if not agreement:
+            gaps = list(dict.fromkeys(gaps + ["AI providers disagreed; manual review recommended"]))[:6]
+
+        role_family = first.role_family if first.role_family == second.role_family else preliminary.role_family
+        return Assessment(
+            matched=matched,
+            score=max(0, min(100, score)),
+            role_family=role_family,
+            permit_path=permit,
+            relocation_fit=relocation,
+            reason=(
+                "Independent AI providers agreed on the assessment."
+                if agreement
+                else "Independent AI providers disagreed; the result preserves a plausible candidate for manual review."
+            ),
+            strengths=strengths,
+            gaps=gaps,
+            source="ai-consensus",
+        )
+
+    def _preferred_provider(self, job: Job) -> str:
+        if self.groq_available and self.gemini_available:
+            return "gemini" if int(job.identity_key[:8], 16) % 2 else "groq"
+        if self.gemini_available:
+            return "gemini"
+        return "groq"
+
+    def _provider_call(
+        self,
+        provider: str,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        second_opinion: bool = False,
+    ) -> Assessment:
+        if provider == "gemini":
+            return self._gemini_call(job, preliminary)
+        model = self.settings.ai_escalation_model if second_opinion else self.settings.ai_model
+        return self._groq_call(job, preliminary, model=model)
+
     @staticmethod
     def _needs_escalation(job: Job, preliminary: Assessment, primary: Assessment, threshold: int) -> bool:
         """Reserve 120B for decisions where a second opinion can change notification safety."""
@@ -297,47 +444,66 @@ class AIClient:
     def refine(self, job: Job, preliminary: Assessment, *, threshold: int = 76) -> Assessment:
         if not self.available:
             if self.settings.ai_required:
-                raise RuntimeError(self.disabled_reason or "AI is required but not configured")
+                raise RuntimeError("No AI provider is configured")
             preliminary.provisional = True
             return preliminary
 
+        preferred = self._preferred_provider(job)
+        alternate = "gemini" if preferred == "groq" else "groq"
+        alternate_available = self.gemini_available if alternate == "gemini" else self.groq_available
+
         try:
-            primary = self._call_with_json_recovery(job, preliminary, self.settings.ai_model)
-            if (
-                self.settings.ai_escalation_model
-                and self.settings.ai_escalation_model != self.settings.ai_model
-                and self._needs_escalation(job, preliminary, primary, threshold)
-            ):
-                logger.info(
-                    "Escalating borderline/high-risk vacancy from %s to %s: %s",
-                    self.settings.ai_model,
-                    self.settings.ai_escalation_model,
-                    job.title,
-                )
-                return self._call_with_json_recovery(job, preliminary, self.settings.ai_escalation_model)
-            return primary
-        except requests.HTTPError as exc:
-            status = exc.response.status_code if exc.response is not None else None
-            detail = exc.response.text[:800] if exc.response is not None else str(exc)
-            if status in {400, 401, 403, 404, 410}:
-                self._disable(f"permanent provider/model error HTTP {status}: {detail}")
-                if self.settings.ai_required:
-                    raise RuntimeError(self.disabled_reason) from exc
-                preliminary.provisional = True
-                return preliminary
-            if status in {408, 425, 429, 500, 502, 503, 504}:
-                if self.settings.ai_required:
-                    raise RuntimeError(f"transient AI provider error HTTP {status} after retries: {detail}") from exc
-                logger.warning(
-                    "Transient AI provider error HTTP %s exhausted retries; marking vacancy provisional",
-                    status,
-                )
-                preliminary.provisional = True
-                return preliminary
-            raise
-        except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
+            primary = self._provider_call(preferred, job, preliminary)
+        except Exception as primary_exc:
+            logger.warning("%s primary provider failed for %s: %s", preferred, job.title, primary_exc)
+            if alternate_available:
+                try:
+                    fallback = self._provider_call(alternate, job, preliminary, second_opinion=(alternate == "groq"))
+                    fallback.source = f"ai-{alternate}-fallback"
+                    return fallback
+                except Exception as fallback_exc:
+                    if self.settings.ai_required:
+                        raise RuntimeError(
+                            f"Both AI providers failed. {preferred}: {primary_exc}; {alternate}: {fallback_exc}"
+                        ) from fallback_exc
+                    preliminary.provisional = True
+                    return preliminary
             if self.settings.ai_required:
-                raise RuntimeError(f"AI validation failed after recovery: {exc}") from exc
+                raise RuntimeError(f"AI provider {preferred} failed: {primary_exc}") from primary_exc
             preliminary.provisional = True
-            logger.warning("AI validation failed after recovery; marking vacancy provisional: %s", exc)
             return preliminary
+
+        if self._needs_escalation(job, preliminary, primary, threshold):
+            if alternate_available:
+                try:
+                    logger.info("Requesting independent %s second opinion: %s", alternate, job.title)
+                    second = self._provider_call(
+                        alternate,
+                        job,
+                        preliminary,
+                        second_opinion=(alternate == "groq"),
+                    )
+                    return self._consolidate(preliminary, primary, second, threshold)
+                except Exception as second_exc:
+                    logger.warning("Independent second opinion failed for %s: %s", job.title, second_exc)
+                    return primary
+
+            if (
+                preferred == "groq"
+                and self.settings.ai_escalation_model
+                and self.settings.ai_escalation_model != self.settings.ai_model
+            ):
+                try:
+                    logger.info(
+                        "Escalating borderline/high-risk vacancy from %s to %s: %s",
+                        self.settings.ai_model,
+                        self.settings.ai_escalation_model,
+                        job.title,
+                    )
+                    second = self._groq_call(job, preliminary, model=self.settings.ai_escalation_model)
+                    return self._consolidate(preliminary, primary, second, threshold)
+                except Exception as second_exc:
+                    logger.warning("Groq escalation failed for %s: %s", job.title, second_exc)
+
+        return primary
+
