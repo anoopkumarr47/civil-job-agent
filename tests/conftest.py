@@ -27,6 +27,8 @@ def settings(tmp_path):
         ai_min_interval_seconds=0.0,
         ai_token_reserve=2400,
         ai_max_evidence_chars=3600,
+        gemini_api_key=None,
+        gemini_model="gemini-3.5-flash-lite",
         email_address=None,
         email_password=None,
         email_to=None,
