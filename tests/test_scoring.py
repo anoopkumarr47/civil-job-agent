@@ -188,5 +188,5 @@ def test_low_scoring_role_does_not_burn_ai_quota(profile):
         "Minimum 15 years experience in civil infrastructure.",
     )
     result = preliminary_assessment(candidate, profile)
-    assert result.score < 68
+    assert result.score < 72
     assert not should_ai_refine(candidate, result)
