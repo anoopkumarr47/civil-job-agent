@@ -71,7 +71,7 @@ class Settings:
             ai_token_reserve=max(0, _env_int("AI_TOKEN_RESERVE", 2400)),
             ai_max_evidence_chars=max(1200, _env_int("AI_MAX_EVIDENCE_CHARS", 3600)),
             gemini_api_key=os.environ.get("GEMINI_API_KEY"),
-            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite"),
+            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite"),
             email_address=sender,
             email_password=os.environ.get("EMAIL_PASSWORD"),
             email_to=os.environ.get("EMAIL_TO") or sender,
