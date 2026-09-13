@@ -11,21 +11,48 @@ Discover -> normalize -> cross-source dedupe -> deterministic hard filters -> pe
 - explicit no-sponsorship/existing-right-to-work language is a hard reject;
 - Northern Ireland is excluded because it uses the UK immigration system;
 - highways/roads/transport/site/resident/civil-design roles receive the strongest fit scores;
-- generic Project Engineer / Design Engineer roles require stronger evidence and AI review;
-- mandatory Chartered/Irish-experience requirements are penalised;
-- salary is used when present, but public-sector pay-scale roles are not automatically rejected because employment-permit rules have public-sector remuneration treatment.
+- generic and senior titles receive contextual/AI review instead of title-only acceptance;
+- mandatory Chartered status or mandatory Irish experience blocks a final match;
+- experience requirements above the candidate profile are capped/penalised;
+- contracts under 12 months are rejected as poor first-relocation targets;
+- 12-23 month offers are not treated as Critical Skills-compatible;
+- salary is used only from explicit salary/remuneration context so project values cannot be mistaken for pay;
+- public-sector pay-scale roles are not automatically rejected because employment-permit remuneration treatment can differ.
+
+## Verified production source baseline
+Enabled after live GitHub Actions validation:
+- LocalGovernmentJobs
+- JobsIreland
+- Roughan O'Donovan / HireHive
+- DBFL / HireHive
+- AtkinsRéalis Ireland
+- Arup Ireland
+- LinkedIn alert email ingestion
+- Indeed alert email ingestion
+
+Disabled until dedicated adapters are independently validated:
+- IrishJobs
+- Jobs.ie
+- PublicJobs
+- Nicholas O'Dwyer
+
+A disabled source must not be counted as coverage.
 
 ## Reliability rules
 - one failed source does not abort the whole run;
-- too few successful sources aborts notification to avoid a misleading incomplete digest;
-- transient HTTP/429 failures retry;
-- permanent AI provider/model failures disable AI for the rest of the run;
+- a minimum number of productive sources is required before notification;
+- malformed vacancy URLs are rejected before detail fetching;
+- each web source has a processing time budget;
+- transient HTTP/429 failures retry and honor Retry-After;
+- Groq JSON-schema generation failures retry in JSON-object mode with the same application-side validation;
+- permanent AI provider/model/auth failures disable AI for the rest of the run;
 - ambiguous AI-dependent classifications become provisional and retry when AI recovers;
 - unchanged vacancies are not reclassified;
 - profile or policy-version changes force reclassification;
+- volatile posting-age text is excluded from the notification content hash;
 - state is persisted before email and exact content hashes are marked notified only after SMTP success;
 - SMTP retries three times;
 - stale job state is pruned after 90 days.
 
-## Source evolution
-Current production baseline includes the major Irish boards, LocalGovernmentJobs, PublicJobs, selected direct employer/ATS pages, plus LinkedIn/Indeed alerts through Gmail. The source config is intentionally data-driven so more employer career pages can be added without changing the classifier.
+## Pre-merge verification gate
+A push to the build branch must pass unit/regression tests and a secret-backed dry run that validates public sources, Gmail IMAP, Groq and SMTP authentication without sending mail or writing state.
