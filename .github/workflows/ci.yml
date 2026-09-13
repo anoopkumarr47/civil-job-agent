@@ -50,11 +50,31 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: |
           set -euo pipefail
           test -n "$GROQ_API_KEY"
           test -n "$EMAIL_ADDRESS"
           test -n "$EMAIL_PASSWORD"
+          test -n "$EMAIL_TO"
+
+      - name: Validate Gmail SMTP authentication
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: |
+          python - <<'PY'
+          import os
+          import smtplib
+
+          with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+              server.starttls()
+              server.login(os.environ["EMAIL_ADDRESS"], os.environ["EMAIL_PASSWORD"])
+              code, _ = server.noop()
+              if code != 250:
+                  raise RuntimeError(f"Unexpected SMTP NOOP response: {code}")
+          print("SMTP authentication verified without sending mail")
+          PY
 
       - name: Full integration dry run
         env:
