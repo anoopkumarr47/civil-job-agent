@@ -2,7 +2,8 @@ name: Ireland Civil Job Agent
 
 on:
   schedule:
-    - cron: "15 6 * * *"
+    # 08:00 and 20:00 India Standard Time (UTC+05:30)
+    - cron: "30 2,14 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -88,13 +89,15 @@ jobs:
 
       - name: Run actual job agent
         env:
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          CEREBRAS_MODEL: ${{ vars.CEREBRAS_MODEL || 'gpt-oss-120b' }}
+          CEREBRAS_MIN_INTERVAL_SECONDS: "2.2"
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.5-flash-lite' }}
-          AI_PRIMARY_MODEL: ${{ vars.AI_PRIMARY_MODEL || 'openai/gpt-oss-20b' }}
           AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
           AI_MIN_INTERVAL_SECONDS: "12"
-          AI_MAX_EVIDENCE_CHARS: "3600"
+          AI_MAX_EVIDENCE_CHARS: "6000"
           AI_TOKEN_RESERVE: "2400"
           AI_REQUIRED: ${{ github.event_name == 'push' && 'true' || 'false' }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
