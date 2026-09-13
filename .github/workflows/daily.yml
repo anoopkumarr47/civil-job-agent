@@ -10,9 +10,12 @@ on:
         required: false
         type: boolean
         default: false
+  push:
+    branches:
+      - build/end-to-end-v1
 
 concurrency:
-  group: ireland-civil-job-agent
+  group: ireland-civil-job-agent-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
@@ -22,52 +25,104 @@ jobs:
   discover-rank-notify:
     runs-on: ubuntu-latest
     timeout-minutes: 55
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Install
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           python -m pip install -e '.[dev]'
           python -m playwright install --with-deps chromium
 
-      - name: Tests
+      - name: Run regression tests
         run: pytest
 
-      - name: Run agent
+      - name: Validate configured mailbox
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          python - <<'PY'
+          import os
+
+          expected = "anoopkumarremesanpillai@gmail.com"
+          sender = os.environ.get("EMAIL_ADDRESS", "").strip().lower()
+          recipient = os.environ.get("EMAIL_TO", "").strip().lower()
+
+          if sender != expected:
+              raise RuntimeError("EMAIL_ADDRESS is not configured for the civil-job-agent Gmail account")
+          if recipient != expected:
+              raise RuntimeError("EMAIL_TO is not configured for the civil-job-agent Gmail account")
+
+          print("Civil-job-agent sender and recipient secrets validated")
+          PY
+
+      - name: Validate Gmail SMTP authentication
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: |
+          python - <<'PY'
+          import os
+          import smtplib
+
+          with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+              server.starttls()
+              server.login(os.environ["EMAIL_ADDRESS"], os.environ["EMAIL_PASSWORD"])
+              code, _ = server.noop()
+              if code != 250:
+                  raise RuntimeError(f"Unexpected SMTP NOOP response: {code}")
+          print("Gmail SMTP authentication verified without sending mail")
+          PY
+
+      - name: Run actual job agent
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
-          AI_REQUIRED: "false"
+          AI_REQUIRED: ${{ github.event_name == 'push' && 'true' || 'false' }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           STATE_FILE: "job_state.json"
-          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+          DRY_RUN: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
           MAIL_LOOKBACK_DAYS: "3"
           MAX_LINKS_PER_SOURCE: "120"
           MIN_SUCCESSFUL_SOURCES: "2"
         run: python -m civil_job_agent.main
 
       - name: Persist state
-        if: always()
+        if: success() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false))
         run: |
           set -euo pipefail
-          if [ ! -f job_state.json ]; then exit 0; fi
+          if [ ! -f job_state.json ]; then
+            echo "No job_state.json to persist"
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add job_state.json
-          if git diff --cached --quiet; then exit 0; fi
+
+          if git diff --cached --quiet; then
+            echo "No state changes"
+            exit 0
+          fi
+
           git commit -m "Update civil job state [skip ci]"
           for attempt in 1 2 3; do
             git pull --rebase && git push && exit 0
+            echo "State push attempt ${attempt} failed"
             sleep $((attempt * 3))
           done
           exit 1
