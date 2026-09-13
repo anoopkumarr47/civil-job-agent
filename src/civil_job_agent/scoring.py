@@ -18,6 +18,8 @@ HARD_NEGATIVE_TITLE = (
     r"\bsite reliability engineer\b",
     r"\barchitect\b",
     r"\bbim (?:coordinator|manager|technician)\b",
+    r"\bstructural engineer\b",
+    r"\bcivil engineering technician\b",
 )
 
 RIGHT_TO_WORK_NEGATIVE = (
