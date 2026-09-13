@@ -379,7 +379,7 @@ def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
     if assessment.hard_reject:
         assessment.matched = False
         return assessment
-    if assessment.source == "ai-refined":
+    if assessment.source.startswith("ai-"):
         minimum = int(profile["minimum_target_score"])
         if assessment.score < minimum or assessment.permit_path == "not_eligible" or assessment.relocation_fit == "low":
             assessment.matched = False
