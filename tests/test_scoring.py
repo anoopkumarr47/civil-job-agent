@@ -190,3 +190,11 @@ def test_low_scoring_role_does_not_burn_ai_quota(profile):
     result = preliminary_assessment(candidate, profile)
     assert result.score < 72
     assert not should_ai_refine(candidate, result)
+
+
+@pytest.mark.parametrize("title", ["Structural Engineer", "Civil Engineering Technician"])
+def test_non_target_specialist_titles_skip_ai(profile, title):
+    candidate = job(title, "civil infrastructure roads")
+    result = preliminary_assessment(candidate, profile)
+    assert result.hard_reject
+    assert not should_ai_refine(candidate, result)
