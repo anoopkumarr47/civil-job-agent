@@ -60,6 +60,35 @@ def _location_name(value: object) -> str:
     return normalize_space(str(value or ""))
 
 
+def _infer_location(text: str) -> str:
+    head = normalize_space(text)[:1200]
+    ireland_patterns = (
+        ("Dublin", r"\bDublin\b"),
+        ("Cork", r"\bCork\b"),
+        ("Galway", r"\bGalway\b"),
+        ("Limerick", r"\bLimerick\b"),
+        ("Waterford", r"\bWaterford\b"),
+        ("Ireland", r"\b(?:Republic of )?Ireland\b"),
+    )
+    import re
+    for label, pattern in ireland_patterns:
+        if re.search(pattern, head, re.I):
+            return f"{label}, Ireland" if label != "Ireland" else "Ireland"
+    foreign_patterns = (
+        ("United Kingdom", r"\bUnited Kingdom\b"),
+        ("Middle East", r"\bMiddle East\b"),
+        ("Australia", r"\bAustralia\b"),
+        ("Canada", r"\bCanada\b"),
+        ("United States", r"\bUnited States\b"),
+        ("Turkey", r"\bTurkey\b"),
+        ("India", r"\bIndia\b"),
+    )
+    for label, pattern in foreign_patterns:
+        if re.search(pattern, head, re.I):
+            return label
+    return ""
+
+
 def _salary_text(value: object) -> str:
     if isinstance(value, dict):
         currency = value.get("currency", "EUR")
@@ -157,10 +186,10 @@ class ConfiguredWebBoard(Source):
             else:
                 title = normalize_space(title_node.get_text(" ") if title_node else "")
             company = ""
-            location = ""
             for tag in soup(["script", "style", "noscript", "svg"]):
                 tag.decompose()
             description = normalize_space(soup.get_text(" "))
+            location = _infer_location(description)
             salary = ""
             posted = ""
         if len(description) < 100 or not title:
@@ -174,7 +203,7 @@ class ConfiguredWebBoard(Source):
             canonicalize_url(url),
             title[:220],
             company[:180],
-            location[:180] or "Ireland",
+            location[:180] or ("Ireland" if self.config.get("assume_ireland", False) else ""),
             description[:30000],
             salary[:220],
             posted[:120],
