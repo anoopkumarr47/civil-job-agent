@@ -58,7 +58,7 @@ def test_northern_ireland_is_excluded(profile):
 
 def test_generic_project_engineer_is_ai_candidate(profile):
     result = preliminary_assessment(job("Project Engineer", "civil roads infrastructure"), profile)
-    assert should_ai_refine(result)
+    assert should_ai_refine(job("Project Engineer", "civil roads infrastructure"), result)
 
 def test_explicit_foreign_location_is_rejected(profile):
     result = preliminary_assessment(job("Civil Engineer", "civil infrastructure", location="Manchester, United Kingdom"), profile)
@@ -106,12 +106,12 @@ def test_additional_no_sponsorship_wording_is_rejected(profile):
 
 def test_generic_site_engineer_requires_context_adjudication(profile):
     result = preliminary_assessment(job("Site Engineer", "construction project delivery"), profile)
-    assert should_ai_refine(result)
+    assert should_ai_refine(job("Site Engineer", "construction project delivery"), result)
 
 
 def test_generic_infrastructure_engineer_requires_context_adjudication(profile):
     result = preliminary_assessment(job("Infrastructure Engineer", "project delivery"), profile)
-    assert should_ai_refine(result)
+    assert should_ai_refine(job("Infrastructure Engineer", "project delivery"), result)
 
 
 def test_current_2026_critical_skills_threshold(profile):
@@ -119,3 +119,54 @@ def test_current_2026_critical_skills_threshold(profile):
     at_threshold = preliminary_assessment(job("Civil Engineer", "Salary €40,909 per annum. Civil roads.", salary="€40,909"), profile)
     assert below.permit_path != "critical_skills_salary_met"
     assert at_threshold.permit_path == "critical_skills_salary_met"
+
+
+def test_short_contract_is_relocation_reject(profile):
+    candidate = job(
+        "Resident Engineer",
+        "Civil roads. This is a 9-month fixed-term contract with site supervision.",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.hard_reject
+    assert not result.matched
+    assert result.permit_path == "short_contract_under_12_months"
+
+
+def test_contract_under_two_years_downgrades_critical_skills(profile):
+    candidate = job(
+        "Resident Engineer",
+        "Civil roads. Contract duration: 18 months. Site supervision and contractor coordination.",
+        salary="€55,000",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.permit_path == "general_permit_duration_plausible"
+    assert result.relocation_fit == "medium"
+    assert any("too short for a Critical Skills permit" in gap for gap in result.gaps)
+
+
+def test_senior_title_forces_ai_review(profile):
+    candidate = job("Senior Transportation Engineer", "Civil roads transport infrastructure")
+    result = preliminary_assessment(candidate, profile)
+    assert should_ai_refine(candidate, result)
+
+
+def test_mandatory_chartered_status_blocks_match(profile):
+    candidate = job(
+        "Civil Engineer",
+        "Civil roads infrastructure. Chartered Engineer status is required.",
+        salary="€60,000",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert not result.matched
+    assert any("mandatory" in gap.casefold() for gap in result.gaps)
+
+
+def test_mandatory_irish_experience_blocks_match(profile):
+    candidate = job(
+        "Civil Engineer",
+        "Civil roads infrastructure. Irish experience is mandatory.",
+        salary="€60,000",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert not result.matched
+    assert any("irish experience" in gap.casefold() for gap in result.gaps)
