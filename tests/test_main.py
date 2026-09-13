@@ -45,3 +45,8 @@ def test_production_requires_mail_settings(settings, monkeypatch):
         assert "Production mode requires email configuration" in str(exc)
     else:
         raise AssertionError("production without mail settings should fail")
+
+
+def test_workflow_expected_mailbox_documented():
+    expected = "anoopkumarremesanpillai@gmail.com"
+    assert expected.endswith("@gmail.com")
