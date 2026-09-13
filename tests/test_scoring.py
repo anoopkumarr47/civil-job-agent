@@ -59,3 +59,13 @@ def test_northern_ireland_is_excluded(profile):
 def test_generic_project_engineer_is_ai_candidate(profile):
     result = preliminary_assessment(job("Project Engineer", "civil roads infrastructure"), profile)
     assert should_ai_refine(result)
+
+def test_explicit_foreign_location_is_rejected(profile):
+    result = preliminary_assessment(job("Civil Engineer", "civil infrastructure", location="Manchester, United Kingdom"), profile)
+    assert result.hard_reject
+    assert result.permit_path == "not_eligible"
+
+
+def test_irish_location_is_not_rejected(profile):
+    result = preliminary_assessment(job("Civil Engineer", "civil infrastructure", location="Dublin, Ireland"), profile)
+    assert not result.hard_reject
