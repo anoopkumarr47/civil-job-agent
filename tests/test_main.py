@@ -17,3 +17,19 @@ def test_dry_run_never_sends_or_persists(settings, monkeypatch, tmp_path):
     monkeypatch.setattr(main, "send_email", lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("email called")))
     assert main.run(dry) == 0
     assert not path.exists()
+
+
+class EmptySource:
+    name = "Empty"
+    def discover(self):
+        return []
+
+
+def test_empty_sources_do_not_count_as_healthy_coverage(settings, monkeypatch):
+    monkeypatch.setattr(main, "_build_sources", lambda *_: [EmptySource()])
+    try:
+        main.run(settings)
+    except RuntimeError as exc:
+        assert "produced candidate jobs" in str(exc)
+    else:
+        raise AssertionError("empty sources should not pass source-health gate")
