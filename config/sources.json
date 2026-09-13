@@ -267,7 +267,7 @@
     },
     {
       "name": "Nicholas O'Dwyer",
-      "enabled": true,
+      "enabled": false,
       "search_urls": [
         "https://nodwyer.com/careers/current-opportunities/?company=&discipline=&getpage=1&location=&searchbu="
       ],
@@ -296,7 +296,8 @@
       ],
       "max_links": 100,
       "assume_ireland": false,
-      "max_detail_seconds": 90
+      "max_detail_seconds": 90,
+      "disabled_reason": "Current opportunities page produced zero usable vacancy links from GitHub Actions after repeated live verification. Keep disabled until a dedicated Networx/current-vacancies adapter is implemented and validated."
     }
   ],
   "mail_sources": [
