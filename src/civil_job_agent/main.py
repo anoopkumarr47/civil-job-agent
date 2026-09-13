@@ -116,7 +116,7 @@ def run(settings: Settings) -> int:
             state.touch(job)
             continue
         assessment = preliminary_assessment(job, profile)
-        if should_ai_refine(assessment):
+        if should_ai_refine(job, assessment):
             assessment = ai.refine(job, assessment)
         assessment = enforce_final_policy(assessment, profile)
         state.record(job, assessment, profile_version, POLICY_VERSION)
