@@ -8,7 +8,7 @@ from .config import Settings, load_json
 from .models import Assessment, Job, SourceReport
 from .notify import send_email
 from .scoring import POLICY_VERSION, enforce_final_policy, preliminary_assessment, should_ai_refine
-from .sources import ConfiguredWebBoard, GmailJobAlertSource
+from .sources import ConfiguredWebBoard, GmailJobAlertSource, SmartRecruitersCompanySource
 from .state import StateStore
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -38,6 +38,15 @@ def _build_sources(settings: Settings, cfg: dict) -> list:
     for entry in cfg.get("web_sources", []):
         if entry.get("enabled", True):
             sources.append(ConfiguredWebBoard(entry, request_timeout=settings.request_timeout, max_links=settings.max_links_per_source))
+    for entry in cfg.get("smartrecruiters_sources", []):
+        if entry.get("enabled", True):
+            sources.append(
+                SmartRecruitersCompanySource(
+                    entry,
+                    request_timeout=settings.request_timeout,
+                    max_links=settings.max_links_per_source,
+                )
+            )
     if settings.email_address and settings.email_password:
         for entry in cfg.get("mail_sources", []):
             if entry.get("enabled", True):
