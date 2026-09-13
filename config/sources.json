@@ -33,7 +33,14 @@
       "enabled": true,
       "search_urls": [
         "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&NaceCode=-1&RemoteOrBlendedJobType=-1&VacancyTypeId=-1&keyWord=civil+engineer&page=1&pageSize=100&vacancyId=-1",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=site+engineer"
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=site+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=highway+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=roads+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=resident+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=project+engineer+civil",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=transportation+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=setting+out+engineer",
+        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=infrastructure+engineer"
       ],
       "allowed_hosts": [
         "jobsireland.ie",
@@ -349,5 +356,21 @@
     "Kilsaran",
     "Farrans",
     "Wills Bros"
+  ],
+  "smartrecruiters_sources": [
+    {
+      "name": "AECOM",
+      "enabled": true,
+      "company_identifier": "AECOM2",
+      "country": "ie",
+      "max_links": 120
+    },
+    {
+      "name": "Egis",
+      "enabled": true,
+      "company_identifier": "egis",
+      "country": "ie",
+      "max_links": 120
+    }
   ]
 }
