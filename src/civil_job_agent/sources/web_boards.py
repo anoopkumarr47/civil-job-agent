@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import json
 import logging
-from urllib.parse import urlparse
+import time
+from urllib.parse import parse_qsl, urlparse
 
 from bs4 import BeautifulSoup
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
@@ -108,6 +109,7 @@ class ConfiguredWebBoard(Source):
         self.name = str(config["name"])
         self.request_timeout = request_timeout
         self.max_links = min(max_links, int(config.get("max_links", max_links)))
+        self.max_detail_seconds = max(1, int(config.get("max_detail_seconds", 90)))
         self.client = HttpClient()
 
     def _allowed_host(self, href: str) -> bool:
@@ -118,6 +120,10 @@ class ConfiguredWebBoard(Source):
     def _looks_like_job(self, href: str, label: str = "") -> bool:
         if not self._allowed_host(href):
             return False
+        parsed = urlparse(href)
+        for key, value in parse_qsl(parsed.query, keep_blank_values=True):
+            if key.casefold() in {"id", "jobid", "vacancyid"} and not value.strip():
+                return False
         candidate = f"{href} {label}".lower()
         excludes = [str(x).lower() for x in self.config.get("exclude_link_patterns", [])]
         if any(x in candidate for x in excludes):
@@ -247,7 +253,14 @@ class ConfiguredWebBoard(Source):
         jobs: list[Job] = []
         links = self._discover_links()
         logger.info("%s discovered %s candidate links", self.name, len(links))
+        deadline = time.monotonic() + self.max_detail_seconds
         for url in links:
+            if time.monotonic() >= deadline:
+                logger.warning(
+                    "%s detail parsing reached the %ss source budget after %s/%s links; continuing with other sources",
+                    self.name, self.max_detail_seconds, len(jobs), len(links),
+                )
+                break
             job = self._parse_detail(url)
             if job:
                 jobs.append(job)
