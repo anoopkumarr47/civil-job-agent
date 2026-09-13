@@ -156,12 +156,16 @@
         "roughan-and-odonovan.hirehive.com"
       ],
       "job_link_patterns": [
-        "/"
+        "engineer",
+        "technician"
       ],
       "exclude_link_patterns": [
         "privacy",
         "jobexpired",
-        "#"
+        "#",
+        "graduate",
+        "geotechnical",
+        "bridge"
       ],
       "required_any_terms": [
         "engineer",
