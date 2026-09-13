@@ -2,91 +2,70 @@
 
 Research snapshot: 2026-09-14.
 
-## Implemented now
+## Implemented production order
 
-The agent supports two independent providers:
+### 1. Cerebras — primary
+- model: `gpt-oss-120b`
+- secret: `CEREBRAS_API_KEY`
+- optional variable: `CEREBRAS_MODEL=gpt-oss-120b`
+- endpoint: `https://api.cerebras.ai/v1/chat/completions`
 
-### Groq
-- primary: `openai/gpt-oss-20b`
-- escalation/second opinion: `openai/gpt-oss-120b`
-- existing secret: `GROQ_API_KEY`
+Cerebras receives every plausible vacancy. Routine roles use medium reasoning; senior/borderline/permit-sensitive roles use high reasoning.
 
-### Google Gemini
-- model: `gemini-3.5-flash-lite`
+### 2. Groq — independent reviewer and fallback
+- model: `openai/gpt-oss-120b`
+- secret: `GROQ_API_KEY`
+- variable: `AI_MODEL=openai/gpt-oss-120b`
+
+Groq reviews borderline/high-risk Cerebras decisions and becomes first fallback if Cerebras fails.
+
+### 3. Gemini — optional tertiary/tie-breaker
 - secret: `GEMINI_API_KEY`
-- optional variable: `GEMINI_MODEL`
+- model variable: `GEMINI_MODEL=gemini-3.5-flash-lite`
 
-Gemini 3.5 Flash-Lite is a stable high-throughput model with structured-output support. It provides a separate provider/quota pool from Groq.
+Gemini is used only if the preferred providers fail or when an additional tie-break review is useful.
 
-When both providers are available, plausible jobs are split deterministically between them. Borderline/high-risk results request an independent opinion from the other provider and are consolidated.
+## Current Cerebras free-tier capacity
 
-## Why this is safer than reducing AI calls
-
-The agent still skips deterministic hard rejects, but it does not skip strong plausible jobs simply to preserve tokens. Instead it:
-- compresses vacancy evidence;
-- distributes first-pass classification;
-- gets a second opinion only where it can change the decision;
-- retains plausible candidates when models disagree;
-- caches unchanged jobs in state.
-
-## Next provider: Cerebras
-
-**Recommended next addition.**
-
-Cerebras has an independent API/quota pool and an OpenAI-compatible `/v1/chat/completions` endpoint. Current free-tier documentation lists `gpt-oss-120b` at about:
-- 64K TPM
+Cerebras currently documents approximately:
+- `gpt-oss-120b`: 64K TPM
 - 30 RPM
 - 1M TPD
 
-It also supports strict JSON-schema responses.
+This is a separate quota pool from Groq.
 
-Recommended use: third-provider fallback when Groq or Gemini is unavailable/quota-limited, and occasional tie-breaker for provider disagreement.
+## Analysis flow
 
-Required future secret:
-- `CEREBRAS_API_KEY`
+```
+broad deterministic capture
+          ↓
+Cerebras GPT-OSS 120B
+ medium/high reasoning by risk
+          ↓
+ clear result ───────────────→ final policy gate
+          │
+ borderline/high-risk
+          ↓
+Groq GPT-OSS 120B independent review
+          ↓
+ disagreement / provider failure
+          ↓
+optional Gemini tie-break/fallback
+          ↓
+conservative consensus
+          ↓
+final permit/score gate
+```
 
-## Fourth provider: Cloudflare Workers AI
+## Future providers
 
-**Feasibility: good, but lower priority than Cerebras.**
-
-Workers AI currently includes a 10,000-Neuron/day free allocation. Several free-plan models remain available, including `@cf/nvidia/nemotron-3-120b-a12b`, `@cf/google/gemma-4-26b-a4b-it`, and lighter models.
-
-It is a separate quota pool but requires Cloudflare account configuration and uses Cloudflare-specific REST authentication.
-
-Potential secrets:
+### Cloudflare Workers AI
+Good independent quota pool and useful future fallback. Requires:
 - `CLOUDFLARE_ACCOUNT_ID`
 - `CLOUDFLARE_API_TOKEN`
 
-## Emergency provider: OpenRouter free router
-
-OpenRouter offers free models and an OpenAI-compatible API. Accounts without purchased credits are currently limited to roughly 50 free-model requests/day total, so it is suitable as a low-volume emergency fallback rather than primary daily capacity.
-
-Potential secret:
+### OpenRouter free router
+Useful emergency low-volume fallback. Requires:
 - `OPENROUTER_API_KEY`
 
-## Recommended final provider order
-
-```
-Broad deterministic capture
-        ↓
-split first-pass load
-   ┌───────────────┐
-   │               │
-Groq 20B      Gemini Flash-Lite
-   │               │
-   └──── second opinion on borderline/disagreement ────┘
-                        ↓
-                 consolidated assessment
-                        ↓
-        provider/quota failure or tie-break
-                        ↓
-               Cerebras GPT-OSS 120B
-                        ↓
-               Cloudflare Workers AI
-                        ↓
-               OpenRouter free router
-                        ↓
-                 provisional/retry
-```
-
-The key principle is that models inside one provider are quality tiers, not true quota diversification. Independent providers create the actual quota waterfall.
+The key design principle is that separate providers provide genuine quota/failure-domain diversification; multiple models within a single provider do not.
