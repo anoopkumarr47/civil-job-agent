@@ -89,7 +89,11 @@ jobs:
       - name: Run actual job agent
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          AI_PRIMARY_MODEL: ${{ vars.AI_PRIMARY_MODEL || 'openai/gpt-oss-20b' }}
           AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
+          AI_MIN_INTERVAL_SECONDS: "12"
+          AI_MAX_EVIDENCE_CHARS: "3600"
+          AI_TOKEN_RESERVE: "2400"
           AI_REQUIRED: ${{ github.event_name == 'push' && 'true' || 'false' }}
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
