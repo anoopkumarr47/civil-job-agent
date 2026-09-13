@@ -234,6 +234,8 @@ class ConfiguredWebBoard(Source):
             posted = ""
         if len(description) < 100 or not title:
             return None
+        if self.config.get("require_location", False) and not location:
+            return None
         required_terms = [str(x).casefold() for x in self.config.get("required_any_terms", [])]
         haystack = f"{title} {description[:4000]}".casefold()
         if required_terms and not any(term in haystack for term in required_terms):
