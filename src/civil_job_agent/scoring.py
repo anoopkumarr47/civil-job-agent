@@ -4,7 +4,7 @@ import re
 
 from .models import Assessment, Job
 
-POLICY_VERSION = "2026-09-13.2"
+POLICY_VERSION = "2026-09-13.3"
 
 HARD_NEGATIVE_TITLE = (
     r"\bintern(ship)?\b",
@@ -30,6 +30,12 @@ RIGHT_TO_WORK_NEGATIVE = (
     r"cannot sponsor",
     r"eu passport required",
     r"eea passport required",
+    r"we (?:do not|don't) (?:offer|provide) (?:visa )?sponsorship",
+    r"(?:visa )?sponsorship (?:cannot|can't|will not|won't) be (?:offered|provided)",
+    r"applicants? must (?:already )?(?:have|hold) (?:valid )?(?:permission|authori[sz]ation|right) to work in ireland",
+    r"must be (?:legally )?(?:entitled|authori[sz]ed) to work in ireland",
+    r"must hold (?:a )?(?:valid )?(?:irish|ireland) work permit",
+    r"stamp 4 (?:is )?required",
 )
 
 TITLE_FAMILIES: tuple[tuple[str, str, int], ...] = (
@@ -117,6 +123,18 @@ def _salary_numbers(text: str) -> list[int]:
         if 20_000 <= value <= 250_000:
             values.append(value)
     return values
+
+
+def _salary_evidence_text(job: Job) -> str:
+    """Use explicit salary fields or salary-context snippets, not arbitrary project euro values."""
+    if job.salary_text.strip():
+        return job.salary_text
+    snippets: list[str] = []
+    for match in re.finditer(r"salary|remuneration|pay range|per annum|p\\.?a\\.?", job.text, re.I):
+        start = max(0, match.start() - 100)
+        end = min(len(job.text), match.end() + 160)
+        snippets.append(job.text[start:end])
+    return " ".join(snippets)
 
 
 def _required_years(text: str) -> int | None:
@@ -240,7 +258,7 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
         score += 8
         strengths.append("explicit relocation/work-permit support")
 
-    salaries = _salary_numbers(f"{job.salary_text} {job.text[:2200]}")
+    salaries = _salary_numbers(_salary_evidence_text(job))
     salary_floor = min(salaries) if salaries else None
     critical = role_family in CRITICAL_ROLE_FAMILIES
     permit = "critical_skills_plausible" if critical else "general_or_unclear"
@@ -248,7 +266,8 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
 
     critical_threshold = int(profile["critical_skills_salary_eur"])
     general_threshold = int(profile["general_permit_salary_eur"])
-    public_sector = job.source.casefold() in {"publicjobs", "localgovernmentjobs"}
+    source_names = {part.strip().casefold() for part in job.source.split("+")}
+    public_sector = bool(source_names & {"publicjobs", "localgovernmentjobs"})
 
     if salary_floor is not None:
         if salary_floor >= critical_threshold and critical:
@@ -299,3 +318,15 @@ def should_ai_refine(assessment: Assessment) -> bool:
     if assessment.score < 60:
         return False
     return assessment.score < 92 or assessment.role_family in {"project_engineer", "design_engineer", "civil_infrastructure_engineer"}
+
+
+def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
+    """Do not let AI bypass the agent's minimum precision/relocation gates."""
+    if assessment.hard_reject:
+        assessment.matched = False
+        return assessment
+    if assessment.source == "ai-refined":
+        minimum = int(profile["minimum_target_score"])
+        if assessment.score < minimum or assessment.permit_path == "not_eligible" or assessment.relocation_fit == "low":
+            assessment.matched = False
+    return assessment
