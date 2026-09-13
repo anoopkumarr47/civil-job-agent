@@ -117,7 +117,7 @@ def run(settings: Settings) -> int:
             continue
         assessment = preliminary_assessment(job, profile)
         if should_ai_refine(job, assessment):
-            assessment = ai.refine(job, assessment)
+            assessment = ai.refine(job, assessment, threshold=int(profile["minimum_target_score"]))
         assessment = enforce_final_policy(assessment, profile)
         state.record(job, assessment, profile_version, POLICY_VERSION)
 
