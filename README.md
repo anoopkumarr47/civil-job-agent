@@ -38,15 +38,25 @@ Senior/principal/lead roles, ambiguous occupational titles, experience gaps, man
 - `EMAIL_TO` — digest recipient
 - `GROQ_API_KEY` — Groq API key for this project
 
-Recommended Actions variable:
+Recommended Actions variables:
 
-- `AI_MODEL=openai/gpt-oss-120b`
+- `AI_PRIMARY_MODEL=openai/gpt-oss-20b` (optional; this is the default)
+- `AI_MODEL=openai/gpt-oss-120b` (kept as the escalation model, so the existing variable remains valid)
 
 No separate IMAP secret is required; the Gmail address/app password are reused for IMAP and SMTP.
 
 ## AI behavior
 
-Groq structured JSON Schema is the preferred response mode. If Groq returns its known JSON-generation validation error, the agent retries that vacancy in JSON-object mode and still applies the same strict application-side field/type/enum validation. Transient HTTP 429 responses honor retry delays.
+The AI path is quota-aware and intentionally narrow:
+
+1. deterministic scoring handles obvious accepts/rejects without an API call;
+2. only genuinely ambiguous/borderline jobs go to AI;
+3. the prompt contains a compact evidence packet (requirements, experience, salary, sponsorship, contract and relevant skills) instead of the first 9,000 characters of the page;
+4. `openai/gpt-oss-20b` handles routine adjudication;
+5. `openai/gpt-oss-120b` is used only when the primary result is borderline or high-risk;
+6. calls are proactively paced and Groq token-reset headers are honored.
+
+Groq strict JSON Schema remains the preferred response mode. If Groq returns a schema-generation validation error, the agent retries that vacancy in JSON-object mode and still applies strict application-side field/type/enum validation.
 
 Production uses `AI_REQUIRED=false`: deterministic high-confidence roles can continue during a provider outage, while AI-dependent roles remain provisional and are retried later.
 
