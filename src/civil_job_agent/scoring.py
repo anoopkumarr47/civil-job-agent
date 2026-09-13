@@ -4,7 +4,7 @@ import re
 
 from .models import Assessment, Job
 
-POLICY_VERSION = "2026-09-13.1"
+POLICY_VERSION = "2026-09-13.2"
 
 HARD_NEGATIVE_TITLE = (
     r"\bintern(ship)?\b",
@@ -130,18 +130,44 @@ def _required_years(text: str) -> int | None:
     return max(numbers) if numbers else None
 
 
+FOREIGN_LOCATION_TERMS = (
+    "united kingdom", "england", "scotland", "wales", "middle east", "turkey", "australia",
+    "new zealand", "united states", "usa", "canada", "india", "uae", "dubai", "abu dhabi",
+    "saudi arabia", "qatar", "singapore", "hong kong", "germany", "france", "netherlands",
+    "spain", "italy", "belgium", "sweden", "norway", "denmark", "finland", "poland",
+)
+
+IRISH_LOCATION_TERMS = (
+    "ireland", "dublin", "cork", "galway", "limerick", "waterford", "kilkenny", "kildare",
+    "wicklow", "meath", "louth", "laois", "offaly", "westmeath", "wexford", "tipperary",
+    "clare", "kerry", "mayo", "sligo", "leitrim", "roscommon", "cavan", "monaghan",
+    "donegal", "longford", "carlow", "athlone",
+)
+
+
 def preliminary_assessment(job: Job, profile: dict) -> Assessment:
     title = job.title.casefold()
     text = f"{job.title} {job.company} {job.location} {job.text}".casefold()
+    location = job.location.casefold().strip()
 
     if not profile.get("include_northern_ireland", False) and any(
-        x in text for x in ["belfast", "northern ireland", "antrim", "down, northern ireland"]
+        x in f"{location} {job.text[:500].casefold()}" for x in ["belfast", "northern ireland"]
     ):
         return Assessment(
             False, 0, "other", "not_eligible", "low",
             "Northern Ireland uses the UK immigration system, not the Republic of Ireland employment-permit route.",
             hard_reject=True,
         )
+
+    if location and location not in {"ireland", "republic of ireland", "remote", "hybrid"}:
+        has_irish = any(term in location for term in IRISH_LOCATION_TERMS)
+        has_foreign = any(term in location for term in FOREIGN_LOCATION_TERMS)
+        if has_foreign and not has_irish:
+            return Assessment(
+                False, 0, "other", "not_eligible", "low",
+                "The vacancy location is outside the Republic of Ireland.",
+                hard_reject=True,
+            )
 
     for pattern in RIGHT_TO_WORK_NEGATIVE:
         if _has(pattern, text):
