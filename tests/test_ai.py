@@ -52,7 +52,7 @@ def test_transient_ai_exhaustion_becomes_provisional_in_production(settings, mon
     def fail(*args, **kwargs):
         raise error
 
-    monkeypatch.setattr(client, "_call", fail)
+    monkeypatch.setattr(client, "_provider_call", fail)
     preliminary = Assessment(
         True, 85, "project_engineer", "critical_skills", "high", "candidate"
     )
@@ -102,28 +102,31 @@ def test_borderline_result_escalates():
     assert AIClient._needs_escalation(vacancy, preliminary, primary, 76)
 
 
-def test_refine_uses_primary_then_escalation(settings, monkeypatch):
+def test_refine_splits_and_consolidates_across_providers(settings, monkeypatch):
     from dataclasses import replace
     from civil_job_agent.models import Assessment, Job
 
-    configured = replace(settings, ai_api_key="test-key")
+    configured = replace(settings, ai_api_key="groq-key", gemini_api_key="gemini-key")
     client = AIClient(configured)
     vacancy = Job("test", "https://example/1", "Project Engineer", "Firm", "Dublin", "civil roads")
     preliminary = Assessment(True, 84, "project_engineer", "critical_skills_plausible", "high", "fit")
 
     calls = []
 
-    def fake_call(job, assessment, model):
-        calls.append(model)
-        if model == "openai/gpt-oss-20b":
-            return Assessment(True, 78, "project_engineer", "critical_skills", "high", "primary", source="ai-refined")
-        return Assessment(True, 88, "project_engineer", "critical_skills", "high", "escalated", source="ai-refined")
+    monkeypatch.setattr(client, "_preferred_provider", lambda job: "groq")
 
-    monkeypatch.setattr(client, "_call_with_json_recovery", fake_call)
+    def fake_provider(provider, job, assessment, second_opinion=False):
+        calls.append((provider, second_opinion))
+        if provider == "groq":
+            return Assessment(True, 78, "project_engineer", "critical_skills", "high", "primary", source="ai-groq")
+        return Assessment(True, 88, "project_engineer", "critical_skills", "high", "second", source="ai-gemini")
+
+    monkeypatch.setattr(client, "_provider_call", fake_provider)
     result = client.refine(vacancy, preliminary, threshold=76)
 
-    assert calls == ["openai/gpt-oss-20b", "openai/gpt-oss-120b"]
-    assert result.score == 88
+    assert calls == [("groq", False), ("gemini", False)]
+    assert result.source == "ai-consensus"
+    assert result.score == 83
 
 
 def test_ai_canonicalizes_known_permit_aliases():
@@ -136,3 +139,26 @@ def test_ai_canonicalizes_known_permit_aliases():
     data["permit_path"] = "general_employment_permit"
     result = AIClient._validate(data)
     assert result.permit_path == "general"
+
+
+def test_consensus_preserves_plausible_candidate_on_provider_disagreement():
+    from civil_job_agent.models import Assessment
+
+    preliminary = Assessment(True, 82, "project_engineer", "critical_skills_plausible", "high", "fit")
+    first = Assessment(False, 73, "project_engineer", "unclear", "medium", "no", source="ai-groq")
+    second = Assessment(True, 86, "project_engineer", "critical_skills", "high", "yes", source="ai-gemini")
+    result = AIClient._consolidate(preliminary, first, second, 76)
+
+    assert result.matched
+    assert result.score == 86
+    assert result.source == "ai-consensus"
+    assert any("disagreed" in gap.lower() for gap in result.gaps)
+
+
+def test_provider_assignment_is_deterministic(settings):
+    from dataclasses import replace
+    from civil_job_agent.models import Job
+
+    client = AIClient(replace(settings, ai_api_key="groq", gemini_api_key="gemini"))
+    vacancy = Job("test", "https://example/1", "Civil Engineer", "Firm", "Dublin", "civil roads")
+    assert client._preferred_provider(vacancy) == client._preferred_provider(vacancy)
