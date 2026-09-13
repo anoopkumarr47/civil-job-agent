@@ -4,7 +4,7 @@ import re
 
 from .models import Assessment, Job
 
-POLICY_VERSION = "2026-09-13.6"
+POLICY_VERSION = "2026-09-14.1"
 
 HARD_NEGATIVE_TITLE = (
     r"\bintern(ship)?\b",
@@ -366,38 +366,12 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
 
 
 def should_ai_refine(job: Job, assessment: Assessment) -> bool:
-    """Use AI only where deterministic evidence leaves a meaningful decision risk."""
-    if assessment.hard_reject or assessment.score < 72:
+    """Review every plausible non-rejected role; only obvious bad fits skip AI."""
+    if assessment.hard_reject:
         return False
-
-    title = job.title.casefold()
-    seniority_needs_review = any(term in title for term in ("senior", "principal", "lead", "associate"))
-    requirement_gap = any(
-        phrase in gap.casefold()
-        for gap in assessment.gaps
-        for phrase in ("posting asks for", "require about", "chartered", "irish experience")
-    )
-    ambiguous_family = assessment.role_family in {
-        "project_engineer",
-        "design_engineer",
-        "civil_infrastructure_engineer",
-        "site_engineer",
-        "infrastructure_engineer",
-    }
-    permit_uncertain = assessment.permit_path in {
-        "general_or_unclear",
-        "critical_skills_duration_unconfirmed",
-        "public_sector_pay_scale_review",
-    }
-    near_notification_boundary = 72 <= assessment.score <= 86
-
-    return (
-        seniority_needs_review
-        or requirement_gap
-        or ambiguous_family
-        or permit_uncertain
-        or near_notification_boundary
-    )
+    if assessment.role_family == "other":
+        return False
+    return assessment.score >= 60
 
 
 def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
