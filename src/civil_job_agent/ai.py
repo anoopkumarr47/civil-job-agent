@@ -184,6 +184,15 @@ class AIClient:
                     raise RuntimeError(self.disabled_reason) from exc
                 preliminary.provisional = True
                 return preliminary
+            if status in {408, 425, 429, 500, 502, 503, 504}:
+                if self.settings.ai_required:
+                    raise RuntimeError(f"transient AI provider error HTTP {status} after retries: {detail}") from exc
+                logger.warning(
+                    "Transient AI provider error HTTP %s exhausted retries; marking vacancy provisional",
+                    status,
+                )
+                preliminary.provisional = True
+                return preliminary
             raise
         except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
             logger.warning("Strict AI response validation failed; retrying this vacancy in JSON-object mode: %s", exc)
