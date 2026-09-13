@@ -38,6 +38,8 @@ class Settings:
     ai_min_interval_seconds: float
     ai_token_reserve: int
     ai_max_evidence_chars: int
+    gemini_api_key: str | None
+    gemini_model: str
     email_address: str | None
     email_password: str | None
     email_to: str | None
@@ -68,6 +70,8 @@ class Settings:
             ai_min_interval_seconds=max(0.0, _env_float("AI_MIN_INTERVAL_SECONDS", 4.0)),
             ai_token_reserve=max(0, _env_int("AI_TOKEN_RESERVE", 2400)),
             ai_max_evidence_chars=max(1200, _env_int("AI_MAX_EVIDENCE_CHARS", 3600)),
+            gemini_api_key=os.environ.get("GEMINI_API_KEY"),
+            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite"),
             email_address=sender,
             email_password=os.environ.get("EMAIL_PASSWORD"),
             email_to=os.environ.get("EMAIL_TO") or sender,
