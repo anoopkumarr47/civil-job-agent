@@ -18,6 +18,8 @@ Enabled sources now include:
 - Arup Ireland careers
 - AECOM Ireland through the SmartRecruiters public Posting API
 - Egis Ireland through the SmartRecruiters public Posting API
+- TOBIN direct careers
+- SYSTRA direct careers with explicit-location validation
 - LinkedIn daily job-alert emails through Gmail IMAP
 - Indeed daily job-alert emails through Gmail IMAP
 
