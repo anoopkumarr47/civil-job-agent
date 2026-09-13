@@ -4,7 +4,7 @@ import re
 
 from .models import Assessment, Job
 
-POLICY_VERSION = "2026-09-13.3"
+POLICY_VERSION = "2026-09-13.4"
 
 HARD_NEGATIVE_TITLE = (
     r"\bintern(ship)?\b",
@@ -317,7 +317,13 @@ def should_ai_refine(assessment: Assessment) -> bool:
         return False
     if assessment.score < 60:
         return False
-    return assessment.score < 92 or assessment.role_family in {"project_engineer", "design_engineer", "civil_infrastructure_engineer"}
+    return assessment.score < 92 or assessment.role_family in {
+        "project_engineer",
+        "design_engineer",
+        "civil_infrastructure_engineer",
+        "site_engineer",
+        "infrastructure_engineer",
+    }
 
 
 def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
