@@ -365,7 +365,7 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
 
 def should_ai_refine(job: Job, assessment: Assessment) -> bool:
     """Use AI only where deterministic evidence leaves a meaningful decision risk."""
-    if assessment.hard_reject or assessment.score < 68:
+    if assessment.hard_reject or assessment.score < 72:
         return False
 
     title = job.title.casefold()
