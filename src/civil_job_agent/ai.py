@@ -368,21 +368,11 @@ class AIClient:
             matched = strongest >= threshold and preliminary.score >= threshold - 8
             score = strongest if matched else round(sum(scores) / 2)
 
-        if first.permit_path == second.permit_path:
-            permit = first.permit_path
-        elif "not_eligible" in {first.permit_path, second.permit_path}:
-            permit = "unclear"
-        elif "critical_skills" in {first.permit_path, second.permit_path}:
-            permit = "critical_skills"
-        elif "general" in {first.permit_path, second.permit_path}:
-            permit = "general"
-        else:
-            permit = "unclear"
-
-        relocation_rank = {"low": 0, "medium": 1, "high": 2}
-        relocation = max(
-            (first.relocation_fit, second.relocation_fit),
-            key=lambda value: relocation_rank.get(value, 0),
+        permit = first.permit_path if first.permit_path == second.permit_path else "unclear"
+        relocation = (
+            first.relocation_fit
+            if first.relocation_fit == second.relocation_fit
+            else "medium"
         )
         strengths = list(dict.fromkeys(first.strengths + second.strengths))[:8]
         gaps = list(dict.fromkeys(first.gaps + second.gaps))[:6]
