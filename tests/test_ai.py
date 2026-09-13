@@ -28,3 +28,8 @@ def test_ai_score_range_is_strict():
     data["score"] = 101
     with pytest.raises(ValueError, match="score"):
         AIClient._validate(data)
+
+
+def test_schema_generation_error_is_retryable():
+    assert AIClient._schema_generation_error('{"code":"json_validate_failed","message":"Failed to validate JSON"}')
+    assert not AIClient._schema_generation_error("invalid API key")
