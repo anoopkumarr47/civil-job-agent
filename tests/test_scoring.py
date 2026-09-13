@@ -172,24 +172,24 @@ def test_mandatory_irish_experience_blocks_match(profile):
     assert any("irish experience" in gap.casefold() for gap in result.gaps)
 
 
-def test_clear_high_confidence_highway_role_skips_ai(profile):
+def test_clear_high_confidence_highway_role_still_gets_distributed_ai_review(profile):
     candidate = job(
         "Highway Engineer",
         "Civil 3D road design horizontal alignment vertical alignment permanent",
     )
     result = preliminary_assessment(candidate, profile)
     assert result.score >= 92
-    assert not should_ai_refine(candidate, result)
+    assert should_ai_refine(candidate, result)
 
 
-def test_low_scoring_role_does_not_burn_ai_quota(profile):
+def test_plausible_lower_score_role_still_gets_ai_review(profile):
     candidate = job(
         "Project Engineer",
         "Minimum 15 years experience in civil infrastructure.",
     )
     result = preliminary_assessment(candidate, profile)
-    assert result.score < 72
-    assert not should_ai_refine(candidate, result)
+    assert result.score >= 60
+    assert should_ai_refine(candidate, result)
 
 
 @pytest.mark.parametrize("title", ["Structural Engineer", "Civil Engineering Technician"])
