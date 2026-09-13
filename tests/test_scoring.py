@@ -69,3 +69,36 @@ def test_explicit_foreign_location_is_rejected(profile):
 def test_irish_location_is_not_rejected(profile):
     result = preliminary_assessment(job("Civil Engineer", "civil infrastructure", location="Dublin, Ireland"), profile)
     assert not result.hard_reject
+
+
+def test_project_value_is_not_misread_as_salary(profile):
+    result = preliminary_assessment(
+        job(
+            "Civil Engineer",
+            "Civil infrastructure project valued at €50,000 with roads and site supervision.",
+            salary="",
+        ),
+        profile,
+    )
+    assert result.permit_path == "critical_skills_plausible"
+
+
+def test_explicit_salary_context_is_used(profile):
+    result = preliminary_assessment(
+        job(
+            "Civil Engineer",
+            "Salary €50,000 per annum. Civil infrastructure and roads.",
+            salary="",
+        ),
+        profile,
+    )
+    assert result.permit_path == "critical_skills_salary_met"
+
+
+def test_additional_no_sponsorship_wording_is_rejected(profile):
+    result = preliminary_assessment(
+        job("Civil Engineer", "We do not offer visa sponsorship for this position."),
+        profile,
+    )
+    assert result.hard_reject
+    assert result.permit_path == "not_eligible"
