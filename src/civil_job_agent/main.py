@@ -121,6 +121,7 @@ def run(settings: Settings) -> int:
         assessment = enforce_final_policy(assessment, profile)
         state.record(job, assessment, profile_version, POLICY_VERSION)
 
+    logger.info("AI calls by model: %s", dict(sorted(ai.calls_by_model.items())))
     assessments: dict[str, Assessment] = {}
     matches: list[tuple[Job, Assessment]] = []
     for job in jobs:
