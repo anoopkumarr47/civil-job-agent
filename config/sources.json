@@ -25,7 +25,8 @@
         "resident"
       ],
       "max_links": 150,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "max_detail_seconds": 90
     },
     {
       "name": "JobsIreland",
@@ -53,11 +54,12 @@
         "infrastructure"
       ],
       "max_links": 120,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "max_detail_seconds": 75
     },
     {
       "name": "IrishJobs",
-      "enabled": true,
+      "enabled": false,
       "search_urls": [
         "https://www.irishjobs.ie/jobs/civil-engineer/in-ireland",
         "https://www.irishjobs.ie/jobs/site-engineer/in-ireland"
@@ -83,11 +85,12 @@
         "infrastructure"
       ],
       "max_links": 120,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "disabled_reason": "GitHub runner requests timed out; browser fallback is too slow for reliable daily operation. Re-enable only after a dedicated verified adapter."
     },
     {
       "name": "Jobs.ie",
-      "enabled": true,
+      "enabled": false,
       "search_urls": [
         "https://www.jobs.ie/jobs/civil-engineer/in-ireland",
         "https://www.jobs.ie/jobs/site-engineer/in-ireland"
@@ -113,11 +116,12 @@
         "infrastructure"
       ],
       "max_links": 120,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "disabled_reason": "Direct search endpoint is not reliably fetchable from automation. Re-enable only after a dedicated verified adapter."
     },
     {
       "name": "PublicJobs",
-      "enabled": true,
+      "enabled": false,
       "search_urls": [
         "https://www.publicjobs.ie/en/"
       ],
@@ -144,7 +148,8 @@
         "infrastructure"
       ],
       "max_links": 100,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "disabled_reason": "publicjobs.ie now delegates vacancies to a TAL job board; the generic homepage adapter is not a reliable vacancy endpoint. Add a TAL-specific adapter before re-enabling."
     },
     {
       "name": "Roughan O'Donovan",
@@ -175,7 +180,8 @@
         "civil",
         "site development"
       ],
-      "max_links": 80
+      "max_links": 80,
+      "max_detail_seconds": 90
     },
     {
       "name": "DBFL",
@@ -185,13 +191,11 @@
       ],
       "allowed_hosts": [
         "dbfl.ie",
-        "www.dbfl.ie"
+        "www.dbfl.ie",
+        "dbfl-consulting-engineers.hirehive.com"
       ],
       "job_link_patterns": [
-        "career",
-        "job",
-        "position",
-        "apply"
+        "dbfl-consulting-engineers.hirehive.com"
       ],
       "exclude_link_patterns": [
         "graduate",
@@ -205,13 +209,14 @@
         "roads"
       ],
       "max_links": 80,
-      "assume_ireland": true
+      "assume_ireland": true,
+      "max_detail_seconds": 75
     },
     {
       "name": "AtkinsRealis",
       "enabled": true,
       "search_urls": [
-        "https://careers.atkinsrealis.com/en/our-job-areas/engineering/civil-engineering-jobs-uk"
+        "https://careers.atkinsrealis.com/en/global-locations/uk-europe/ireland"
       ],
       "allowed_hosts": [
         "careers.atkinsrealis.com"
@@ -227,13 +232,14 @@
         "transport",
         "infrastructure"
       ],
-      "max_links": 100
+      "max_links": 100,
+      "max_detail_seconds": 90
     },
     {
       "name": "Arup",
       "enabled": true,
       "search_urls": [
-        "https://jobs.arup.com/"
+        "https://jobs.arup.com/page/jobs-in-ireland-252"
       ],
       "allowed_hosts": [
         "jobs.arup.com"
@@ -256,7 +262,8 @@
         "site engineer"
       ],
       "max_links": 100,
-      "assume_ireland": false
+      "assume_ireland": false,
+      "max_detail_seconds": 90
     },
     {
       "name": "Nicholas O'Dwyer",
@@ -290,7 +297,8 @@
         "civil 3d"
       ],
       "max_links": 100,
-      "assume_ireland": false
+      "assume_ireland": false,
+      "max_detail_seconds": 90
     }
   ],
   "mail_sources": [
