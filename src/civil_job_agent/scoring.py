@@ -4,7 +4,7 @@ import re
 
 from .models import Assessment, Job
 
-POLICY_VERSION = "2026-09-13.4"
+POLICY_VERSION = "2026-09-13.5"
 
 HARD_NEGATIVE_TITLE = (
     r"\bintern(ship)?\b",
@@ -143,9 +143,25 @@ def _required_years(text: str) -> int | None:
         r"(?:minimum|min\.?|at least)\s+(\d{1,2})\+?\s+years?",
         r"(\d{1,2})\+\s+years?\s+(?:of\s+)?experience",
         r"experience\s+of\s+(\d{1,2})\+?\s+years?",
+        r"(?:minimum|min\.?|at least)\s+(\d{1,2})\s+years['’]?\s+(?:post[- ]graduate\s+)?experience",
     ):
         numbers.extend(int(x) for x in re.findall(pattern, text, re.I))
     return max(numbers) if numbers else None
+
+
+def _contract_months(text: str) -> int | None:
+    """Extract explicit employment-contract duration, avoiding unrelated project-value numbers."""
+    values: list[int] = []
+    patterns = (
+        r"(?:contract\s+duration|duration)\s*:?\s*(\d{1,2})\s*[- ]?months?",
+        r"(\d{1,2})\s*[- ]month\s+(?:fixed[- ]term\s+)?contract",
+        r"(?:fixed[- ]term\s+)?contract(?:\s+(?:role|position))?\s+(?:for|of)\s+(?:approximately\s+)?(\d{1,2})\s*months?",
+        r"(?:role|position|vacancy).{0,120}?for\s+(?:approximately\s+)?(\d{1,2})\s*months?",
+        r"for\s+approximately\s+(\d{1,2})\s*months?",
+    )
+    for pattern in patterns:
+        values.extend(int(x) for x in re.findall(pattern, text, re.I | re.S))
+    return min(values) if values else None
 
 
 FOREIGN_LOCATION_TERMS = (
@@ -229,11 +245,11 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
     required_years = _required_years(text)
     candidate_years = float(profile.get("years_experience", 0))
     if required_years is not None:
-        if required_years > candidate_years + 3:
-            score -= 18
+        if required_years > candidate_years + 2:
+            score = min(score - 18, 70)
             gaps.append(f"posting appears to require about {required_years}+ years of experience")
         elif required_years > candidate_years:
-            score -= 8
+            score = min(score - 8, 86)
             gaps.append(f"posting asks for {required_years}+ years; candidate has about {candidate_years:g}")
         else:
             strengths.append(f"experience threshold ({required_years}+ years) is within range")
@@ -243,20 +259,41 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
             score -= 5
             gaps.append(gap)
 
-    if _has(r"(?:must be|must hold|is required|required:)\s+(?:a\s+)?chartered", text) or _has(r"chartered (?:engineer|status) (?:is )?(?:required|essential)", text):
-        score -= 14
+    mandatory_chartered = (
+        _has(r"(?:must be|must hold|is required|required:)\s+(?:a\s+)?chartered", text)
+        or _has(r"chartered (?:engineer|status) (?:is )?(?:required|essential|mandatory)", text)
+    )
+    if mandatory_chartered:
+        score = min(score - 14, 70)
         gaps.append("Chartered Engineer status appears mandatory")
     elif "chartered" in text:
         gaps.append("Chartered status is mentioned; verify whether it is essential or only desirable")
         score -= 3
 
-    if _has(r"irish experience.{0,30}(?:required|essential|mandatory)", text):
-        score -= 10
+    mandatory_irish_experience = _has(r"irish experience.{0,30}(?:required|essential|mandatory)", text)
+    if mandatory_irish_experience:
+        score = min(score - 10, 70)
         gaps.append("Irish experience appears mandatory")
 
     if any(x in text for x in ["visa sponsorship", "employment permit support", "work permit support", "relocation support", "critical skills permit"]):
         score += 8
         strengths.append("explicit relocation/work-permit support")
+
+    contract_months = _contract_months(text)
+    permanent = "permanent" in text or "full time permanent" in text
+    if contract_months is not None and contract_months < 12:
+        return Assessment(
+            False,
+            min(max(score, 0), 55),
+            role_family,
+            "short_contract_under_12_months",
+            "low",
+            "The advertised contract is under 12 months, making it a poor relocation target for a first-time Ireland employment-permit move.",
+            strengths=list(dict.fromkeys(strengths))[:8],
+            gaps=list(dict.fromkeys(gaps + [f"contract duration is only {contract_months} months"]))[:6],
+            hard_reject=True,
+            source="relocation-gate",
+        )
 
     salaries = _salary_numbers(_salary_evidence_text(job))
     salary_floor = min(salaries) if salaries else None
@@ -288,15 +325,29 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
             relocation = "medium"
             gaps.append("public-sector pay-scale exception needs confirmation")
 
-    if "permanent" in text or "full time permanent" in text:
-        score += 2
+    if contract_months is not None:
+        if contract_months < 24:
+            if permit != "salary_below_normal_permit_threshold":
+                permit = "general_permit_duration_plausible"
+            relocation = "medium"
+            score -= 8
+            gaps.append(
+                f"{contract_months}-month offer is too short for a Critical Skills permit; General Employment Permit route must be assessed"
+            )
+        else:
+            strengths.append("2+ year duration appears compatible with Critical Skills permit duration")
+    elif permanent:
         strengths.append("permanent role")
-    if re.search(r"\b(?:24|2[4-9]|3\d)\s+months\b|\b2\+?\s+years?\s+(?:contract|fixed term)", text):
-        strengths.append("2+ year duration appears compatible with Critical Skills permit duration")
+        score += 2
+    elif critical and ("fixed term" in text or "fixed-term" in text or "contract" in text):
+        permit = "critical_skills_duration_unconfirmed"
+        relocation = "medium"
+        score -= 5
+        gaps.append("fixed-term duration is unclear; Critical Skills requires a 2-year job offer")
 
     score = max(0, min(100, score))
     matched = score >= int(profile["minimum_target_score"])
-    if permit == "salary_below_normal_permit_threshold":
+    if permit == "salary_below_normal_permit_threshold" or mandatory_chartered or mandatory_irish_experience:
         matched = False
 
     return Assessment(
@@ -312,18 +363,30 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
     )
 
 
-def should_ai_refine(assessment: Assessment) -> bool:
+def should_ai_refine(job: Job, assessment: Assessment) -> bool:
     if assessment.hard_reject:
         return False
     if assessment.score < 60:
         return False
-    return assessment.score < 92 or assessment.role_family in {
-        "project_engineer",
-        "design_engineer",
-        "civil_infrastructure_engineer",
-        "site_engineer",
-        "infrastructure_engineer",
-    }
+    title = job.title.casefold()
+    seniority_needs_review = any(term in title for term in ("senior", "principal", "lead", "associate"))
+    requirement_gap = any(
+        phrase in gap.casefold()
+        for gap in assessment.gaps
+        for phrase in ("posting asks for", "require about", "chartered", "irish experience")
+    )
+    return (
+        assessment.score < 92
+        or seniority_needs_review
+        or requirement_gap
+        or assessment.role_family in {
+            "project_engineer",
+            "design_engineer",
+            "civil_infrastructure_engineer",
+            "site_engineer",
+            "infrastructure_engineer",
+        }
+    )
 
 
 def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
