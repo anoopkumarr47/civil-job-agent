@@ -1,0 +1,101 @@
+{
+  "web_sources": [
+    {
+      "name": "LocalGovernmentJobs",
+      "enabled": true,
+      "search_urls": ["https://www.localgovernmentjobs.ie/Search/Vacancies"],
+      "allowed_hosts": ["localgovernmentjobs.ie", "www.localgovernmentjobs.ie"],
+      "job_link_patterns": ["/jobs/"],
+      "exclude_link_patterns": ["/search/"],
+      "required_any_terms": ["civil", "engineer", "roads", "transport", "infrastructure", "resident"],
+      "max_links": 150
+    },
+    {
+      "name": "JobsIreland",
+      "enabled": true,
+      "search_urls": ["https://jobsireland.ie/"],
+      "allowed_hosts": ["jobsireland.ie", "www.jobsireland.ie"],
+      "job_link_patterns": ["job-details", "job-details?id=", "jobdetails", "job-detail"],
+      "required_any_terms": ["civil", "engineer", "roads", "highway", "site", "infrastructure"],
+      "max_links": 120
+    },
+    {
+      "name": "IrishJobs",
+      "enabled": true,
+      "search_urls": ["https://www.irishjobs.ie/jobs/civil-engineer/in-ireland", "https://www.irishjobs.ie/jobs/site-engineer/in-ireland"],
+      "allowed_hosts": ["irishjobs.ie", "www.irishjobs.ie"],
+      "job_link_patterns": ["/job/", "/jobs/"],
+      "exclude_link_patterns": ["/jobs/civil-engineer", "/jobs/site-engineer"],
+      "required_any_terms": ["civil", "engineer", "road", "highway", "resident", "infrastructure"],
+      "max_links": 120
+    },
+    {
+      "name": "Jobs.ie",
+      "enabled": true,
+      "search_urls": ["https://www.jobs.ie/jobs/civil-engineer/in-ireland", "https://www.jobs.ie/jobs/site-engineer/in-ireland"],
+      "allowed_hosts": ["jobs.ie", "www.jobs.ie"],
+      "job_link_patterns": ["/job/", "/jobs/"],
+      "exclude_link_patterns": ["/jobs/civil-engineer", "/jobs/site-engineer"],
+      "required_any_terms": ["civil", "engineer", "road", "highway", "resident", "infrastructure"],
+      "max_links": 120
+    },
+    {
+      "name": "PublicJobs",
+      "enabled": true,
+      "search_urls": ["https://www.publicjobs.ie/en/"],
+      "allowed_hosts": ["publicjobs.ie", "www.publicjobs.ie"],
+      "job_link_patterns": ["job", "vacancy", "campaign"],
+      "exclude_link_patterns": ["privacy", "contact", "about", "login"],
+      "required_any_terms": ["civil", "engineer", "roads", "transport", "infrastructure"],
+      "max_links": 100
+    },
+    {
+      "name": "Roughan O'Donovan",
+      "enabled": true,
+      "search_urls": ["https://roughan-and-odonovan.hirehive.com/"],
+      "allowed_hosts": ["roughan-and-odonovan.hirehive.com"],
+      "job_link_patterns": ["/"],
+      "exclude_link_patterns": ["privacy", "jobexpired", "#"],
+      "required_any_terms": ["engineer", "resident", "transport", "roads", "civil", "site development"],
+      "max_links": 80
+    },
+    {
+      "name": "DBFL",
+      "enabled": true,
+      "search_urls": ["https://www.dbfl.ie/careers-lc/"],
+      "allowed_hosts": ["dbfl.ie", "www.dbfl.ie"],
+      "job_link_patterns": ["career", "job", "position", "apply"],
+      "exclude_link_patterns": ["graduate", "intern", "privacy"],
+      "required_any_terms": ["civil", "transportation", "engineer", "roads"],
+      "max_links": 80
+    },
+    {
+      "name": "AtkinsRealis",
+      "enabled": true,
+      "search_urls": ["https://careers.atkinsrealis.com/en/our-job-areas/engineering/civil-engineering-jobs-uk"],
+      "allowed_hosts": ["careers.atkinsrealis.com"],
+      "job_link_patterns": ["/jobs/"],
+      "required_any_terms": ["ireland", "civil", "highway", "roads", "transport", "infrastructure"],
+      "max_links": 100
+    }
+  ],
+  "mail_sources": [
+    {
+      "name": "LinkedIn",
+      "enabled": true,
+      "sender_contains": ["linkedin"],
+      "allowed_hosts": ["linkedin.com", "www.linkedin.com", "ie.linkedin.com"]
+    },
+    {
+      "name": "Indeed",
+      "enabled": true,
+      "sender_contains": ["indeed"],
+      "allowed_hosts": ["indeed.com", "ie.indeed.com", "www.indeed.com"]
+    }
+  ],
+  "future_employer_watchlist": [
+    "Arup", "AECOM", "Jacobs", "SYSTRA", "Egis", "RPS", "TOBIN", "Nicholas O'Dwyer",
+    "Tetra Tech", "Mott MacDonald", "Glanua", "Murphy", "BAM", "Sisk", "John Paul Construction",
+    "PJ Hegarty", "Cairn", "Walls Construction", "Coffey", "Kilsaran", "Farrans", "Wills Bros"
+  ]
+}
