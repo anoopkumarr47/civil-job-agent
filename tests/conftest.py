@@ -20,7 +20,7 @@ def settings(tmp_path):
         max_links_per_source=20,
         ai_api_url="https://example.invalid/chat",
         ai_api_key=None,
-        ai_model="openai/gpt-oss-20b",
+        ai_model="openai/gpt-oss-120b",
         ai_escalation_model="openai/gpt-oss-120b",
         cerebras_api_url="https://api.cerebras.ai/v1/chat/completions",
         cerebras_api_key=None,
