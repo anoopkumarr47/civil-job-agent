@@ -29,17 +29,29 @@ class Settings:
     sources_file: str
     request_timeout: int
     max_links_per_source: int
+
+    # Groq: independent second opinion / fallback.
     ai_api_url: str
     ai_api_key: str | None
     ai_model: str
     ai_escalation_model: str
+
+    # Cerebras: primary analysis provider.
+    cerebras_api_url: str
+    cerebras_api_key: str | None
+    cerebras_model: str
+    cerebras_min_interval_seconds: float
+
+    # Optional tertiary provider.
+    gemini_api_key: str | None
+    gemini_model: str
+
     ai_timeout: int
     ai_required: bool
     ai_min_interval_seconds: float
     ai_token_reserve: int
     ai_max_evidence_chars: int
-    gemini_api_key: str | None
-    gemini_model: str
+
     email_address: str | None
     email_password: str | None
     email_to: str | None
@@ -51,6 +63,11 @@ class Settings:
     @classmethod
     def from_env(cls) -> "Settings":
         sender = os.environ.get("EMAIL_ADDRESS")
+        groq_model = (
+            os.environ.get("AI_MODEL")
+            or os.environ.get("AI_ESCALATION_MODEL")
+            or "openai/gpt-oss-120b"
+        )
         return cls(
             state_file=os.environ.get("STATE_FILE", "job_state.json"),
             profile_file=os.environ.get("PROFILE_FILE", "config/candidate_profile.json"),
@@ -59,19 +76,24 @@ class Settings:
             max_links_per_source=_env_int("MAX_LINKS_PER_SOURCE", 120),
             ai_api_url=os.environ.get("AI_API_URL", "https://api.groq.com/openai/v1/chat/completions"),
             ai_api_key=os.environ.get("AI_API_KEY") or os.environ.get("GROQ_API_KEY"),
-            ai_model=os.environ.get("AI_PRIMARY_MODEL", "openai/gpt-oss-20b"),
-            ai_escalation_model=(
-                os.environ.get("AI_ESCALATION_MODEL")
-                or os.environ.get("AI_MODEL")
-                or "openai/gpt-oss-120b"
+            ai_model=groq_model,
+            ai_escalation_model=groq_model,
+            cerebras_api_url=os.environ.get(
+                "CEREBRAS_API_URL",
+                "https://api.cerebras.ai/v1/chat/completions",
             ),
+            cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+            cerebras_model=os.environ.get("CEREBRAS_MODEL", "gpt-oss-120b"),
+            cerebras_min_interval_seconds=max(
+                0.0, _env_float("CEREBRAS_MIN_INTERVAL_SECONDS", 2.2)
+            ),
+            gemini_api_key=os.environ.get("GEMINI_API_KEY"),
+            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite"),
             ai_timeout=_env_int("AI_TIMEOUT", 90),
             ai_required=_env_bool("AI_REQUIRED", False),
             ai_min_interval_seconds=max(0.0, _env_float("AI_MIN_INTERVAL_SECONDS", 4.0)),
             ai_token_reserve=max(0, _env_int("AI_TOKEN_RESERVE", 2400)),
-            ai_max_evidence_chars=max(1200, _env_int("AI_MAX_EVIDENCE_CHARS", 3600)),
-            gemini_api_key=os.environ.get("GEMINI_API_KEY"),
-            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite"),
+            ai_max_evidence_chars=max(1800, _env_int("AI_MAX_EVIDENCE_CHARS", 6000)),
             email_address=sender,
             email_password=os.environ.get("EMAIL_PASSWORD"),
             email_to=os.environ.get("EMAIL_TO") or sender,
