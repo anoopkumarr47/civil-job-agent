@@ -86,11 +86,11 @@ def run(settings: Settings) -> int:
             logger.exception("Source failed: %s", source.name)
             reports.append(SourceReport(source.name, 0, False, str(exc)))
 
-    successful_sources = sum(1 for report in reports if report.ok)
-    if successful_sources < settings.min_successful_sources:
+    productive_sources = sum(1 for report in reports if report.ok and report.jobs > 0)
+    if productive_sources < settings.min_successful_sources:
         raise RuntimeError(
-            f"Only {successful_sources} source(s) completed successfully; minimum is {settings.min_successful_sources}. "
-            "Refusing to send a misleading incomplete daily report."
+            f"Only {productive_sources} source(s) produced candidate jobs; minimum is {settings.min_successful_sources}. "
+            "Refusing to treat empty/broken source pages as a complete daily sweep."
         )
 
     jobs = _dedupe(jobs_raw)
