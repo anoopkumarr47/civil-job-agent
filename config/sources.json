@@ -269,7 +269,7 @@
       "name": "Nicholas O'Dwyer",
       "enabled": true,
       "search_urls": [
-        "https://nodwyer.com/careers/current-opportunities/"
+        "https://nodwyer.com/careers/current-opportunities/?company=&discipline=&getpage=1&location=&searchbu="
       ],
       "allowed_hosts": [
         "nodwyer.com",
@@ -277,10 +277,8 @@
         "nodwyer.current-vacancies.com"
       ],
       "job_link_patterns": [
-        "current-vacancies.com",
-        "/job/",
-        "/jobs/",
-        "apply"
+        "current-vacancies.com/Jobs/FeedLink/",
+        "current-vacancies.com/Jobs/Advert/"
       ],
       "exclude_link_patterns": [
         "early-careers",
