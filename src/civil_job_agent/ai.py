@@ -142,7 +142,35 @@ class AIClient:
         return "json_validate_failed" in lowered or "failed to validate json" in lowered or "generated json does not match" in lowered
 
     @staticmethod
+    def _canonicalize(data: object) -> object:
+        if not isinstance(data, dict):
+            return data
+        normalized = dict(data)
+        permit = str(normalized.get("permit_path", "")).strip().casefold().replace("-", "_").replace(" ", "_")
+        permit_aliases = {
+            "critical_skills_plausible": "critical_skills",
+            "critical_skills_salary_met": "critical_skills",
+            "critical_skills_duration_unconfirmed": "critical_skills",
+            "critical_skills_permit": "critical_skills",
+            "csep": "critical_skills",
+            "general_permit": "general",
+            "general_employment_permit": "general",
+            "general_permit_salary_met": "general",
+            "general_permit_duration_plausible": "general",
+            "gep": "general",
+            "noteligible": "not_eligible",
+            "ineligible": "not_eligible",
+        }
+        if permit in permit_aliases:
+            normalized["permit_path"] = permit_aliases[permit]
+        relocation = str(normalized.get("relocation_fit", "")).strip().casefold()
+        if relocation in RELOCATION:
+            normalized["relocation_fit"] = relocation
+        return normalized
+
+    @staticmethod
     def _validate(data: object) -> Assessment:
+        data = AIClient._canonicalize(data)
         if not isinstance(data, dict):
             raise ValueError("AI output must be an object")
         expected = {"matched", "score", "role_family", "permit_path", "relocation_fit", "reason", "strengths", "gaps"}
@@ -177,7 +205,7 @@ class AIClient:
         )
 
     def _messages(self, job: Job, preliminary: Assessment, *, json_fallback: bool) -> list[dict[str, str]]:
-        system = SYSTEM + ("\n\n" + JSON_CONTRACT if json_fallback else "")
+        system = SYSTEM + "\n\n" + JSON_CONTRACT
         evidence = compact_job_evidence(job, self.settings.ai_max_evidence_chars)
         return [
             {"role": "system", "content": system},
@@ -253,17 +281,18 @@ class AIClient:
 
     @staticmethod
     def _needs_escalation(job: Job, preliminary: Assessment, primary: Assessment, threshold: int) -> bool:
+        """Reserve 120B for decisions where a second opinion can change notification safety."""
         title = job.title.casefold()
         senior = any(term in title for term in ("senior", "principal", "lead", "associate"))
-        near_threshold = abs(primary.score - threshold) <= 5
+        near_threshold = abs(primary.score - threshold) <= 4
         permit_unclear = primary.permit_path == "unclear"
-        contested = preliminary.matched != primary.matched and abs(preliminary.score - threshold) <= 12
-        risky_match = primary.matched and (
+        contested = preliminary.matched != primary.matched and abs(primary.score - threshold) <= 8
+        risky_borderline_match = primary.matched and primary.score <= threshold + 8 and (
             senior
             or primary.relocation_fit == "medium"
             or preliminary.role_family in {"project_engineer", "design_engineer", "civil_infrastructure_engineer"}
         )
-        return near_threshold or permit_unclear or contested or risky_match
+        return near_threshold or permit_unclear or contested or risky_borderline_match
 
     def refine(self, job: Job, preliminary: Assessment, *, threshold: int = 76) -> Assessment:
         if not self.available:
