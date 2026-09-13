@@ -24,6 +24,31 @@ def _decode(value: str | None) -> str:
         return value
 
 
+ROLE_PATTERNS = (
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?highways?\s+(?:design\s+)?engineer\b",
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?roads?\s+(?:design\s+)?engineer\b",
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?civil\s+(?:design\s+|site\s+|project\s+|infrastructure\s+)?engineer\b",
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?resident\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?site\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+|assistant\s+)?project\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?transport(?:ation)?\s+engineer\b",
+    r"\bsetting\s+out\s+engineer\b",
+    r"\binfrastructure\s+engineer\b",
+)
+
+
+def _title_from_alert(label: str, context: str) -> str:
+    import re
+    clean_label = normalize_space(label)
+    if any(term in clean_label.casefold() for term in ["engineer", "engineering", "highway", "roads", "resident"]):
+        return clean_label[:220]
+    for pattern in ROLE_PATTERNS:
+        match = re.search(pattern, context, re.I)
+        if match:
+            return normalize_space(match.group(0))[:220]
+    return clean_label[:220]
+
+
 def _unwrap(url: str) -> str:
     parsed = urlparse(url)
     query = parse_qs(parsed.query)
@@ -99,15 +124,16 @@ class GmailJobAlertSource(Source):
                     label = normalize_space(anchor.get_text(" "))
                     context_node = anchor.parent.parent if anchor.parent and anchor.parent.parent else anchor.parent
                     context = normalize_space(context_node.get_text(" ") if context_node else label)
-                    if not label or len(label) < 3:
+                    title = _title_from_alert(label, context)
+                    if not title or len(title) < 3:
                         continue
-                    if not any(term in f"{label} {context}".casefold() for term in ["civil", "engineer", "highway", "road", "resident", "transport", "infrastructure", "site"]):
+                    if not any(term in f"{title} {context}".casefold() for term in ["civil", "engineer", "highway", "road", "resident", "transport", "infrastructure", "site"]):
                         continue
                     results.append(
                         Job(
                             self.name,
                             url,
-                            label[:220],
+                            title,
                             "",
                             "Ireland",
                             normalize_space(f"Email subject: {subject}. Alert context: {context}")[:6000],
