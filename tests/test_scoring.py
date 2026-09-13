@@ -198,3 +198,14 @@ def test_non_target_specialist_titles_skip_ai(profile, title):
     result = preliminary_assessment(candidate, profile)
     assert result.hard_reject
     assert not should_ai_refine(candidate, result)
+
+
+def test_final_policy_applies_to_gemini_and_consensus(profile):
+    from civil_job_agent.models import Assessment
+    from civil_job_agent.scoring import enforce_final_policy
+
+    gemini = Assessment(True, 70, "civil_engineer", "critical_skills", "high", "fit", source="ai-gemini")
+    consensus = Assessment(True, 80, "civil_engineer", "critical_skills", "low", "fit", source="ai-consensus")
+
+    assert not enforce_final_policy(gemini, profile).matched
+    assert not enforce_final_policy(consensus, profile).matched
