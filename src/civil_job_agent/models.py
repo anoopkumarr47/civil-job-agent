@@ -37,8 +37,10 @@ class Job:
 
     @property
     def content_hash(self) -> str:
+        # Posting-age/date labels can change every day without the vacancy changing.
+        # Exclude them from notification identity so "1 day ago" -> "2 days ago" cannot resend a job.
         material = "\n".join(
-            [self.title, self.company, self.location, self.text, self.salary_text, self.posted_text]
+            [self.title, self.company, self.location, self.text, self.salary_text]
         ).encode("utf-8", "ignore")
         return sha256(material).hexdigest()
 
