@@ -125,38 +125,72 @@ class ConfiguredWebBoard(Source):
         patterns = [str(x).lower() for x in self.config.get("job_link_patterns", [])]
         return any(pattern in candidate for pattern in patterns) if patterns else True
 
+    def _add_anchors(self, anchors: list[dict], found: list[str]) -> None:
+        for item in anchors:
+            if not isinstance(item, dict):
+                continue
+            href = canonicalize_url(str(item.get("href", "")))
+            label = normalize_space(str(item.get("text", "")))
+            if href and self._looks_like_job(href, label) and href not in found:
+                found.append(href)
+                if len(found) >= self.max_links:
+                    return
+
+    def _requests_links(self, search_url: str) -> list[dict]:
+        response = self.client.request("GET", search_url, timeout=self.request_timeout, attempts=2)
+        soup = BeautifulSoup(response.text, "html.parser")
+        anchors: list[dict] = []
+        for anchor in soup.find_all("a", href=True):
+            href = str(anchor.get("href", ""))
+            if href.startswith("/"):
+                parsed = urlparse(search_url)
+                href = f"{parsed.scheme}://{parsed.netloc}{href}"
+            anchors.append({"href": href, "text": normalize_space(anchor.get_text(" "))})
+        return anchors
+
     def _discover_links(self) -> list[str]:
         found: list[str] = []
+        browser_targets: list[str] = []
+
+        # Most career/search pages expose useful links in normal HTML. Avoid a browser unless needed.
+        for search_url in self.config.get("search_urls", []):
+            before = len(found)
+            try:
+                self._add_anchors(self._requests_links(search_url), found)
+            except Exception as exc:
+                logger.info("%s requests discovery needs browser fallback for %s: %s", self.name, search_url, exc)
+            if len(found) == before and len(found) < self.max_links:
+                browser_targets.append(search_url)
+            if len(found) >= self.max_links:
+                return found
+
+        if not browser_targets:
+            return found
+
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
             context = browser.new_context(user_agent=USER_AGENT, locale="en-IE", viewport={"width": 1440, "height": 1000})
             page = context.new_page()
             try:
-                for search_url in self.config.get("search_urls", []):
+                for search_url in browser_targets:
                     try:
-                        page.goto(search_url, wait_until="domcontentloaded", timeout=60000)
+                        page.goto(search_url, wait_until="domcontentloaded", timeout=45000)
                         try:
-                            page.wait_for_load_state("networkidle", timeout=12000)
+                            page.wait_for_load_state("networkidle", timeout=8000)
                         except PlaywrightTimeoutError:
-                            page.wait_for_timeout(2500)
-                        for _ in range(3):
+                            page.wait_for_timeout(1500)
+                        for _ in range(2):
                             page.mouse.wheel(0, 2500)
-                            page.wait_for_timeout(500)
+                            page.wait_for_timeout(350)
                         anchors = page.eval_on_selector_all(
                             "a[href]",
                             "els => els.map(a => ({href: a.href, text: (a.innerText || a.textContent || '').trim()}))",
                         )
-                        for item in anchors:
-                            if not isinstance(item, dict):
-                                continue
-                            href = canonicalize_url(str(item.get("href", "")))
-                            label = normalize_space(str(item.get("text", "")))
-                            if href and self._looks_like_job(href, label) and href not in found:
-                                found.append(href)
-                                if len(found) >= self.max_links:
-                                    return found
+                        self._add_anchors(anchors, found)
+                        if len(found) >= self.max_links:
+                            return found
                     except Exception as exc:
-                        logger.warning("%s search page failed %s: %s", self.name, search_url, exc)
+                        logger.warning("%s browser search page failed %s: %s", self.name, search_url, exc)
             finally:
                 context.close()
                 browser.close()
