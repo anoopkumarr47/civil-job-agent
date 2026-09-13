@@ -305,6 +305,69 @@
       "assume_ireland": false,
       "max_detail_seconds": 90,
       "disabled_reason": "Current opportunities page produced zero usable vacancy links from GitHub Actions after repeated live verification. Keep disabled until a dedicated Networx/current-vacancies adapter is implemented and validated."
+    },
+    {
+      "name": "TOBIN",
+      "enabled": true,
+      "search_urls": [
+        "https://www.tobin.ie/careers/"
+      ],
+      "allowed_hosts": [
+        "tobin.ie",
+        "www.tobin.ie"
+      ],
+      "job_link_patterns": [
+        "/career/"
+      ],
+      "exclude_link_patterns": [
+        "graduate",
+        "student-placement",
+        "structural-engineer"
+      ],
+      "required_any_terms": [
+        "civil",
+        "engineer",
+        "resident",
+        "infrastructure",
+        "roads",
+        "water",
+        "utilities"
+      ],
+      "max_links": 100,
+      "assume_ireland": true,
+      "max_detail_seconds": 90
+    },
+    {
+      "name": "SYSTRA",
+      "enabled": true,
+      "search_urls": [
+        "https://www.systra.com/ireland/job-offers/"
+      ],
+      "allowed_hosts": [
+        "systra.com",
+        "www.systra.com"
+      ],
+      "job_link_patterns": [
+        "/ireland/job-offers/"
+      ],
+      "exclude_link_patterns": [
+        "graduate",
+        "intern",
+        "drafter"
+      ],
+      "required_any_terms": [
+        "civil",
+        "engineer",
+        "resident",
+        "transport",
+        "rail",
+        "infrastructure",
+        "roads"
+      ],
+      "max_links": 100,
+      "assume_ireland": false,
+      "require_location": true,
+      "max_detail_seconds": 90
     }
   ],
   "mail_sources": [
