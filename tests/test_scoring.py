@@ -102,3 +102,13 @@ def test_additional_no_sponsorship_wording_is_rejected(profile):
     )
     assert result.hard_reject
     assert result.permit_path == "not_eligible"
+
+
+def test_generic_site_engineer_requires_context_adjudication(profile):
+    result = preliminary_assessment(job("Site Engineer", "construction project delivery"), profile)
+    assert should_ai_refine(result)
+
+
+def test_generic_infrastructure_engineer_requires_context_adjudication(profile):
+    result = preliminary_assessment(job("Infrastructure Engineer", "project delivery"), profile)
+    assert should_ai_refine(result)
