@@ -112,3 +112,10 @@ def test_generic_site_engineer_requires_context_adjudication(profile):
 def test_generic_infrastructure_engineer_requires_context_adjudication(profile):
     result = preliminary_assessment(job("Infrastructure Engineer", "project delivery"), profile)
     assert should_ai_refine(result)
+
+
+def test_current_2026_critical_skills_threshold(profile):
+    below = preliminary_assessment(job("Civil Engineer", "Salary €40,908 per annum. Civil roads.", salary="€40,908"), profile)
+    at_threshold = preliminary_assessment(job("Civil Engineer", "Salary €40,909 per annum. Civil roads.", salary="€40,909"), profile)
+    assert below.permit_path != "critical_skills_salary_met"
+    assert at_threshold.permit_path == "critical_skills_salary_met"
