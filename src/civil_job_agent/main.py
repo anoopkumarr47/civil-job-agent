@@ -13,6 +13,7 @@ from .sources import (
     ConfiguredWebBoard,
     GmailJobAlertSource,
     JobsIrelandSource,
+    OleeoSource,
     SmartRecruitersCompanySource,
     SuccessFactorsSource,
 )
@@ -96,6 +97,15 @@ def _build_sources(settings: Settings, cfg: dict) -> list:
         if entry.get("enabled", True):
             sources.append(
                 SuccessFactorsSource(
+                    entry,
+                    request_timeout=settings.request_timeout,
+                    max_links=settings.max_links_per_source,
+                )
+            )
+    for entry in cfg.get("oleeo_sources", []):
+        if entry.get("enabled", True):
+            sources.append(
+                OleeoSource(
                     entry,
                     request_timeout=settings.request_timeout,
                     max_links=settings.max_links_per_source,
