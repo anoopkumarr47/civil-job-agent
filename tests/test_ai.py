@@ -221,7 +221,11 @@ def test_preflight_checks_all_configured_lanes(settings, monkeypatch):
         ("groq_backup", True),
         ("gemini", True),
     ]
-    assert all(health[name]["operational"] for name in health)
+    assert all(
+        state["operational"]
+        for state in health.values()
+        if state["configured"]
+    )
 
 
 def test_groq_strict_fallback_is_not_sticky(settings, monkeypatch):
