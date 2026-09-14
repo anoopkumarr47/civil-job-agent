@@ -1,60 +1,59 @@
-# Free-model provider waterfall
+# AI provider waterfall
 
-Research snapshot: 2026-09-14.
+Research/configuration snapshot: 2026-09-14.
 
-## Implemented production order
+## Production order
 
-### 1. Groq — primary
+### Groq — primary
 - model: `openai/gpt-oss-20b`
 - secret: `GROQ_API_KEY`
-- variable: `AI_MODEL=openai/gpt-oss-20b`
+- variable: `GROQ_MODEL=openai/gpt-oss-20b`
 - endpoint: `https://api.groq.com/openai/v1/chat/completions`
 
-GPT-OSS 20B is used instead of 120B for routine job classification because the deterministic scoring layer already narrows the task and the smaller model reduces free-tier token pressure. It supports reasoning plus strict JSON-schema output.
+The deterministic layer already extracts civil-domain, fit, salary, permit, experience and blocker evidence, so the 20B model is a more quota-efficient primary classifier than the prior 120B configuration.
 
-### 2. Gemini — independent fallback/reviewer
+### Gemini — independent fallback/reviewer
 - model: `gemini-3.5-flash-lite`
 - secret: `GEMINI_API_KEY`
 - variable: `GEMINI_MODEL=gemini-3.5-flash-lite`
-- endpoint: Google Generative Language API
 
-Gemini Flash-Lite is used when Groq fails and as an independent reviewer for ambiguous/high-risk decisions. Keeping it on a separate provider gives a genuinely separate quota and failure domain.
+Gemini provides a separate provider/quota failure domain. It is used when Groq fails and for ambiguous/high-risk second opinions.
 
-## Why Cerebras was removed
+## Quota and failure controls
 
-The 2026-09-14 live GitHub Actions run returned HTTP 402 Payment Required from Cerebras for every attempted classification. Because that status is not transient, repeatedly attempting Cerebras added latency without adding reliability.
+- compact decision evidence is capped by `AI_MAX_EVIDENCE_CHARS` (production default 4,200);
+- model output is capped at 500 tokens;
+- Groq calls are paced by `GROQ_MIN_INTERVAL_SECONDS`;
+- provider API calls do not perform generic multi-retry amplification;
+- permanent 400/401/402/403/404 provider errors trip a run-level circuit breaker;
+- ambiguous provider failures remain provisional and are retried on later runs;
+- unchanged jobs reuse persisted assessments;
+- manual dry-runs load state read-only;
+- live AI discovery is not triggered on every code push.
 
-## Quota-safety changes
+## Decision flow
 
-- Groq output cap reduced to 500 tokens.
-- Evidence packet default reduced from 6,000 to 3,600 characters.
-- Groq minimum interval defaults to 15 seconds.
-- Provider HTTP calls no longer perform generic three-attempt retries internally.
-- Permanent 4xx provider errors trip a run-level circuit breaker.
-- A provider that fails for a vacancy is not immediately called again as its reviewer.
-- The full live workflow is no longer triggered on every source-code push.
+```text
+civil-domain + deterministic scoring
+              |
+              v
+       Groq GPT-OSS 20B
+          /          \
+    clear result   ambiguous/risky
+        |                |
+        |                v
+        |        Gemini Flash-Lite
+        |                |
+        +--------> conservative consensus
+                         |
+                         v
+                 final policy gate
 
-## Analysis flow
-
-```
-deterministic capture + scoring
-          |
-          v
-Groq GPT-OSS 20B
-          |
-          +---- clear result ----------> final policy gate
-          |
-          +---- borderline/high-risk
-                      |
-                      v
-             Gemini Flash-Lite
-                      |
-                      v
-             conservative consensus
-
-Groq failure ----------> Gemini fallback
+Groq unavailable -> Gemini fallback -> final policy gate
 ```
 
-## Future third provider
+## Provider history
 
-Cloudflare Workers AI is a reasonable future third failure domain, but it adds account/token setup and is unnecessary while Groq + Gemini remain healthy. OpenRouter free routing is better treated as emergency capacity rather than the primary production dependency.
+Cerebras was removed after live requests returned HTTP 402 Payment Required. Keeping an unusable primary provider added latency and pushed the entire fallback workload onto Groq.
+
+A third provider should only be added if it provides a genuinely independent quota/failure domain and can preserve strict structured-output semantics.
