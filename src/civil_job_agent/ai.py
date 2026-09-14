@@ -400,6 +400,7 @@ class AIClient:
         }
         key = f"groq:{state.model}"
         self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
+        state.requests_made += 1
         try:
             response = self.http.request(
                 "POST",
@@ -482,6 +483,7 @@ class AIClient:
         }
         key = f"gemini:{state.model}"
         self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
+        state.requests_made += 1
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{state.model}:generateContent"
         response = self.http.request(
             "POST",
