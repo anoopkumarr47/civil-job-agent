@@ -140,6 +140,12 @@ class ConfiguredWebBoard(Source):
                 continue
             href = canonicalize_url(str(item.get("href", "")))
             label = normalize_space(str(item.get("text", "")))
+            if (
+                self.config.get("plausible_title_links_only", False)
+                and label
+                and not is_plausible_target_title(label)
+            ):
+                continue
             if href and self._looks_like_job(href, label) and href not in found:
                 found.append(href)
                 if len(found) >= self.max_links:
