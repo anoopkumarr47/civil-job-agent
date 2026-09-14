@@ -87,28 +87,26 @@
     },
     {
       "name": "PublicJobs",
-      "enabled": false,
+      "enabled": true,
       "search_urls": [
-        "https://www.publicjobs.ie/en/"
+        "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-ext/brand-4/xf-423dd989250d/candidate/jobboard/vacancy/3/adv/"
       ],
       "allowed_hosts": [
-        "publicjobs.ie",
-        "www.publicjobs.ie"
+        "publicjobs.tal.net"
       ],
       "job_link_patterns": [
-        "job",
-        "vacancy",
-        "campaign"
+        "/candidate/so/",
+        "/opp/"
       ],
       "exclude_link_patterns": [
-        "privacy",
-        "contact",
-        "about",
-        "login"
+        "/login",
+        "/register",
+        "help-centre"
       ],
-      "max_links": 100,
+      "max_links": 160,
       "assume_ireland": true,
-      "disabled_reason": "publicjobs.ie now delegates vacancies to a TAL job board; the generic homepage adapter is not a reliable vacancy endpoint. Add a TAL-specific adapter before re-enabling."
+      "plausible_title_links_only": true,
+      "max_detail_seconds": 120
     },
     {
       "name": "Roughan O'Donovan",
