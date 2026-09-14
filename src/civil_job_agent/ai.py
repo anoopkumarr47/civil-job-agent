@@ -91,10 +91,28 @@ class AIClient:
         )
         self.groq_available = bool(settings.ai_api_key and settings.ai_model and settings.ai_api_url)
         self.gemini_available = bool(settings.gemini_api_key and settings.gemini_model)
-        self.available = self.cerebras_available or self.groq_available or self.gemini_available
+        # Production waterfall intentionally uses Groq + Gemini only.
+        # Cerebras settings are retained for backwards compatibility but are not active.
+        self.available = self.groq_available or self.gemini_available
         self.calls_by_model: dict[str, int] = {}
         self._last_cerebras_at = 0.0
         self._last_groq_at = 0.0
+        self._disabled_providers: set[str] = set()
+
+    @staticmethod
+    def _permanent_provider_error(exc: Exception) -> bool:
+        if not isinstance(exc, requests.HTTPError) or exc.response is None:
+            return False
+        return exc.response.status_code in {400, 401, 402, 403, 404}
+
+    def _disable_on_permanent_error(self, provider: str, exc: Exception) -> None:
+        if self._permanent_provider_error(exc):
+            self._disabled_providers.add(provider)
+            logger.warning(
+                "%s disabled for the remainder of this run after permanent API error: %s",
+                provider,
+                exc,
+            )
 
     @staticmethod
     def _schema_generation_error(detail: str) -> bool:
@@ -241,7 +259,7 @@ class AIClient:
             "model": model,
             "messages": self._messages(job, preliminary),
             "temperature": 0,
-            "max_tokens": 900,
+            "max_tokens": 500,
             "reasoning_effort": reasoning_effort,
             "response_format": (
                 {
@@ -263,7 +281,7 @@ class AIClient:
                 "POST",
                 url,
                 timeout=self.settings.ai_timeout,
-                attempts=3,
+                attempts=1,
                 headers={
                     "Authorization": f"Bearer {api_key}",
                     "Content-Type": "application/json",
@@ -402,7 +420,7 @@ class AIClient:
             }],
             "generationConfig": {
                 "temperature": 0,
-                "maxOutputTokens": 900,
+                "maxOutputTokens": 500,
                 "responseMimeType": "application/json",
                 "responseSchema": SCHEMA,
             },
@@ -413,7 +431,7 @@ class AIClient:
             "POST",
             url,
             timeout=self.settings.ai_timeout,
-            attempts=3,
+            attempts=1,
             headers={
                 "x-goog-api-key": self.settings.gemini_api_key,
                 "Content-Type": "application/json",
@@ -525,27 +543,31 @@ class AIClient:
             return preliminary
 
         assessments: list[Assessment] = []
+        failed_this_job: set[str] = set()
 
-        # 1) Cerebras is the preferred primary and gets the richest reasoning budget.
-        if self.cerebras_available:
+        # 1) Groq is the primary free-tier classifier. GPT-OSS 20B is fast,
+        # supports strict JSON schema output, and is sufficient after deterministic pre-scoring.
+        if self.groq_available and "groq" not in self._disabled_providers:
             try:
-                primary = self._cerebras_call(job, preliminary, threshold=threshold)
-                assessments.append(primary)
+                assessments.append(
+                    self._groq_call(job, preliminary, reasoning_effort="medium")
+                )
             except Exception as exc:
-                logger.warning("Cerebras primary failed for %s: %s", job.title, exc)
+                failed_this_job.add("groq")
+                self._disable_on_permanent_error("groq", exc)
+                logger.warning("Groq primary failed for %s: %s", job.title, exc)
 
-        # 2) If Cerebras is absent/failed, Groq becomes the first fallback.
-        if not assessments and self.groq_available:
-            try:
-                assessments.append(self._groq_call(job, preliminary, reasoning_effort="medium"))
-            except Exception as exc:
-                logger.warning("Groq fallback failed for %s: %s", job.title, exc)
-
-        # 3) Gemini is tertiary fallback if the two preferred providers are unavailable.
-        if not assessments and self.gemini_available:
+        # 2) Gemini Flash-Lite is the independent failure-domain fallback.
+        if (
+            not assessments
+            and self.gemini_available
+            and "gemini" not in self._disabled_providers
+        ):
             try:
                 assessments.append(self._gemini_call(job, preliminary))
             except Exception as exc:
+                failed_this_job.add("gemini")
+                self._disable_on_permanent_error("gemini", exc)
                 logger.warning("Gemini fallback failed for %s: %s", job.title, exc)
 
         if not assessments:
@@ -556,38 +578,44 @@ class AIClient:
 
         primary = assessments[0]
 
-        # 4) Borderline/high-risk Cerebras decisions get independent Groq review.
+        # 3) Borderline/high-risk decisions get one independent review, but never
+        # immediately retry a provider that already failed for this vacancy.
         if self._needs_second_opinion(job, preliminary, primary, threshold):
-            if primary.source != "ai-groq" and self.groq_available:
+            if (
+                primary.source != "ai-gemini"
+                and self.gemini_available
+                and "gemini" not in failed_this_job
+                and "gemini" not in self._disabled_providers
+            ):
+                try:
+                    logger.info("Requesting Gemini independent review: %s", job.title)
+                    assessments.append(self._gemini_call(job, preliminary))
+                except Exception as exc:
+                    failed_this_job.add("gemini")
+                    self._disable_on_permanent_error("gemini", exc)
+                    logger.warning(
+                        "Gemini independent review failed for %s: %s",
+                        job.title,
+                        exc,
+                    )
+            elif (
+                primary.source != "ai-groq"
+                and self.groq_available
+                and "groq" not in failed_this_job
+                and "groq" not in self._disabled_providers
+            ):
                 try:
                     logger.info("Requesting Groq independent review: %s", job.title)
                     assessments.append(
                         self._groq_call(job, preliminary, reasoning_effort="high")
                     )
                 except Exception as exc:
-                    logger.warning("Groq independent review failed for %s: %s", job.title, exc)
-            elif primary.source != "ai-gemini" and self.gemini_available:
-                try:
-                    logger.info("Requesting Gemini independent review: %s", job.title)
-                    assessments.append(self._gemini_call(job, preliminary))
-                except Exception as exc:
-                    logger.warning("Gemini independent review failed for %s: %s", job.title, exc)
-
-        # 5) If the first two providers disagree materially, optional Gemini breaks the tie.
-        if (
-            len(assessments) >= 2
-            and self.gemini_available
-            and all(item.source != "ai-gemini" for item in assessments)
-            and (
-                assessments[0].matched != assessments[1].matched
-                or assessments[0].permit_path != assessments[1].permit_path
-                or abs(assessments[0].score - assessments[1].score) >= 12
-            )
-        ):
-            try:
-                logger.info("Requesting Gemini tie-break review: %s", job.title)
-                assessments.append(self._gemini_call(job, preliminary))
-            except Exception as exc:
-                logger.warning("Gemini tie-break review failed for %s: %s", job.title, exc)
+                    failed_this_job.add("groq")
+                    self._disable_on_permanent_error("groq", exc)
+                    logger.warning(
+                        "Groq independent review failed for %s: %s",
+                        job.title,
+                        exc,
+                    )
 
         return self._consolidate(preliminary, assessments, threshold)
