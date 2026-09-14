@@ -50,3 +50,32 @@ def test_production_requires_mail_settings(settings, monkeypatch):
 def test_workflow_expected_mailbox_documented():
     expected = "anoopkumarremesanpillai@gmail.com"
     assert expected.endswith("@gmail.com")
+
+
+def test_build_sources_uses_dedicated_jobsireland(settings):
+    from civil_job_agent.sources import JobsIrelandSource
+
+    cfg = {
+        "web_sources": [
+            {
+                "name": "JobsIreland",
+                "enabled": False,
+                "search_urls": [],
+                "allowed_hosts": ["jobsireland.ie"],
+                "job_link_patterns": ["job-details"],
+            }
+        ],
+        "jobsireland_source": {
+            "name": "JobsIreland",
+            "enabled": True,
+            "search_terms": ["civil engineer", "site engineer"],
+            "max_links": 50,
+        },
+        "smartrecruiters_sources": [],
+        "mail_sources": [],
+    }
+
+    sources = main._build_sources(settings, cfg)
+
+    assert sum(isinstance(source, JobsIrelandSource) for source in sources) == 1
+    assert [source.name for source in sources].count("JobsIreland") == 1
