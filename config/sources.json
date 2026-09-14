@@ -30,23 +30,8 @@
     },
     {
       "name": "JobsIreland",
-      "enabled": true,
-      "search_urls": [
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&NaceCode=-1&RemoteOrBlendedJobType=-1&VacancyTypeId=-1&keyWord=civil+engineer&page=1&pageSize=100&vacancyId=-1",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=site+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=highway+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=roads+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=resident+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=project+engineer+civil",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=transportation+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=setting+out+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=infrastructure+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=construction+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=drainage+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=water+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=assistant+engineer",
-        "https://jobsireland.ie/en-US/browse-jobs?CareerlevelId=-1&keyWord=civil+inspector"
-      ],
+      "enabled": false,
+      "search_urls": [],
       "allowed_hosts": [
         "jobsireland.ie",
         "www.jobsireland.ie"
@@ -67,7 +52,8 @@
       ],
       "max_links": 120,
       "assume_ireland": true,
-      "max_detail_seconds": 75
+      "max_detail_seconds": 75,
+      "disabled_reason": "Replaced by dedicated browser-first single-session JobsIreland adapter."
     },
     {
       "name": "IrishJobs",
@@ -440,5 +426,32 @@
       "country": "ie",
       "max_links": 120
     }
-  ]
+  ],
+  "jobsireland_source": {
+    "name": "JobsIreland",
+    "enabled": true,
+    "search_terms": [
+      "civil engineer",
+      "site engineer",
+      "highway engineer",
+      "roads engineer",
+      "resident engineer",
+      "project engineer civil",
+      "transportation engineer",
+      "setting out engineer",
+      "infrastructure engineer",
+      "construction engineer",
+      "drainage engineer",
+      "water engineer",
+      "assistant engineer",
+      "civil inspector"
+    ],
+    "page_size": 100,
+    "max_pages": 1,
+    "max_links": 120,
+    "navigation_timeout_ms": 25000,
+    "search_budget_seconds": 180,
+    "detail_budget_seconds": 180,
+    "settle_ms": 1000
+  }
 }
