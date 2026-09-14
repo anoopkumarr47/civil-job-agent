@@ -67,3 +67,15 @@ def test_v2_state_is_read_and_lazily_migrated(tmp_path):
     store.record(job, assessment(), "p1", POLICY_VERSION)
     assert job.identity_key in store.data["jobs"]
     assert job.legacy_identity_key not in store.data["jobs"]
+
+
+def test_notified_posting_is_not_resent_after_content_edit(tmp_path):
+    store = StateStore(str(tmp_path / "state.json"))
+    original = Job("test", "https://x/1", "Civil Engineer", "A", "Dublin", "original description")
+    store.record(original, assessment(), "p1", POLICY_VERSION)
+    store.mark_notified(original)
+
+    updated = Job("test", "https://x/1", "Civil Engineer", "A", "Dublin", "updated description and salary")
+    assert store.needs_review(updated, "p1", POLICY_VERSION, True)
+    store.record(updated, assessment(), "p1", POLICY_VERSION)
+    assert store.is_notified(updated)
