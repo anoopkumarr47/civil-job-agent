@@ -1,53 +1,85 @@
-# AI resilience and model waterfall
+# AI resilience and adaptive routing
 
 Configuration snapshot: 2026-09-14.
 
 The deterministic civil-domain and relocation gates run first. AI is reserved for plausible but non-obvious jobs.
 
-## Production order
+## Production lanes
 
-1. **Groq GPT-OSS 20B** — primary classification lane.
-2. **Groq GPT-OSS 120B** — separate model fallback when 20B is rate-limited, temporarily unavailable, or returns invalid output.
-3. **Gemini 3.1 Flash-Lite** — independent cross-provider emergency fallback.
+### Active workhorses
+1. **Groq GPT-OSS 20B** — fast primary classifier.
+2. **Cloudflare Llama 3.3 70B Fast** — independent provider sharing normal classification load.
 
-One schema-valid adjudication is sufficient. Routine second opinions are disabled because they consumed Gemini's small free-tier request allowance without materially improving obvious classifications.
+The router balances successful classifications between these two lanes while respecting readiness/cooldown state. Cloudflare is capped by `CLOUDFLARE_RUN_CALL_BUDGET` (18 in production) because Workers AI's free allocation is shared across the UTC day and this agent runs twice daily.
 
-## Structured output
+### Reserve lanes
+3. **Groq GPT-OSS 120B** — model-level reserve if both workhorses cannot serve the current vacancy.
+4. **Gemini 3.1 Flash-Lite** — independent emergency reserve.
 
-Both Groq GPT-OSS models use strict JSON Schema on every new job. If strict generation fails for one request, that request alone may retry JSON-object mode; future jobs return to strict mode.
+One schema-valid adjudication is sufficient. Routine second opinions are disabled.
 
-Gemini uses `responseJsonSchema` and minimal thinking. It is not used unless both Groq model lanes are unavailable for the current vacancy.
+## Cloudflare specifics
 
-## Rate-limit behavior
+Workers AI uses the OpenAI-compatible chat-completions endpoint:
 
-Groq rate-limit state is tracked per model. The response headers for remaining tokens and reset time are used to cool only the affected lane. A 20B TPM squeeze therefore switches immediately to 120B rather than provisionalizing the job.
+`https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions`
 
-Gemini 429 responses are distinguished between short RPM cooldowns and daily quota exhaustion. A daily quota failure disables Gemini for the rest of the run.
+The production model is `@cf/meta/llama-3.3-70b-instruct-fp8-fast`, which supports JSON Mode / JSON Schema output.
+
+Cloudflare error handling:
+- HTTP 429 internal code 3036 / free-allocation exhaustion: disable Cloudflare for the rest of that run.
+- HTTP 429 internal code 3040 / out of capacity: temporary cooldown, then continue.
+- auth/permission/model failures: disable only Cloudflare.
+- schema incompatibility: retry JSON-object mode for that request only.
+
+## Groq specifics
+
+Both GPT-OSS models start each job in strict JSON Schema mode. A request may fall back once to JSON-object mode, but future jobs return to strict mode.
+
+Rate-limit state is model-specific. If GPT-OSS 20B is temporarily constrained, the router can immediately use Cloudflare or GPT-OSS 120B.
+
+## Gemini specifics
+
+Gemini uses `responseJsonSchema` with minimal thinking. It is reserved for emergency cross-provider failover so its small free request allowance is not consumed by routine review traffic.
 
 ## Health semantics
 
-A healthy production run requires:
-- sufficient productive scraping sources;
-- at least two operational configured AI lanes when multiple lanes are configured;
-- provisional ratio no greater than 25% of AI-relevant assessments.
+`run_health.json` records:
+- source health;
+- lane vendor/model;
+- requests and successful classifications;
+- failures and last error;
+- average latency;
+- cooldown;
+- Cloudflare per-run reserve remaining;
+- provisional count and ratio;
+- configured and operational independent vendors.
 
-Temporary cooldown is not treated as permanent provider failure. The third emergency lane may be exhausted while two Groq lanes remain healthy without failing the sweep.
+A production sweep is degraded when fewer than two independent configured AI vendors remain operational, or when more than 25% of AI-relevant assessments are provisional.
+
+Temporary cooldown does not count as permanent vendor loss.
 
 ## Flow
 
 ```text
-deterministic clear reject --------------------> reject
-deterministic overwhelming clear civil -------> final policy
+deterministic clear reject --------------------------> reject
+deterministic overwhelming clear civil -------------> final policy
 ambiguous / non-obvious
         |
         v
-Groq GPT-OSS 20B
-        |
-        +-- failure/cooldown --> Groq GPT-OSS 120B
-                                     |
-                                     +-- failure/cooldown --> Gemini 3.1 Flash-Lite
-                                                                    |
-                                                                    +-- failure --> provisional
+adaptive workhorse selection
+   |                    |
+Groq 20B          Cloudflare Llama 70B
+   \                    /
+    +------ failure/cooldown ------+
+                                   v
+                              Groq 120B
+                                   |
+                                   v
+                         Gemini 3.1 Flash-Lite
+                                   |
+                                   v
+                              provisional
 ```
 
 Provisional assessments are persisted but never notified as matches. They are retried on a later healthy run.

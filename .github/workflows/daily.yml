@@ -49,16 +49,16 @@ jobs:
       - name: Validate AI configuration
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           set -euo pipefail
-          if [ -z "$GROQ_API_KEY" ] && [ -z "$GEMINI_API_KEY" ]; then
-            echo "::error::At least one AI provider key is required"
-            exit 1
-          fi
-          [ -n "$GROQ_API_KEY" ] || echo "::warning::GROQ_API_KEY is missing; Gemini will be the only AI provider"
-          [ -n "$GEMINI_API_KEY" ] || echo "::warning::GEMINI_API_KEY is missing; Groq will be the only AI provider"
-          echo "AI provider secrets validated"
+          test -n "$GROQ_API_KEY"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$CLOUDFLARE_API_TOKEN"
+          test -n "$GEMINI_API_KEY"
+          echo "Groq, Cloudflare and Gemini secrets are configured"
 
       - name: Validate mail configuration
         env:
@@ -93,9 +93,13 @@ jobs:
       - name: Run actual job agent
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Model IDs are intentionally pinned in version control. Do not inherit stale repo variables.
           GROQ_MODEL: "openai/gpt-oss-20b"
+          CLOUDFLARE_MODEL: "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+          CLOUDFLARE_RUN_CALL_BUDGET: "18"
           GROQ_BACKUP_MODEL: "openai/gpt-oss-120b"
           GEMINI_MODEL: "gemini-3.1-flash-lite"
           GROQ_MIN_INTERVAL_SECONDS: "8"

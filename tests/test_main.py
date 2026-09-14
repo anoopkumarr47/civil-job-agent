@@ -204,7 +204,7 @@ def test_dry_run_clear_match_survives_without_ai(settings, monkeypatch, tmp_path
     assert health["provisional"] == 0
 
 
-def test_health_remains_healthy_with_two_operational_lanes(settings):
+def test_health_remains_healthy_with_two_independent_vendors(settings):
     from civil_job_agent.ai import AIClient
     from civil_job_agent.models import SourceReport
 
@@ -212,6 +212,8 @@ def test_health_remains_healthy_with_two_operational_lanes(settings):
         replace(
             settings,
             groq_api_key="groq-key",
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
             gemini_api_key="gemini-key",
         )
     )
@@ -224,9 +226,10 @@ def test_health_remains_healthy_with_two_operational_lanes(settings):
         ai=ai,
     )
     assert health["status"] == "healthy"
+    assert health["operational_ai_vendors"] == ["cloudflare", "groq"]
 
 
-def test_health_degrades_when_only_one_ai_lane_remains(settings):
+def test_health_degrades_when_only_one_vendor_remains(settings):
     from civil_job_agent.ai import AIClient
     from civil_job_agent.models import SourceReport
 
@@ -234,10 +237,12 @@ def test_health_degrades_when_only_one_ai_lane_remains(settings):
         replace(
             settings,
             groq_api_key="groq-key",
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
             gemini_api_key="gemini-key",
         )
     )
-    ai.providers["groq_backup"].disabled_reason = "preflight failed"
+    ai.providers["cloudflare"].disabled_reason = "daily quota exhausted"
     ai.providers["gemini"].disabled_reason = "daily quota exhausted"
     health = main._health_payload(
         settings,
@@ -247,7 +252,8 @@ def test_health_degrades_when_only_one_ai_lane_remains(settings):
         ai=ai,
     )
     assert health["status"] == "degraded"
-    assert any("critically reduced" in reason for reason in health["reasons"])
+    assert health["operational_ai_vendors"] == ["groq"]
+    assert any("vendor redundancy" in reason for reason in health["reasons"])
 
 
 def test_health_does_not_degrade_for_temporary_provider_cooldown(settings):

@@ -34,6 +34,10 @@ class Settings:
     groq_api_key: str | None
     groq_model: str
     groq_backup_model: str
+    cloudflare_account_id: str | None
+    cloudflare_api_token: str | None
+    cloudflare_model: str
+    cloudflare_run_call_budget: int
     gemini_api_key: str | None
     gemini_model: str
 
@@ -72,6 +76,18 @@ class Settings:
             groq_backup_model=os.environ.get(
                 "GROQ_BACKUP_MODEL",
                 "openai/gpt-oss-120b",
+            ),
+            cloudflare_account_id=os.environ.get("CLOUDFLARE_ACCOUNT_ID"),
+            cloudflare_api_token=os.environ.get("CLOUDFLARE_API_TOKEN"),
+            cloudflare_model=os.environ.get(
+                "CLOUDFLARE_MODEL",
+                "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+            ),
+            # Keep a conservative per-run reserve because Workers AI's free allocation
+            # is shared across the entire UTC day and this agent runs twice daily.
+            cloudflare_run_call_budget=max(
+                0,
+                _env_int("CLOUDFLARE_RUN_CALL_BUDGET", 18),
             ),
             gemini_api_key=os.environ.get("GEMINI_API_KEY"),
             gemini_model=os.environ.get(
