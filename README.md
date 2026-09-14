@@ -60,8 +60,9 @@ discover
   -> permit-aware deterministic scoring
   -> deterministic clear-positive / clear-negative decision
   -> AI adjudication only for ambiguous or non-obvious roles
-  -> Groq 20B primary with immediate Gemini fallback
-  -> independent second opinion where useful
+  -> Groq 20B primary
+  -> Groq 120B model-level fallback
+  -> Gemini 3.1 Flash-Lite emergency cross-provider fallback
   -> conservative final policy gate
   -> notify only new non-provisional matches
   -> persist state
@@ -74,19 +75,19 @@ Distinct requisitions with the same title/company/location are preserved. Cross-
 AI is an ambiguity resolver, not a single point of failure.
 
 - High-confidence deterministic civil matches can proceed without AI.
-- Generic or risky titles such as Infrastructure Engineer, Project Engineer, Site Engineer and Project Manager remain AI-gated.
-- Groq `openai/gpt-oss-20b` is the primary provider.
-- Gemini `gemini-3.5-flash` is the independent immediate fallback/reviewer.
-- Every run performs a capability preflight using the same structured-output path used for real vacancies.
-- Structured-output incompatibility falls back once to validated JSON mode.
-- HTTP 429 and transient 5xx/timeouts trigger cooldown plus immediate provider failover.
-- A generic HTTP 400 does not disable an entire provider after a single vacancy.
-- Authentication/billing/model-not-found errors disable only the affected provider for the run.
-- If all AI providers are unavailable, ambiguous jobs remain provisional and retry later; clear deterministic civil matches are not suppressed.
+- Generic/risky titles remain AI-gated.
+- Lane 1: Groq `openai/gpt-oss-20b`.
+- Lane 2: Groq `openai/gpt-oss-120b`.
+- Lane 3: Gemini `gemini-3.1-flash-lite` as the independent emergency fallback.
+- Routine second-opinion calls are intentionally disabled to preserve free-tier quota.
+- Each Groq model has its own cooldown/rate state; a 20B TPM limit can immediately fail over to 120B.
+- Groq strict JSON Schema is retried in loose JSON-object mode only for the failing request; the downgrade is never sticky.
+- Gemini uses structured JSON output with minimal thinking and is only called after both Groq lanes fail or cool down.
+- Daily Gemini quota exhaustion disables only Gemini for that run instead of repeatedly wasting requests.
+- Authentication/model/permission errors disable only the affected lane.
+- If all AI lanes are unavailable, ambiguous jobs remain provisional and retry later; deterministic clear matches are not suppressed.
 
-The workflow writes `run_health.json`. A sweep is marked degraded when configured AI redundancy is lost or the provisional ratio exceeds 25%. The final health step runs after state persistence so useful results are not lost merely because the run is degraded.
-
-Model IDs are pinned in version control. Repository variables such as legacy `AI_MODEL`, `GROQ_MODEL` or `GEMINI_MODEL` do not control the scheduled production workflow.
+The workflow writes `run_health.json`. A sweep is degraded if fewer than two configured AI lanes remain operational or the provisional ratio exceeds 25%. A scarce third backup being exhausted does not fail an otherwise healthy two-lane run.
 
 ## Required GitHub Actions secrets
 

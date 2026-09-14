@@ -33,6 +33,7 @@ class Settings:
     groq_api_url: str
     groq_api_key: str | None
     groq_model: str
+    groq_backup_model: str
     gemini_api_key: str | None
     gemini_model: str
 
@@ -68,8 +69,15 @@ class Settings:
             groq_api_key=os.environ.get("GROQ_API_KEY"),
             # Do not inherit legacy AI_MODEL. Production model selection must be explicit.
             groq_model=os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b"),
+            groq_backup_model=os.environ.get(
+                "GROQ_BACKUP_MODEL",
+                "openai/gpt-oss-120b",
+            ),
             gemini_api_key=os.environ.get("GEMINI_API_KEY"),
-            gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.5-flash"),
+            gemini_model=os.environ.get(
+                "GEMINI_MODEL",
+                "gemini-3.1-flash-lite",
+            ),
             ai_timeout=_env_int("AI_TIMEOUT", 75),
             ai_required=_env_bool("AI_REQUIRED", False),
             ai_preflight=_env_bool("AI_PREFLIGHT", True),

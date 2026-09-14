@@ -189,11 +189,11 @@ def _health_payload(
         )
     if configured and not operational:
         status = "degraded" if status == "healthy" else status
-        reasons.append("no configured AI provider passed capability health checks")
-    elif len(configured) > 1 and len(operational) < len(configured):
+        reasons.append("no configured AI lane passed capability health checks")
+    elif len(configured) >= 2 and len(operational) < 2:
         status = "degraded" if status == "healthy" else status
         reasons.append(
-            f"AI redundancy reduced: {len(operational)}/{len(configured)} configured providers operational"
+            f"AI redundancy critically reduced: {len(operational)}/{len(configured)} configured lanes operational"
         )
     if ai_relevant and provisional_ratio > settings.ai_max_provisional_ratio:
         status = "degraded" if status == "healthy" else status
