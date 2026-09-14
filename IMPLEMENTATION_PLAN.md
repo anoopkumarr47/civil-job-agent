@@ -56,3 +56,21 @@ A disabled source must not be counted as coverage.
 
 ## Pre-merge verification gate
 A push to the build branch must pass unit/regression tests and a secret-backed dry run that validates public sources, Gmail IMAP, Groq and SMTP authentication without sending mail or writing state.
+
+
+## JobsIreland dedicated adapter
+
+JobsIreland is intentionally excluded from the generic Requests-first board adapter.
+
+The dedicated `JobsIrelandSource` is browser-first because GitHub-hosted runners repeatedly experienced long Requests timeouts even though the site itself remained usable in Chromium. The adapter:
+
+- starts Chromium once per JobsIreland sweep;
+- reuses one browser context across all searches;
+- searches the configured civil/highway/site/resident/project/transport/infrastructure role families;
+- extracts numeric vacancy IDs from rendered links;
+- deduplicates vacancy IDs across overlapping searches before visiting details;
+- parses JSON-LD JobPosting data when available, with rendered-page fallback;
+- has global search and detail budgets so one source cannot monopolize the workflow;
+- reports partial results if the time budget is reached rather than hanging the full daily run.
+
+The old generic JobsIreland configuration remains disabled as an explicit record of why it was replaced.
