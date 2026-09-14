@@ -63,25 +63,27 @@ def _location_name(value: object) -> str:
 
 
 def _infer_location(text: str) -> str:
-    head = normalize_space(text)[:1200]
-    ireland_patterns = (
-        ("Dublin", r"\bDublin\b"),
-        ("Cork", r"\bCork\b"),
-        ("Galway", r"\bGalway\b"),
-        ("Limerick", r"\bLimerick\b"),
-        ("Waterford", r"\bWaterford\b"),
-        ("Ireland", r"\b(?:Republic of )?Ireland\b"),
+    head = normalize_space(text)[:2500]
+    ireland_places = (
+        "Dublin", "Cork", "Galway", "Limerick", "Waterford", "Kilkenny", "Kildare",
+        "Wicklow", "Meath", "Louth", "Laois", "Offaly", "Westmeath", "Wexford",
+        "Tipperary", "Clare", "Kerry", "Mayo", "Sligo", "Leitrim", "Roscommon",
+        "Cavan", "Monaghan", "Donegal", "Longford", "Carlow", "Athlone", "Naas",
+        "Drogheda", "Dundalk", "Mullingar", "Letterkenny", "Castlebar",
     )
     import re
-    for label, pattern in ireland_patterns:
-        if re.search(pattern, head, re.I):
-            return f"{label}, Ireland" if label != "Ireland" else "Ireland"
+    for place in ireland_places:
+        if re.search(rf"\b{re.escape(place)}\b", head, re.I):
+            return f"{place}, Ireland"
+    if re.search(r"\b(?:Republic of )?Ireland\b|\bIE\b", head, re.I):
+        return "Ireland"
+
     foreign_patterns = (
-        ("United Kingdom", r"\bUnited Kingdom\b"),
+        ("United Kingdom", r"\bUnited Kingdom\b|\bUK\b|\bEngland\b|\bScotland\b|\bWales\b"),
         ("Middle East", r"\bMiddle East\b"),
         ("Australia", r"\bAustralia\b"),
         ("Canada", r"\bCanada\b"),
-        ("United States", r"\bUnited States\b"),
+        ("United States", r"\bUnited States\b|\bUSA\b"),
         ("Turkey", r"\bTurkey\b"),
         ("India", r"\bIndia\b"),
     )
