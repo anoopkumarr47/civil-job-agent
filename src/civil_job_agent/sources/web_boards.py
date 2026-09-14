@@ -237,10 +237,6 @@ class ConfiguredWebBoard(Source):
             return None
         if self.config.get("require_location", False) and not location:
             return None
-        required_terms = [str(x).casefold() for x in self.config.get("required_any_terms", [])]
-        haystack = f"{title} {description[:6000]}".casefold()
-        if required_terms and not any(term in haystack for term in required_terms):
-            return None
         if not is_plausible_target_title(title):
             return None
         domain = classify_civil_domain(title, description[:8000])
