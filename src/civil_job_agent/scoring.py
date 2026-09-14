@@ -36,8 +36,13 @@ RIGHT_TO_WORK_NEGATIVE = (
 
 AI_RISKY_ROLE_FAMILIES = {
     "infrastructure_engineer",
+    "civil_infrastructure_engineer",
     "project_engineer",
     "design_engineer",
+    "site_engineer",
+    "assistant_engineer",
+    "construction_engineer",
+    "civil_site_role",
     "ambiguous_engineering_role",
     "engineer",
     "project_manager",
