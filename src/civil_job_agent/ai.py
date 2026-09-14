@@ -196,6 +196,11 @@ class AIClient:
             return
 
         if status == 429:
+            detail = state.last_error.casefold()
+            if "perday" in detail or "requestsperday" in detail or "per day" in detail:
+                state.disabled_reason = "daily quota exhausted"
+                logger.warning("%s daily quota exhausted; disabling lane for this run", provider)
+                return
             cooldown = self._retry_after_seconds(exc, 60.0)
             state.cooldown_until = time.monotonic() + cooldown
             logger.warning("%s rate-limited; cooling down %.1fs", provider, cooldown)
