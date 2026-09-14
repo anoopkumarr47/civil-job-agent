@@ -60,9 +60,9 @@ discover
   -> permit-aware deterministic scoring
   -> deterministic clear-positive / clear-negative decision
   -> AI adjudication only for ambiguous or non-obvious roles
-  -> Groq 20B primary
-  -> Groq 120B model-level fallback
-  -> Gemini 3.1 Flash-Lite emergency cross-provider fallback
+  -> adaptive workhorses: Groq 20B + Cloudflare Llama 3.3 70B Fast
+  -> Groq 120B model-level reserve
+  -> Gemini 3.1 Flash-Lite emergency cross-provider reserve
   -> conservative final policy gate
   -> notify only new non-provisional matches
   -> persist state
@@ -76,18 +76,21 @@ AI is an ambiguity resolver, not a single point of failure.
 
 - High-confidence deterministic civil matches can proceed without AI.
 - Generic/risky titles remain AI-gated.
-- Lane 1: Groq `openai/gpt-oss-20b`.
-- Lane 2: Groq `openai/gpt-oss-120b`.
-- Lane 3: Gemini `gemini-3.1-flash-lite` as the independent emergency fallback.
-- Routine second-opinion calls are intentionally disabled to preserve free-tier quota.
-- Each Groq model has its own cooldown/rate state; a 20B TPM limit can immediately fail over to 120B.
-- Groq strict JSON Schema is retried in loose JSON-object mode only for the failing request; the downgrade is never sticky.
-- Gemini uses structured JSON output with minimal thinking and is only called after both Groq lanes fail or cool down.
-- Daily Gemini quota exhaustion disables only Gemini for that run instead of repeatedly wasting requests.
+- Active workhorse 1: Groq `openai/gpt-oss-20b`.
+- Active workhorse 2: Cloudflare Workers AI `@cf/meta/llama-3.3-70b-instruct-fp8-fast`.
+- Reserve lane: Groq `openai/gpt-oss-120b`.
+- Emergency cross-provider reserve: Gemini `gemini-3.1-flash-lite`.
+- Groq and Cloudflare share normal classification load adaptively; Cloudflare is bounded by a conservative per-run request reserve so both scheduled daily runs can use the free allocation.
+- Cloudflare's daily-free-allocation and out-of-capacity errors are handled differently: daily exhaustion disables only that lane for the run, while temporary capacity issues trigger cooldown/failover.
+- Routine second-opinion calls are disabled. One schema-valid adjudication is sufficient because deterministic policy remains the final guardrail.
+- Groq strict JSON Schema retries loose JSON-object mode only for the failing request; the downgrade is never sticky.
+- Gemini is used only after the active workhorses and Groq reserve are unavailable.
 - Authentication/model/permission errors disable only the affected lane.
 - If all AI lanes are unavailable, ambiguous jobs remain provisional and retry later; deterministic clear matches are not suppressed.
 
-The workflow writes `run_health.json`. A sweep is degraded if fewer than two configured AI lanes remain operational or the provisional ratio exceeds 25%. A scarce third backup being exhausted does not fail an otherwise healthy two-lane run.
+The workflow writes `run_health.json` with per-lane requests, successes, failures, average latency, cooldown state, and Cloudflare per-run reserve remaining. A sweep is degraded if fewer than two **independent AI vendors** remain operational or the provisional ratio exceeds 25%.
+
+Model IDs and the Cloudflare per-run reserve are pinned in version control. Repository variables do not control the scheduled production workflow.
 
 ## Required GitHub Actions secrets
 
@@ -95,6 +98,8 @@ The workflow writes `run_health.json`. A sweep is degraded if fewer than two con
 - `EMAIL_PASSWORD`
 - `EMAIL_TO`
 - `GROQ_API_KEY`
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
 - `GEMINI_API_KEY`
 
 No model-selection Actions variables are required. The production workflow pins the tested model IDs in source control to prevent configuration drift.
