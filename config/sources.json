@@ -16,14 +16,6 @@
       "exclude_link_patterns": [
         "/search/"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "transport",
-        "infrastructure",
-        "resident"
-      ],
       "max_links": 150,
       "assume_ireland": true,
       "max_detail_seconds": 90
@@ -41,14 +33,6 @@
         "job-details?id=",
         "jobdetails",
         "job-detail"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "highway",
-        "site",
-        "infrastructure"
       ],
       "max_links": 120,
       "assume_ireland": true,
@@ -74,14 +58,6 @@
         "/jobs/civil-engineer",
         "/jobs/site-engineer"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "road",
-        "highway",
-        "resident",
-        "infrastructure"
-      ],
       "max_links": 120,
       "assume_ireland": true,
       "disabled_reason": "GitHub runner requests timed out; browser fallback is too slow for reliable daily operation. Re-enable only after a dedicated verified adapter."
@@ -104,14 +80,6 @@
       "exclude_link_patterns": [
         "/jobs/civil-engineer",
         "/jobs/site-engineer"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "road",
-        "highway",
-        "resident",
-        "infrastructure"
       ],
       "max_links": 120,
       "assume_ireland": true,
@@ -138,13 +106,6 @@
         "about",
         "login"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "transport",
-        "infrastructure"
-      ],
       "max_links": 100,
       "assume_ireland": true,
       "disabled_reason": "publicjobs.ie now delegates vacancies to a TAL job board; the generic homepage adapter is not a reliable vacancy endpoint. Add a TAL-specific adapter before re-enabling."
@@ -168,14 +129,6 @@
         "#",
         "graduate"
       ],
-      "required_any_terms": [
-        "engineer",
-        "resident",
-        "transport",
-        "roads",
-        "civil",
-        "site development"
-      ],
       "max_links": 80,
       "max_detail_seconds": 90
     },
@@ -198,12 +151,6 @@
         "intern",
         "privacy"
       ],
-      "required_any_terms": [
-        "civil",
-        "transportation",
-        "engineer",
-        "roads"
-      ],
       "max_links": 80,
       "assume_ireland": true,
       "max_detail_seconds": 75
@@ -219,14 +166,6 @@
       ],
       "job_link_patterns": [
         "/jobs/"
-      ],
-      "required_any_terms": [
-        "ireland",
-        "civil",
-        "highway",
-        "roads",
-        "transport",
-        "infrastructure"
       ],
       "max_links": 100,
       "max_detail_seconds": 90
@@ -247,15 +186,6 @@
         "work-placement",
         "graduate",
         "intern"
-      ],
-      "required_any_terms": [
-        "civil",
-        "highway",
-        "road",
-        "transport",
-        "infrastructure",
-        "resident",
-        "site engineer"
       ],
       "max_links": 100,
       "assume_ireland": false,
@@ -280,16 +210,6 @@
         "early-careers",
         "privacy"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "project engineer",
-        "transport",
-        "infrastructure",
-        "autocad",
-        "civil 3d"
-      ],
       "max_links": 100,
       "assume_ireland": false,
       "max_detail_seconds": 90,
@@ -312,15 +232,6 @@
         "graduate",
         "student-placement"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "infrastructure",
-        "roads",
-        "water",
-        "utilities"
-      ],
       "max_links": 100,
       "assume_ireland": true,
       "max_detail_seconds": 90
@@ -342,15 +253,6 @@
         "graduate",
         "intern",
         "drafter"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "transport",
-        "rail",
-        "infrastructure",
-        "roads"
       ],
       "max_links": 100,
       "assume_ireland": false,
@@ -448,21 +350,6 @@
         "intern",
         "apprentice",
         "placement"
-      ],
-      "required_any_terms": [
-        "civil",
-        "road",
-        "highway",
-        "transport",
-        "drainage",
-        "water",
-        "wastewater",
-        "rail",
-        "structural",
-        "geotechnical",
-        "site",
-        "infrastructure",
-        "engineer"
       ],
       "page_size": 20,
       "max_pages": 60,
