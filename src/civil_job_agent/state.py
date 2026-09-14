@@ -104,7 +104,7 @@ class StateStore:
 
     def is_notified(self, job: Job) -> bool:
         record = self._record_for(job) or {}
-        return record.get("notified_hash") == job.content_hash
+        return bool(record.get("notified_at"))
 
     def mark_notified(self, job: Job) -> None:
         key = self._record_key(job)
