@@ -199,6 +199,7 @@ class AIClient:
             "json schema", "response_format", "responseschema", "response schema",
             "response_schema", "responsejsonschema", "response_json_schema",
             "additionalproperties", "additional_properties",
+            "json mode couldn't be met", "json mode could not be met",
         ))
 
     def _handle_provider_error(self, provider: str, exc: Exception, *, preflight: bool = False) -> None:
@@ -537,11 +538,7 @@ class AIClient:
             "response_format": (
                 {
                     "type": "json_schema",
-                    "json_schema": {
-                        "name": "civil_job_fit",
-                        "strict": True,
-                        "schema": SCHEMA,
-                    },
+                    "json_schema": SCHEMA,
                 }
                 if mode == "strict"
                 else {"type": "json_object"}
