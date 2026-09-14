@@ -340,6 +340,7 @@ def test_cloudflare_request_uses_openai_compatible_schema(settings, monkeypatch)
     assert "/accounts/acct/ai/v1/chat/completions" in captured["url"]
     assert captured["payload"]["model"] == "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
     assert captured["payload"]["response_format"]["type"] == "json_schema"
+    assert captured["payload"]["response_format"]["json_schema"] == __import__("civil_job_agent.ai", fromlist=["SCHEMA"]).SCHEMA
     assert captured["headers"]["Authorization"] == "Bearer cf-token"
     assert result.source == "ai-cloudflare"
 
