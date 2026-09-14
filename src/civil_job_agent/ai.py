@@ -74,11 +74,15 @@ EVIDENCE_KEYWORDS = (
 class ProviderState:
     configured: bool
     model: str
+    vendor: str
     mode: str = "strict"
     disabled_reason: str = ""
     cooldown_until: float = 0.0
     failures: int = 0
     last_error: str = ""
+    requests_made: int = 0
+    successes: int = 0
+    latency_seconds: float = 0.0
 
     def ready(self) -> bool:
         return self.configured and not self.disabled_reason and time.monotonic() >= self.cooldown_until
@@ -122,14 +126,27 @@ class AIClient:
             "groq_primary": ProviderState(
                 configured=groq_configured and bool(settings.groq_model),
                 model=settings.groq_model,
+                vendor="groq",
+            ),
+            "cloudflare": ProviderState(
+                configured=bool(
+                    settings.cloudflare_account_id
+                    and settings.cloudflare_api_token
+                    and settings.cloudflare_model
+                    and settings.cloudflare_run_call_budget > 0
+                ),
+                model=settings.cloudflare_model,
+                vendor="cloudflare",
             ),
             "groq_backup": ProviderState(
                 configured=groq_configured and bool(settings.groq_backup_model),
                 model=settings.groq_backup_model,
+                vendor="groq",
             ),
             "gemini": ProviderState(
                 configured=bool(settings.gemini_api_key and settings.gemini_model),
                 model=settings.gemini_model,
+                vendor="gemini",
                 mode="schema",
             ),
         }
@@ -197,9 +214,20 @@ class AIClient:
 
         if status == 429:
             detail = state.last_error.casefold()
-            if "perday" in detail or "requestsperday" in detail or "per day" in detail:
+            if (
+                "perday" in detail
+                or "requestsperday" in detail
+                or "per day" in detail
+                or "3036" in detail
+                or "free allocation" in detail
+                or "10,000 neurons" in detail
+            ):
                 state.disabled_reason = "daily quota exhausted"
                 logger.warning("%s daily quota exhausted; disabling lane for this run", provider)
+                return
+            if "3040" in detail or "out of capacity" in detail:
+                state.cooldown_until = time.monotonic() + 45.0
+                logger.warning("%s out of capacity; cooling down 45s", provider)
                 return
             cooldown = self._retry_after_seconds(exc, 60.0)
             state.cooldown_until = time.monotonic() + cooldown
@@ -477,10 +505,164 @@ class AIClient:
         result.source = "ai-gemini"
         return result
 
-    def _call_provider(self, provider: str, job: Job, preliminary: Assessment, *, preflight: bool = False) -> Assessment:
-        if provider.startswith("groq_"):
-            return self._groq_call(provider, job, preliminary, preflight=preflight)
-        return self._gemini_request(job, preliminary, preflight=preflight)
+    def _cloudflare_budget_available(self) -> bool:
+        state = self.providers["cloudflare"]
+        return (
+            state.configured
+            and state.requests_made < self.settings.cloudflare_run_call_budget
+            and not state.disabled_reason
+        )
+
+    def _cloudflare_request(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        mode: str = "strict",
+        preflight: bool = False,
+    ) -> Assessment:
+        if not self.settings.cloudflare_account_id or not self.settings.cloudflare_api_token:
+            raise RuntimeError("Cloudflare Workers AI credentials are not configured")
+        if not self._cloudflare_budget_available():
+            raise RuntimeError("Cloudflare per-run request reserve is exhausted")
+
+        state = self.providers["cloudflare"]
+        payload = {
+            "model": state.model,
+            "messages": self._messages(job, preliminary, preflight=preflight),
+            "temperature": 0,
+            "max_tokens": 320,
+            "response_format": (
+                {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": "civil_job_fit",
+                        "strict": True,
+                        "schema": SCHEMA,
+                    },
+                }
+                if mode == "strict"
+                else {"type": "json_object"}
+            ),
+        }
+        key = f"cloudflare:{state.model}"
+        self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
+        state.requests_made += 1
+        url = (
+            "https://api.cloudflare.com/client/v4/accounts/"
+            f"{self.settings.cloudflare_account_id}/ai/v1/chat/completions"
+        )
+        response = self.http.request(
+            "POST",
+            url,
+            timeout=self.settings.ai_timeout,
+            attempts=1,
+            headers={
+                "Authorization": f"Bearer {self.settings.cloudflare_api_token}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+        )
+        raw = response.json()["choices"][0]["message"]["content"]
+        result = self._validate(json.loads(raw))
+        result.source = "ai-cloudflare"
+        return result
+
+    def _cloudflare_call(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        preflight: bool = False,
+    ) -> Assessment:
+        try:
+            return self._cloudflare_request(
+                job,
+                preliminary,
+                mode="strict",
+                preflight=preflight,
+            )
+        except requests.HTTPError as exc:
+            detail = self._http_detail(exc)
+            if self._http_status(exc) == 400 and self._schema_generation_error(detail):
+                logger.warning(
+                    "cloudflare strict mode failed for this request; trying JSON object once"
+                )
+                return self._cloudflare_request(
+                    job,
+                    preliminary,
+                    mode="json_object",
+                    preflight=preflight,
+                )
+            raise
+        except (ValueError, KeyError, TypeError, json.JSONDecodeError):
+            logger.warning(
+                "cloudflare strict response invalid for this request; trying JSON object once"
+            )
+            return self._cloudflare_request(
+                job,
+                preliminary,
+                mode="json_object",
+                preflight=preflight,
+            )
+
+    def _call_provider(
+        self,
+        provider: str,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        preflight: bool = False,
+    ) -> Assessment:
+        state = self.providers[provider]
+        started = time.monotonic()
+        try:
+            if provider.startswith("groq_"):
+                result = self._groq_call(
+                    provider,
+                    job,
+                    preliminary,
+                    preflight=preflight,
+                )
+            elif provider == "cloudflare":
+                result = self._cloudflare_call(
+                    job,
+                    preliminary,
+                    preflight=preflight,
+                )
+            else:
+                result = self._gemini_request(
+                    job,
+                    preliminary,
+                    preflight=preflight,
+                )
+            state.successes += 1
+            return result
+        finally:
+            state.latency_seconds += max(0.0, time.monotonic() - started)
+
+    def _routing_order(self) -> list[str]:
+        workhorses: list[str] = []
+        if self.providers["groq_primary"].ready():
+            workhorses.append("groq_primary")
+        if self.providers["cloudflare"].ready() and self._cloudflare_budget_available():
+            workhorses.append("cloudflare")
+
+        if len(workhorses) == 2:
+            # Balance successful classifications while retaining a deterministic tie-break
+            # in favour of the faster primary Groq lane.
+            workhorses.sort(
+                key=lambda name: (
+                    self.providers[name].successes,
+                    0 if name == "groq_primary" else 1,
+                )
+            )
+
+        order = workhorses
+        for reserve in ("groq_backup", "gemini"):
+            if self.providers[reserve].ready():
+                order.append(reserve)
+        return order
 
     def _wait_for_recovery(self, max_wait: float = 35.0) -> bool:
         if self.available:
@@ -514,7 +696,7 @@ class AIClient:
         )
         preliminary = Assessment(True, 95, "highway_engineer", "critical_skills", "high", "synthetic preflight")
 
-        for provider in ("groq_primary", "groq_backup", "gemini"):
+        for provider in ("groq_primary", "cloudflare", "groq_backup", "gemini"):
             state = self.providers[provider]
             if not state.configured:
                 continue
@@ -534,8 +716,24 @@ class AIClient:
                 "configured": state.configured,
                 "operational": state.operational(),
                 "ready": state.operational() and now >= state.cooldown_until,
+                "vendor": state.vendor,
                 "model": state.model,
                 "mode": state.mode,
+                "requests": state.requests_made,
+                "successes": state.successes,
+                "average_latency_seconds": (
+                    round(state.latency_seconds / state.successes, 3)
+                    if state.successes
+                    else None
+                ),
+                "run_budget_remaining": (
+                    max(
+                        0,
+                        self.settings.cloudflare_run_call_budget - state.requests_made,
+                    )
+                    if name == "cloudflare"
+                    else None
+                ),
                 "disabled_reason": state.disabled_reason[:300],
                 "cooldown_seconds": max(0, round(state.cooldown_until - now)),
                 "failures": state.failures,
@@ -545,30 +743,25 @@ class AIClient:
         }
 
     def refine(self, job: Job, preliminary: Assessment, *, threshold: int = 76) -> Assessment:
-        del threshold  # one schema-valid adjudication is enough; deterministic policy is the guardrail.
+        del threshold  # deterministic policy remains the final guardrail.
 
         attempted: set[str] = set()
-        for provider in ("groq_primary", "groq_backup", "gemini"):
-            state = self.providers[provider]
-            if not state.ready():
-                continue
+        for provider in self._routing_order():
             attempted.add(provider)
             try:
                 return self._call_provider(provider, job, preliminary)
             except Exception as exc:
                 self._handle_provider_error(provider, exc)
                 logger.warning(
-                    "%s failed for %s; continuing waterfall: %s",
+                    "%s failed for %s; continuing adaptive waterfall: %s",
                     provider,
                     job.title,
                     self._http_detail(exc),
                 )
 
         if self._wait_for_recovery():
-            for provider in ("groq_primary", "groq_backup", "gemini"):
+            for provider in self._routing_order():
                 if provider in attempted and not self.providers[provider].ready():
-                    continue
-                if not self.providers[provider].ready():
                     continue
                 try:
                     return self._call_provider(provider, job, preliminary)
