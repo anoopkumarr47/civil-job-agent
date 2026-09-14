@@ -187,6 +187,11 @@ def _health_payload(
     if configured and not ready:
         status = "degraded" if status == "healthy" else status
         reasons.append("no configured AI provider passed health checks")
+    elif len(configured) > 1 and len(ready) < len(configured):
+        status = "degraded" if status == "healthy" else status
+        reasons.append(
+            f"AI redundancy reduced: {len(ready)}/{len(configured)} configured providers ready"
+        )
     if ai_relevant and provisional_ratio > settings.ai_max_provisional_ratio:
         status = "degraded" if status == "healthy" else status
         reasons.append(
