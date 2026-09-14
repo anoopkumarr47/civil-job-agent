@@ -217,3 +217,23 @@ def test_final_policy_applies_to_ai_outputs(profile):
     low_relocation = Assessment(True, 80, "civil_engineer", "critical_skills", "low", "fit", source="ai-consensus")
     assert not enforce_final_policy(low_score, profile).matched
     assert not enforce_final_policy(low_relocation, profile).matched
+
+
+def test_generic_civil_project_manager_is_retained_for_review(profile):
+    candidate = job(
+        "Project Manager",
+        "Civil engineering transport infrastructure roads construction contractor coordination.",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert not result.hard_reject
+    assert should_ai_refine(candidate, result)
+
+
+def test_it_project_manager_is_not_a_civil_match(profile):
+    candidate = job(
+        "Project Manager",
+        "Cloud infrastructure AWS Azure Kubernetes Terraform software platform migration.",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.hard_reject
+    assert not result.matched
