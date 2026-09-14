@@ -14,7 +14,7 @@ from .relevance import (
     role_family_for_title,
 )
 
-POLICY_VERSION = "2026-09-14.2"
+POLICY_VERSION = "2026-09-14.3"
 
 RIGHT_TO_WORK_NEGATIVE = (
     r"must already have (?:the )?right to work in ireland",
@@ -33,6 +33,18 @@ RIGHT_TO_WORK_NEGATIVE = (
     r"must hold (?:a )?(?:valid )?(?:irish|ireland) work permit",
     r"stamp 4 (?:is )?required",
 )
+
+AI_RISKY_ROLE_FAMILIES = {
+    "infrastructure_engineer",
+    "project_engineer",
+    "design_engineer",
+    "ambiguous_engineering_role",
+    "engineer",
+    "project_manager",
+    "construction_manager",
+    "site_manager",
+    "design_manager",
+}
 
 CRITICAL_ROLE_FAMILIES = {
     "highway_engineer",
@@ -407,11 +419,49 @@ def preliminary_assessment(job: Job, profile: dict) -> Assessment:
     )
 
 
-def should_ai_refine(job: Job, assessment: Assessment) -> bool:
+def is_deterministic_clear_match(assessment: Assessment, profile: dict) -> bool:
+    """Allow only overwhelming deterministic positives to bypass AI availability."""
+    if assessment.hard_reject or not assessment.matched:
+        return False
+    if assessment.provisional:
+        return False
+    if assessment.score < int(profile.get("high_confidence_score", 90)):
+        return False
+    if assessment.permit_path == "not_eligible" or assessment.relocation_fit == "low":
+        return False
+    if assessment.role_family in AI_RISKY_ROLE_FAMILIES:
+        return False
+    if any(
+        marker in gap.casefold()
+        for gap in assessment.gaps
+        for marker in (
+            "ai review required",
+            "mandatory",
+            "irish experience",
+            "verify",
+            "unclear",
+        )
+    ):
+        return False
+    return True
+
+
+def should_ai_refine(
+    job: Job,
+    assessment: Assessment,
+    profile: dict | None = None,
+) -> bool:
     if assessment.hard_reject or assessment.role_family == "other":
         return False
-    # Ambiguous-domain roles are intentionally reviewed at a lower score to maximize recall.
-    return assessment.score >= 55
+    if assessment.score < 55:
+        return False
+
+    profile = profile or {}
+    if is_deterministic_clear_match(assessment, profile):
+        return False
+
+    # Everything plausible but not overwhelmingly deterministic is AI-adjudicated.
+    return True
 
 
 def enforce_final_policy(assessment: Assessment, profile: dict) -> Assessment:
