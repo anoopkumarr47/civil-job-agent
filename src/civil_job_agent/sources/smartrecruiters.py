@@ -7,23 +7,10 @@ from bs4 import BeautifulSoup
 
 from ..http import HttpClient
 from ..models import Job, normalize_space
+from ..relevance import is_plausible_target_title
 from .base import Source
 
 logger = logging.getLogger(__name__)
-
-TARGET_TERMS = (
-    "civil",
-    "highway",
-    "road",
-    "transport",
-    "resident engineer",
-    "site engineer",
-    "project engineer",
-    "infrastructure",
-    "setting out",
-    "rail",
-    "water",
-)
 
 
 def _html_text(value: object) -> str:
@@ -56,8 +43,7 @@ class SmartRecruitersCompanySource(Source):
         )
 
     def _target_title(self, title: str) -> bool:
-        lowered = title.casefold()
-        return any(term in lowered for term in TARGET_TERMS)
+        return is_plausible_target_title(title)
 
     def _detail_to_job(self, item: dict, detail: dict) -> Job | None:
         title = normalize_space(str(detail.get("name") or item.get("name") or ""))
@@ -133,8 +119,9 @@ class SmartRecruitersCompanySource(Source):
         jobs: list[Job] = []
         offset = 0
         seen_ids: set[str] = set()
+        candidate_ids: set[str] = set()
 
-        while len(seen_ids) < self.max_links:
+        while len(candidate_ids) < self.max_links:
             response = self.client.request("GET", self._list_url(offset), timeout=self.request_timeout)
             payload = response.json()
             content = payload.get("content") or []
@@ -148,8 +135,10 @@ class SmartRecruitersCompanySource(Source):
                 if not posting_id or posting_id in seen_ids:
                     continue
                 seen_ids.add(posting_id)
-                if not self._target_title(normalize_space(str(item.get("name") or ""))):
+                title = normalize_space(str(item.get("name") or ""))
+                if not self._target_title(title):
                     continue
+                candidate_ids.add(posting_id)
 
                 detail_url = item.get("ref") or (
                     f"https://api.smartrecruiters.com/v1/companies/{self.company_identifier}/postings/{posting_id}"
@@ -163,7 +152,7 @@ class SmartRecruitersCompanySource(Source):
                 except Exception as exc:
                     logger.warning("%s detail fetch failed for %s: %s", self.name, posting_id, exc)
 
-                if len(seen_ids) >= self.max_links:
+                if len(candidate_ids) >= self.max_links:
                     break
 
             total = int(payload.get("totalFound") or 0)
@@ -171,5 +160,5 @@ class SmartRecruitersCompanySource(Source):
             if offset >= total or offset <= 0:
                 break
 
-        logger.info("%s SmartRecruiters API yielded %s relevant job(s)", self.name, len(jobs))
+        logger.info("%s SmartRecruiters API yielded %s relevant job(s) from %s candidate title(s)", self.name, len(jobs), len(candidate_ids))
         return jobs

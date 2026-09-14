@@ -16,14 +16,6 @@
       "exclude_link_patterns": [
         "/search/"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "transport",
-        "infrastructure",
-        "resident"
-      ],
       "max_links": 150,
       "assume_ireland": true,
       "max_detail_seconds": 90
@@ -41,14 +33,6 @@
         "job-details?id=",
         "jobdetails",
         "job-detail"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "highway",
-        "site",
-        "infrastructure"
       ],
       "max_links": 120,
       "assume_ireland": true,
@@ -74,14 +58,6 @@
         "/jobs/civil-engineer",
         "/jobs/site-engineer"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "road",
-        "highway",
-        "resident",
-        "infrastructure"
-      ],
       "max_links": 120,
       "assume_ireland": true,
       "disabled_reason": "GitHub runner requests timed out; browser fallback is too slow for reliable daily operation. Re-enable only after a dedicated verified adapter."
@@ -105,49 +81,9 @@
         "/jobs/civil-engineer",
         "/jobs/site-engineer"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "road",
-        "highway",
-        "resident",
-        "infrastructure"
-      ],
       "max_links": 120,
       "assume_ireland": true,
       "disabled_reason": "Direct search endpoint is not reliably fetchable from automation. Re-enable only after a dedicated verified adapter."
-    },
-    {
-      "name": "PublicJobs",
-      "enabled": false,
-      "search_urls": [
-        "https://www.publicjobs.ie/en/"
-      ],
-      "allowed_hosts": [
-        "publicjobs.ie",
-        "www.publicjobs.ie"
-      ],
-      "job_link_patterns": [
-        "job",
-        "vacancy",
-        "campaign"
-      ],
-      "exclude_link_patterns": [
-        "privacy",
-        "contact",
-        "about",
-        "login"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "roads",
-        "transport",
-        "infrastructure"
-      ],
-      "max_links": 100,
-      "assume_ireland": true,
-      "disabled_reason": "publicjobs.ie now delegates vacancies to a TAL job board; the generic homepage adapter is not a reliable vacancy endpoint. Add a TAL-specific adapter before re-enabling."
     },
     {
       "name": "Roughan O'Donovan",
@@ -166,17 +102,7 @@
         "privacy",
         "jobexpired",
         "#",
-        "graduate",
-        "geotechnical",
-        "bridge"
-      ],
-      "required_any_terms": [
-        "engineer",
-        "resident",
-        "transport",
-        "roads",
-        "civil",
-        "site development"
+        "graduate"
       ],
       "max_links": 80,
       "max_detail_seconds": 90
@@ -200,12 +126,6 @@
         "intern",
         "privacy"
       ],
-      "required_any_terms": [
-        "civil",
-        "transportation",
-        "engineer",
-        "roads"
-      ],
       "max_links": 80,
       "assume_ireland": true,
       "max_detail_seconds": 75
@@ -221,14 +141,6 @@
       ],
       "job_link_patterns": [
         "/jobs/"
-      ],
-      "required_any_terms": [
-        "ireland",
-        "civil",
-        "highway",
-        "roads",
-        "transport",
-        "infrastructure"
       ],
       "max_links": 100,
       "max_detail_seconds": 90
@@ -249,15 +161,6 @@
         "work-placement",
         "graduate",
         "intern"
-      ],
-      "required_any_terms": [
-        "civil",
-        "highway",
-        "road",
-        "transport",
-        "infrastructure",
-        "resident",
-        "site engineer"
       ],
       "max_links": 100,
       "assume_ireland": false,
@@ -282,16 +185,6 @@
         "early-careers",
         "privacy"
       ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "project engineer",
-        "transport",
-        "infrastructure",
-        "autocad",
-        "civil 3d"
-      ],
       "max_links": 100,
       "assume_ireland": false,
       "max_detail_seconds": 90,
@@ -312,17 +205,7 @@
       ],
       "exclude_link_patterns": [
         "graduate",
-        "student-placement",
-        "structural-engineer"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "infrastructure",
-        "roads",
-        "water",
-        "utilities"
+        "student-placement"
       ],
       "max_links": 100,
       "assume_ireland": true,
@@ -345,15 +228,6 @@
         "graduate",
         "intern",
         "drafter"
-      ],
-      "required_any_terms": [
-        "civil",
-        "engineer",
-        "resident",
-        "transport",
-        "rail",
-        "infrastructure",
-        "roads"
       ],
       "max_links": 100,
       "assume_ireland": false,
@@ -387,30 +261,6 @@
       ]
     }
   ],
-  "future_employer_watchlist": [
-    "Arup",
-    "AECOM",
-    "Jacobs",
-    "SYSTRA",
-    "Egis",
-    "RPS",
-    "TOBIN",
-    "Nicholas O'Dwyer",
-    "Tetra Tech",
-    "Mott MacDonald",
-    "Glanua",
-    "Murphy",
-    "BAM",
-    "Sisk",
-    "John Paul Construction",
-    "PJ Hegarty",
-    "Cairn",
-    "Walls Construction",
-    "Coffey",
-    "Kilsaran",
-    "Farrans",
-    "Wills Bros"
-  ],
   "smartrecruiters_sources": [
     {
       "name": "AECOM",
@@ -437,21 +287,74 @@
       "roads engineer",
       "resident engineer",
       "project engineer civil",
-      "transportation engineer",
+      "transport engineer",
       "setting out engineer",
-      "infrastructure engineer",
-      "construction engineer",
       "drainage engineer",
       "water engineer",
-      "assistant engineer",
+      "wastewater engineer",
+      "structural engineer",
+      "geotechnical engineer",
+      "traffic engineer",
+      "pavement engineer",
+      "rail engineer",
+      "permanent way engineer",
+      "utilities engineer",
       "civil inspector"
     ],
     "page_size": 100,
     "max_pages": 1,
-    "max_links": 120,
+    "max_links": 160,
     "navigation_timeout_ms": 25000,
-    "search_budget_seconds": 180,
-    "detail_budget_seconds": 180,
+    "search_budget_seconds": 240,
+    "detail_budget_seconds": 240,
     "settle_ms": 1000
-  }
+  },
+  "successfactors_sources": [
+    {
+      "name": "Mott MacDonald",
+      "enabled": true,
+      "search_url": "https://apply.mottmac.com/search/?q=",
+      "allowed_hosts": [
+        "apply.mottmac.com"
+      ],
+      "job_link_patterns": [
+        "/job/"
+      ],
+      "exclude_link_patterns": [
+        "graduate",
+        "intern",
+        "apprentice",
+        "placement"
+      ],
+      "page_size": 20,
+      "max_pages": 60,
+      "max_links": 160,
+      "require_location": true,
+      "max_detail_seconds": 120
+    }
+  ],
+  "oleeo_sources": [
+    {
+      "name": "PublicJobs",
+      "enabled": true,
+      "landing_url": "https://www.publicjobs.ie/en/",
+      "board_host": "publicjobs.tal.net",
+      "allowed_hosts": [
+        "publicjobs.tal.net"
+      ],
+      "job_link_patterns": [
+        "/candidate/so/",
+        "/opp/"
+      ],
+      "exclude_link_patterns": [
+        "/login",
+        "/register",
+        "help-centre"
+      ],
+      "max_pages": 30,
+      "max_links": 160,
+      "assume_ireland": true,
+      "max_detail_seconds": 150
+    }
+  ]
 }

@@ -13,7 +13,7 @@ def now() -> str:
 
 
 class StateStore:
-    VERSION = 2
+    VERSION = 3
 
     def __init__(self, path: str) -> None:
         self.path = Path(path)
@@ -24,13 +24,30 @@ class StateStore:
         if not self.path.exists():
             return
         raw = json.loads(self.path.read_text(encoding="utf-8"))
-        if raw.get("version") != self.VERSION or not isinstance(raw.get("jobs"), dict):
+        if not isinstance(raw.get("jobs"), dict):
+            raise RuntimeError("Unsupported or corrupt state")
+        version = raw.get("version")
+        if version not in {2, self.VERSION}:
             raise RuntimeError("Unsupported or corrupt state version")
+        # Version 2 used title/company/location as the record key. Keep those records
+        # readable and migrate them lazily when a matching posting is seen.
         self.data = raw
-        self.dirty = False
+        self.data["version"] = self.VERSION
+        self.dirty = version != self.VERSION
+
+    def _record_key(self, job: Job) -> str | None:
+        if job.identity_key in self.data["jobs"]:
+            return job.identity_key
+        if job.legacy_identity_key in self.data["jobs"]:
+            return job.legacy_identity_key
+        return None
+
+    def _record_for(self, job: Job) -> dict | None:
+        key = self._record_key(job)
+        return self.data["jobs"].get(key) if key else None
 
     def needs_review(self, job: Job, profile_version: str, policy_version: str, ai_available: bool) -> bool:
-        record = self.data["jobs"].get(job.identity_key)
+        record = self._record_for(job)
         if not record:
             return True
         if record.get("content_hash") != job.content_hash:
@@ -43,7 +60,10 @@ class StateStore:
         return Assessment.from_dict(raw).provisional and ai_available
 
     def record(self, job: Job, assessment: Assessment, profile_version: str, policy_version: str) -> None:
-        previous = self.data["jobs"].get(job.identity_key, {})
+        old_key = self._record_key(job)
+        previous = self.data["jobs"].get(old_key, {}) if old_key else {}
+        if old_key and old_key != job.identity_key:
+            del self.data["jobs"][old_key]
         self.data["jobs"][job.identity_key] = {
             "identity_key": job.identity_key,
             "url": job.canonical_url,
@@ -63,7 +83,7 @@ class StateStore:
         self.dirty = True
 
     def touch(self, job: Job) -> None:
-        record = self.data["jobs"].get(job.identity_key)
+        record = self._record_for(job)
         if not record:
             return
         today = now()[:10]
@@ -72,7 +92,7 @@ class StateStore:
             self.dirty = True
 
     def assessment_for(self, job: Job, profile_version: str, policy_version: str) -> Assessment | None:
-        record = self.data["jobs"].get(job.identity_key)
+        record = self._record_for(job)
         if not record:
             return None
         if record.get("content_hash") != job.content_hash:
@@ -83,11 +103,14 @@ class StateStore:
         return Assessment.from_dict(raw) if isinstance(raw, dict) else None
 
     def is_notified(self, job: Job) -> bool:
-        record = self.data["jobs"].get(job.identity_key, {})
-        return record.get("notified_hash") == job.content_hash
+        record = self._record_for(job) or {}
+        return bool(record.get("notified_at"))
 
     def mark_notified(self, job: Job) -> None:
-        record = self.data["jobs"][job.identity_key]
+        key = self._record_key(job)
+        if not key:
+            raise KeyError(job.identity_key)
+        record = self.data["jobs"][key]
         record["notified_hash"] = job.content_hash
         record["notified_at"] = now()
         self.dirty = True

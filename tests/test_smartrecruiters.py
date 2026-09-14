@@ -82,3 +82,60 @@ def test_smartrecruiters_skips_non_target_title(monkeypatch):
 
     monkeypatch.setattr(source.client, "request", lambda *args, **kwargs: FakeResponse(listing))
     assert source.discover() == []
+
+
+def test_irrelevant_postings_do_not_consume_candidate_cap(monkeypatch):
+    source = SmartRecruitersCompanySource(
+        {
+            "name": "AECOM",
+            "company_identifier": "AECOM2",
+            "country": "ie",
+            "max_links": 1,
+        },
+        request_timeout=5,
+        max_links=1,
+    )
+    first_page = {
+        "limit": 2,
+        "offset": 0,
+        "totalFound": 3,
+        "content": [
+            {"id": "1", "name": "Finance Manager", "location": {"city": "Dublin", "country": "ie"}},
+            {"id": "2", "name": "HR Business Partner", "location": {"city": "Dublin", "country": "ie"}},
+        ],
+    }
+    second_page = {
+        "limit": 2,
+        "offset": 2,
+        "totalFound": 3,
+        "content": [
+            {
+                "id": "3",
+                "name": "Civil Engineer",
+                "location": {"city": "Dublin", "country": "ie"},
+                "ref": "https://api.smartrecruiters.com/v1/companies/AECOM2/postings/3",
+            }
+        ],
+    }
+    detail = {
+        "id": "3",
+        "name": "Civil Engineer",
+        "location": {"city": "Dublin", "country": "ie"},
+        "company": {"name": "AECOM"},
+        "jobAd": {
+            "jobDescription": "<p>Civil engineering roads drainage and transport infrastructure.</p>",
+            "qualifications": "<p>Five years experience.</p>",
+        },
+        "applyUrl": "https://jobs.smartrecruiters.com/AECOM2/3",
+    }
+
+    def fake_request(method, url, **kwargs):
+        if url.endswith("/3"):
+            return FakeResponse(detail)
+        if "offset=2" in url:
+            return FakeResponse(second_page)
+        return FakeResponse(first_page)
+
+    monkeypatch.setattr(source.client, "request", fake_request)
+    jobs = source.discover()
+    assert [job.title for job in jobs] == ["Civil Engineer"]

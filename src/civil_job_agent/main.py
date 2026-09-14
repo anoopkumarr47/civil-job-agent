@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from collections import Counter
 
 from .ai import AIClient
@@ -8,7 +9,14 @@ from .config import Settings, load_json
 from .models import Assessment, Job, SourceReport
 from .notify import send_email
 from .scoring import POLICY_VERSION, enforce_final_policy, preliminary_assessment, should_ai_refine
-from .sources import ConfiguredWebBoard, GmailJobAlertSource, JobsIrelandSource, SmartRecruitersCompanySource
+from .sources import (
+    ConfiguredWebBoard,
+    GmailJobAlertSource,
+    JobsIrelandSource,
+    OleeoSource,
+    SmartRecruitersCompanySource,
+    SuccessFactorsSource,
+)
 from .state import StateStore
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -22,15 +30,45 @@ def _merge_duplicate(current: Job, incoming: Job) -> Job:
     location = richer.location or current.location or incoming.location
     salary = richer.salary_text or current.salary_text or incoming.salary_text
     posted = richer.posted_text or current.posted_text or incoming.posted_text
-    return Job(" + ".join(sources), richer.url, richer.title, company, location, richer.text, salary, posted)
+    return Job(" + ".join(sources), current.url, richer.title, company, location, richer.text, salary, posted)
+
+
+def _description_tokens(job: Job) -> set[str]:
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]{4,}", job.text.casefold())
+        if token not in {"with", "that", "this", "from", "your", "will", "have", "role", "team", "work"}
+    }
+
+
+def _same_cross_source_posting(a: Job, b: Job) -> bool:
+    if not a.company or not b.company or a.duplicate_signature != b.duplicate_signature:
+        return False
+    left = _description_tokens(a)
+    right = _description_tokens(b)
+    if not left or not right:
+        return False
+    overlap = len(left & right) / max(1, min(len(left), len(right)))
+    return overlap >= 0.72
 
 
 def _dedupe(jobs: list[Job]) -> list[Job]:
-    best: dict[str, Job] = {}
+    # First collapse exact canonical URLs. Then conservatively merge the same posting
+    # discovered through two sources, but never collapse distinct same-title requisitions.
+    by_url: dict[str, Job] = {}
     for job in jobs:
-        current = best.get(job.identity_key)
-        best[job.identity_key] = job if current is None else _merge_duplicate(current, job)
-    return list(best.values())
+        current = by_url.get(job.identity_key)
+        by_url[job.identity_key] = job if current is None else _merge_duplicate(current, job)
+
+    unique: list[Job] = []
+    for job in by_url.values():
+        for index, current in enumerate(unique):
+            if _same_cross_source_posting(current, job):
+                unique[index] = _merge_duplicate(current, job)
+                break
+        else:
+            unique.append(job)
+    return unique
 
 
 def _build_sources(settings: Settings, cfg: dict) -> list:
@@ -50,6 +88,24 @@ def _build_sources(settings: Settings, cfg: dict) -> list:
         if entry.get("enabled", True):
             sources.append(
                 SmartRecruitersCompanySource(
+                    entry,
+                    request_timeout=settings.request_timeout,
+                    max_links=settings.max_links_per_source,
+                )
+            )
+    for entry in cfg.get("successfactors_sources", []):
+        if entry.get("enabled", True):
+            sources.append(
+                SuccessFactorsSource(
+                    entry,
+                    request_timeout=settings.request_timeout,
+                    max_links=settings.max_links_per_source,
+                )
+            )
+    for entry in cfg.get("oleeo_sources", []):
+        if entry.get("enabled", True):
+            sources.append(
+                OleeoSource(
                     entry,
                     request_timeout=settings.request_timeout,
                     max_links=settings.max_links_per_source,
@@ -87,7 +143,8 @@ def run(settings: Settings) -> int:
     sources_cfg = load_json(settings.sources_file)
     state = StateStore(settings.state_file)
     if settings.dry_run:
-        logger.info("DRY RUN: state will not be loaded/written and email will not be sent")
+        logger.info("DRY RUN: state is read-only; email and state writes are disabled")
+        state.load()
     else:
         missing = [
             name
