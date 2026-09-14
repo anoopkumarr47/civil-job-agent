@@ -102,3 +102,102 @@ def test_dedupe_merges_highly_similar_cross_source_posting():
     result = main._dedupe([a, b])
     assert len(result) == 1
     assert "A" in result[0].source and "B" in result[0].source
+
+
+def test_health_degrades_when_provisional_ratio_is_high(settings):
+    from civil_job_agent.ai import AIClient
+    from civil_job_agent.models import Assessment, SourceReport
+
+    ai = AIClient(
+        replace(
+            settings,
+            groq_api_key="groq-key",
+            gemini_api_key="gemini-key",
+        )
+    )
+    ai.providers["groq"].disabled_reason = "preflight failed"
+    ai.providers["gemini"].disabled_reason = "preflight failed"
+    vacancy = Job(
+        "Fake",
+        "https://example/1",
+        "Project Engineer",
+        "Firm",
+        "Dublin",
+        "civil roads",
+    )
+    assessments = {
+        vacancy.identity_key: Assessment(
+            True,
+            82,
+            "project_engineer",
+            "critical_skills",
+            "high",
+            "candidate",
+            provisional=True,
+        )
+    }
+    health = main._health_payload(
+        settings,
+        reports=[SourceReport("Fake", 1, True)],
+        jobs=[vacancy],
+        assessments=assessments,
+        ai=ai,
+    )
+    assert health["status"] == "degraded"
+    assert health["provisional_ratio"] == 1.0
+
+
+def test_health_is_healthy_with_one_ready_provider(settings):
+    from civil_job_agent.ai import AIClient
+    from civil_job_agent.models import Assessment, SourceReport
+
+    ai = AIClient(replace(settings, gemini_api_key="gemini-key"))
+    vacancy = Job(
+        "Fake",
+        "https://example/1",
+        "Highway Engineer",
+        "Firm",
+        "Dublin",
+        "civil roads",
+    )
+    assessments = {
+        vacancy.identity_key: Assessment(
+            True,
+            95,
+            "highway_engineer",
+            "critical_skills",
+            "high",
+            "fit",
+            source="deterministic",
+        )
+    }
+    health = main._health_payload(
+        settings,
+        reports=[SourceReport("Fake", 1, True)],
+        jobs=[vacancy],
+        assessments=assessments,
+        ai=ai,
+    )
+    assert health["status"] == "healthy"
+    assert health["provisional"] == 0
+
+
+def test_dry_run_clear_match_survives_without_ai(settings, monkeypatch, tmp_path):
+    path = tmp_path / "state.json"
+    health_path = tmp_path / "health.json"
+    dry = replace(
+        settings,
+        state_file=str(path),
+        run_health_file=str(health_path),
+        dry_run=True,
+        groq_api_key=None,
+        gemini_api_key=None,
+    )
+    monkeypatch.setattr(main, "_build_sources", lambda *_: [FakeSource()])
+    assert main.run(dry) == 0
+
+    import json
+
+    health = json.loads(health_path.read_text(encoding="utf-8"))
+    assert health["status"] == "healthy"
+    assert health["provisional"] == 0
