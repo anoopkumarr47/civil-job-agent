@@ -201,3 +201,26 @@ def test_dry_run_clear_match_survives_without_ai(settings, monkeypatch, tmp_path
     health = json.loads(health_path.read_text(encoding="utf-8"))
     assert health["status"] == "healthy"
     assert health["provisional"] == 0
+
+
+def test_health_degrades_when_configured_backup_is_down(settings):
+    from civil_job_agent.ai import AIClient
+    from civil_job_agent.models import SourceReport
+
+    ai = AIClient(
+        replace(
+            settings,
+            groq_api_key="groq-key",
+            gemini_api_key="gemini-key",
+        )
+    )
+    ai.providers["gemini"].disabled_reason = "preflight incompatible"
+    health = main._health_payload(
+        settings,
+        reports=[SourceReport("Fake", 1, True)],
+        jobs=[],
+        assessments={},
+        ai=ai,
+    )
+    assert health["status"] == "degraded"
+    assert any("redundancy reduced" in reason for reason in health["reasons"])
