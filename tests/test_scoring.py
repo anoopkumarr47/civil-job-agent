@@ -1,7 +1,11 @@
 import pytest
 
 from civil_job_agent.models import Job
-from civil_job_agent.scoring import preliminary_assessment, should_ai_refine
+from civil_job_agent.scoring import (
+    is_deterministic_clear_match,
+    preliminary_assessment,
+    should_ai_refine,
+)
 
 
 def job(title, text="", salary="", source="test", location="Dublin, Ireland", url="https://example/jobs/1"):
@@ -237,3 +241,39 @@ def test_it_project_manager_is_not_a_civil_match(profile):
     result = preliminary_assessment(candidate, profile)
     assert result.hard_reject
     assert not result.matched
+
+
+def test_clear_highway_match_bypasses_ai(profile):
+    candidate = job(
+        "Highway Engineer",
+        "Civil engineering highway road design Civil 3D horizontal alignment vertical alignment permanent.",
+        salary="€55,000",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert result.matched
+    assert is_deterministic_clear_match(result, profile)
+    assert not should_ai_refine(candidate, result, profile)
+
+
+def test_generic_project_engineer_still_requires_ai(profile):
+    candidate = job(
+        "Project Engineer",
+        "Civil engineering transport infrastructure roads construction project delivery.",
+        salary="€55,000",
+    )
+    result = preliminary_assessment(candidate, profile)
+    assert not result.hard_reject
+    assert should_ai_refine(candidate, result, profile)
+
+
+def test_clear_match_with_uncertainty_gap_does_not_bypass_ai(profile):
+    result = preliminary_assessment(
+        job(
+            "Highway Engineer",
+            "Civil roads highway design Civil 3D. Chartered status is desirable; verify requirements.",
+            salary="€55,000",
+        ),
+        profile,
+    )
+    result.gaps.append("verify permit condition")
+    assert not is_deterministic_clear_match(result, profile)
