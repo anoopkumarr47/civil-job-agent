@@ -505,15 +505,12 @@ def test_short_groq_cooldown_is_waited_and_retried(settings, monkeypatch):
         )
 
     monkeypatch.setattr(client, "_groq_call", fake_groq)
-    monkeypatch.setattr("civil_job_agent.ai.time.sleep", lambda *_: None)
-    monkeypatch.setattr(client, "_wait_for_short_cooldown", lambda max_wait=6.0: True)
-    # Simulate cooldown expiry when the retry is attempted.
-    original_ready = client.providers["groq"].ready
-    monkeypatch.setattr(
-        client.providers["groq"],
-        "ready",
-        lambda: len(calls) >= 1,
-    )
+
+    def recover(max_wait=6.0):
+        client.providers["groq"].cooldown_until = 0.0
+        return True
+
+    monkeypatch.setattr(client, "_wait_for_short_cooldown", recover)
 
     result = client.refine(vacancy, preliminary)
     assert calls == ["groq", "groq"]
