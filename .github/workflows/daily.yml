@@ -96,7 +96,8 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Model IDs are intentionally pinned in version control. Do not inherit stale repo variables.
           GROQ_MODEL: "openai/gpt-oss-20b"
-          GEMINI_MODEL: "gemini-3.5-flash"
+          GROQ_BACKUP_MODEL: "openai/gpt-oss-120b"
+          GEMINI_MODEL: "gemini-3.1-flash-lite"
           GROQ_MIN_INTERVAL_SECONDS: "8"
           AI_MAX_EVIDENCE_CHARS: "3000"
           AI_PREFLIGHT: "true"
