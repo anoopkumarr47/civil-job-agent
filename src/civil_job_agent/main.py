@@ -177,7 +177,16 @@ def _health_payload(
     operational = [
         name for name, state in provider_health.items() if state.get("operational")
     ]
-    ready = [name for name, state in provider_health.items() if state.get("ready")]
+    configured_vendors = {
+        str(state.get("vendor"))
+        for state in provider_health.values()
+        if state.get("configured") and state.get("vendor")
+    }
+    operational_vendors = {
+        str(state.get("vendor"))
+        for state in provider_health.values()
+        if state.get("operational") and state.get("vendor")
+    }
 
     reasons: list[str] = []
     status = "healthy"
@@ -190,10 +199,12 @@ def _health_payload(
     if configured and not operational:
         status = "degraded" if status == "healthy" else status
         reasons.append("no configured AI lane passed capability health checks")
-    elif len(configured) >= 2 and len(operational) < 2:
+    elif len(configured_vendors) >= 2 and len(operational_vendors) < 2:
         status = "degraded" if status == "healthy" else status
         reasons.append(
-            f"AI redundancy critically reduced: {len(operational)}/{len(configured)} configured lanes operational"
+            "AI vendor redundancy critically reduced: "
+            f"{len(operational_vendors)}/{len(configured_vendors)} "
+            "independent vendors operational"
         )
     if ai_relevant and provisional_ratio > settings.ai_max_provisional_ratio:
         status = "degraded" if status == "healthy" else status
@@ -220,6 +231,8 @@ def _health_payload(
         "provisional": provisional,
         "provisional_ratio": round(provisional_ratio, 4),
         "providers": provider_health,
+        "configured_ai_vendors": sorted(configured_vendors),
+        "operational_ai_vendors": sorted(operational_vendors),
         "ai_calls_by_model": dict(sorted(ai.calls_by_model.items())) if ai else {},
     }
 
