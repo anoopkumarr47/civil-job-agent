@@ -29,7 +29,7 @@ def _merge_duplicate(current: Job, incoming: Job) -> Job:
     location = richer.location or current.location or incoming.location
     salary = richer.salary_text or current.salary_text or incoming.salary_text
     posted = richer.posted_text or current.posted_text or incoming.posted_text
-    return Job(" + ".join(sources), richer.url, richer.title, company, location, richer.text, salary, posted)
+    return Job(" + ".join(sources), current.url, richer.title, company, location, richer.text, salary, posted)
 
 
 def _description_tokens(job: Job) -> set[str]:
