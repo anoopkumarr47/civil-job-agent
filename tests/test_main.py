@@ -115,7 +115,8 @@ def test_health_degrades_when_provisional_ratio_is_high(settings):
             gemini_api_key="gemini-key",
         )
     )
-    ai.providers["groq"].disabled_reason = "preflight failed"
+    ai.providers["groq_primary"].disabled_reason = "preflight failed"
+    ai.providers["groq_backup"].disabled_reason = "preflight failed"
     ai.providers["gemini"].disabled_reason = "preflight failed"
     vacancy = Job(
         "Fake",
@@ -203,7 +204,7 @@ def test_dry_run_clear_match_survives_without_ai(settings, monkeypatch, tmp_path
     assert health["provisional"] == 0
 
 
-def test_health_degrades_when_configured_backup_is_down(settings):
+def test_health_remains_healthy_with_two_operational_lanes(settings):
     from civil_job_agent.ai import AIClient
     from civil_job_agent.models import SourceReport
 
@@ -214,7 +215,30 @@ def test_health_degrades_when_configured_backup_is_down(settings):
             gemini_api_key="gemini-key",
         )
     )
-    ai.providers["gemini"].disabled_reason = "preflight incompatible"
+    ai.providers["gemini"].disabled_reason = "daily quota exhausted"
+    health = main._health_payload(
+        settings,
+        reports=[SourceReport("Fake", 1, True)],
+        jobs=[],
+        assessments={},
+        ai=ai,
+    )
+    assert health["status"] == "healthy"
+
+
+def test_health_degrades_when_only_one_ai_lane_remains(settings):
+    from civil_job_agent.ai import AIClient
+    from civil_job_agent.models import SourceReport
+
+    ai = AIClient(
+        replace(
+            settings,
+            groq_api_key="groq-key",
+            gemini_api_key="gemini-key",
+        )
+    )
+    ai.providers["groq_backup"].disabled_reason = "preflight failed"
+    ai.providers["gemini"].disabled_reason = "daily quota exhausted"
     health = main._health_payload(
         settings,
         reports=[SourceReport("Fake", 1, True)],
@@ -223,7 +247,7 @@ def test_health_degrades_when_configured_backup_is_down(settings):
         ai=ai,
     )
     assert health["status"] == "degraded"
-    assert any("redundancy reduced" in reason for reason in health["reasons"])
+    assert any("critically reduced" in reason for reason in health["reasons"])
 
 
 def test_health_does_not_degrade_for_temporary_provider_cooldown(settings):
@@ -238,7 +262,7 @@ def test_health_does_not_degrade_for_temporary_provider_cooldown(settings):
             gemini_api_key=None,
         )
     )
-    ai.providers["groq"].cooldown_until = time.monotonic() + 2
+    ai.providers["groq_primary"].cooldown_until = time.monotonic() + 2
 
     health = main._health_payload(
         settings,
@@ -248,5 +272,6 @@ def test_health_does_not_degrade_for_temporary_provider_cooldown(settings):
         ai=ai,
     )
     assert health["status"] == "healthy"
-    assert health["providers"]["groq"]["operational"]
-    assert not health["providers"]["groq"]["ready"]
+    assert health["providers"]["groq_primary"]["operational"]
+    assert not health["providers"]["groq_primary"]["ready"]
+    assert health["providers"]["groq_backup"]["ready"]
