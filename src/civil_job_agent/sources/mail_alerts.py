@@ -3,13 +3,14 @@ from __future__ import annotations
 import email
 import imaplib
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.header import decode_header, make_header
 from urllib.parse import parse_qs, unquote, urlparse
 
 from bs4 import BeautifulSoup
 
 from ..models import Job, canonicalize_url, normalize_space
+from ..relevance import NON_CIVIL, classify_civil_domain, is_plausible_target_title
 from .base import Source
 
 logger = logging.getLogger(__name__)
@@ -34,6 +35,12 @@ ROLE_PATTERNS = (
     r"\b(?:senior\s+|principal\s+)?transport(?:ation)?\s+engineer\b",
     r"\bsetting\s+out\s+engineer\b",
     r"\binfrastructure\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?structural\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?geotechnical\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?drainage\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?(?:water|wastewater)\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?(?:rail|track|permanent\s+way)\s+engineer\b",
+    r"\b(?:senior\s+|principal\s+)?traffic\s+engineer\b",
 )
 
 
@@ -85,7 +92,7 @@ class GmailJobAlertSource(Source):
 
     def discover(self) -> list[Job]:
         results: list[Job] = []
-        since = (datetime.utcnow() - timedelta(days=self.lookback_days)).strftime("%d-%b-%Y")
+        since = (datetime.now(timezone.utc) - timedelta(days=self.lookback_days)).strftime("%d-%b-%Y")
         with imaplib.IMAP4_SSL("imap.gmail.com", 993) as client:
             client.login(self.address, self.password)
             client.select("INBOX", readonly=True)
@@ -125,9 +132,10 @@ class GmailJobAlertSource(Source):
                     context_node = anchor.parent.parent if anchor.parent and anchor.parent.parent else anchor.parent
                     context = normalize_space(context_node.get_text(" ") if context_node else label)
                     title = _title_from_alert(label, context)
-                    if not title or len(title) < 3:
+                    if not title or len(title) < 3 or not is_plausible_target_title(title):
                         continue
-                    if not any(term in f"{title} {context}".casefold() for term in ["civil", "engineer", "highway", "road", "resident", "transport", "infrastructure", "site"]):
+                    domain = classify_civil_domain(title, context)
+                    if domain.domain == NON_CIVIL:
                         continue
                     results.append(
                         Job(
