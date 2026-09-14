@@ -11,6 +11,7 @@ from playwright.sync_api import sync_playwright
 
 from ..http import USER_AGENT, HttpClient
 from ..models import Job, canonicalize_url, normalize_space
+from ..relevance import NON_CIVIL, classify_civil_domain, is_plausible_target_title
 from .base import Source
 
 logger = logging.getLogger(__name__)
@@ -62,25 +63,27 @@ def _location_name(value: object) -> str:
 
 
 def _infer_location(text: str) -> str:
-    head = normalize_space(text)[:1200]
-    ireland_patterns = (
-        ("Dublin", r"\bDublin\b"),
-        ("Cork", r"\bCork\b"),
-        ("Galway", r"\bGalway\b"),
-        ("Limerick", r"\bLimerick\b"),
-        ("Waterford", r"\bWaterford\b"),
-        ("Ireland", r"\b(?:Republic of )?Ireland\b"),
+    head = normalize_space(text)[:2500]
+    ireland_places = (
+        "Dublin", "Cork", "Galway", "Limerick", "Waterford", "Kilkenny", "Kildare",
+        "Wicklow", "Meath", "Louth", "Laois", "Offaly", "Westmeath", "Wexford",
+        "Tipperary", "Clare", "Kerry", "Mayo", "Sligo", "Leitrim", "Roscommon",
+        "Cavan", "Monaghan", "Donegal", "Longford", "Carlow", "Athlone", "Naas",
+        "Drogheda", "Dundalk", "Mullingar", "Letterkenny", "Castlebar",
     )
     import re
-    for label, pattern in ireland_patterns:
-        if re.search(pattern, head, re.I):
-            return f"{label}, Ireland" if label != "Ireland" else "Ireland"
+    for place in ireland_places:
+        if re.search(rf"\b{re.escape(place)}\b", head, re.I):
+            return f"{place}, Ireland"
+    if re.search(r"\b(?:Republic of )?Ireland\b|\bIE\b", head, re.I):
+        return "Ireland"
+
     foreign_patterns = (
-        ("United Kingdom", r"\bUnited Kingdom\b"),
+        ("United Kingdom", r"\bUnited Kingdom\b|\bUK\b|\bEngland\b|\bScotland\b|\bWales\b"),
         ("Middle East", r"\bMiddle East\b"),
         ("Australia", r"\bAustralia\b"),
         ("Canada", r"\bCanada\b"),
-        ("United States", r"\bUnited States\b"),
+        ("United States", r"\bUnited States\b|\bUSA\b"),
         ("Turkey", r"\bTurkey\b"),
         ("India", r"\bIndia\b"),
     )
@@ -137,6 +140,12 @@ class ConfiguredWebBoard(Source):
                 continue
             href = canonicalize_url(str(item.get("href", "")))
             label = normalize_space(str(item.get("text", "")))
+            if (
+                self.config.get("plausible_title_links_only", False)
+                and label
+                and not is_plausible_target_title(label)
+            ):
+                continue
             if href and self._looks_like_job(href, label) and href not in found:
                 found.append(href)
                 if len(found) >= self.max_links:
@@ -236,9 +245,10 @@ class ConfiguredWebBoard(Source):
             return None
         if self.config.get("require_location", False) and not location:
             return None
-        required_terms = [str(x).casefold() for x in self.config.get("required_any_terms", [])]
-        haystack = f"{title} {description[:4000]}".casefold()
-        if required_terms and not any(term in haystack for term in required_terms):
+        if not is_plausible_target_title(title):
+            return None
+        domain = classify_civil_domain(title, description[:8000])
+        if domain.domain == NON_CIVIL:
             return None
         return Job(
             self.name,

@@ -1,71 +1,59 @@
-# Free-model provider waterfall
+# AI provider waterfall
 
-Research snapshot: 2026-09-14.
+Research/configuration snapshot: 2026-09-14.
 
-## Implemented production order
+## Production order
 
-### 1. Cerebras — primary
-- model: `gpt-oss-120b`
-- secret: `CEREBRAS_API_KEY`
-- optional variable: `CEREBRAS_MODEL=gpt-oss-120b`
-- endpoint: `https://api.cerebras.ai/v1/chat/completions`
-
-Cerebras receives every plausible vacancy. Routine roles use medium reasoning; senior/borderline/permit-sensitive roles use high reasoning.
-
-### 2. Groq — independent reviewer and fallback
-- model: `openai/gpt-oss-120b`
+### Groq — primary
+- model: `openai/gpt-oss-20b`
 - secret: `GROQ_API_KEY`
-- variable: `AI_MODEL=openai/gpt-oss-120b`
+- variable: `GROQ_MODEL=openai/gpt-oss-20b`
+- endpoint: `https://api.groq.com/openai/v1/chat/completions`
 
-Groq reviews borderline/high-risk Cerebras decisions and becomes first fallback if Cerebras fails.
+The deterministic layer already extracts civil-domain, fit, salary, permit, experience and blocker evidence, so the 20B model is a more quota-efficient primary classifier than the prior 120B configuration.
 
-### 3. Gemini — optional tertiary/tie-breaker
+### Gemini — independent fallback/reviewer
+- model: `gemini-3.5-flash-lite`
 - secret: `GEMINI_API_KEY`
-- model variable: `GEMINI_MODEL=gemini-3.5-flash-lite`
+- variable: `GEMINI_MODEL=gemini-3.5-flash-lite`
 
-Gemini is used only if the preferred providers fail or when an additional tie-break review is useful.
+Gemini provides a separate provider/quota failure domain. It is used when Groq fails and for ambiguous/high-risk second opinions.
 
-## Current Cerebras free-tier capacity
+## Quota and failure controls
 
-Cerebras currently documents approximately:
-- `gpt-oss-120b`: 64K TPM
-- 30 RPM
-- 1M TPD
+- compact decision evidence is capped by `AI_MAX_EVIDENCE_CHARS` (production default 4,200);
+- model output is capped at 500 tokens;
+- Groq calls are paced by `GROQ_MIN_INTERVAL_SECONDS`;
+- provider API calls do not perform generic multi-retry amplification;
+- permanent 400/401/402/403/404 provider errors trip a run-level circuit breaker;
+- ambiguous provider failures remain provisional and are retried on later runs;
+- unchanged jobs reuse persisted assessments;
+- manual dry-runs load state read-only;
+- live AI discovery is not triggered on every code push.
 
-This is a separate quota pool from Groq.
+## Decision flow
 
-## Analysis flow
+```text
+civil-domain + deterministic scoring
+              |
+              v
+       Groq GPT-OSS 20B
+          /          \
+    clear result   ambiguous/risky
+        |                |
+        |                v
+        |        Gemini Flash-Lite
+        |                |
+        +--------> conservative consensus
+                         |
+                         v
+                 final policy gate
 
+Groq unavailable -> Gemini fallback -> final policy gate
 ```
-broad deterministic capture
-          ↓
-Cerebras GPT-OSS 120B
- medium/high reasoning by risk
-          ↓
- clear result ───────────────→ final policy gate
-          │
- borderline/high-risk
-          ↓
-Groq GPT-OSS 120B independent review
-          ↓
- disagreement / provider failure
-          ↓
-optional Gemini tie-break/fallback
-          ↓
-conservative consensus
-          ↓
-final permit/score gate
-```
 
-## Future providers
+## Provider history
 
-### Cloudflare Workers AI
-Good independent quota pool and useful future fallback. Requires:
-- `CLOUDFLARE_ACCOUNT_ID`
-- `CLOUDFLARE_API_TOKEN`
+Cerebras was removed after live requests returned HTTP 402 Payment Required. Keeping an unusable primary provider added latency and pushed the entire fallback workload onto Groq.
 
-### OpenRouter free router
-Useful emergency low-volume fallback. Requires:
-- `OPENROUTER_API_KEY`
-
-The key design principle is that separate providers provide genuine quota/failure-domain diversification; multiple models within a single provider do not.
+A third provider should only be added if it provides a genuinely independent quota/failure domain and can preserve strict structured-output semantics.

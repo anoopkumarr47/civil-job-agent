@@ -14,10 +14,30 @@ def normalize_space(value: str) -> str:
 def canonicalize_url(url: str) -> str:
     parsed = urlparse(url)
     query = urlencode(
-        [(k, v) for k, v in parse_qsl(parsed.query, keep_blank_values=True)
-         if not k.lower().startswith("utm_") and k.lower() not in {"trk", "trackingid", "refid"}]
+        [
+            (k, v)
+            for k, v in parse_qsl(parsed.query, keep_blank_values=True)
+            if not k.lower().startswith("utm_")
+            and k.lower()
+            not in {
+                "trk",
+                "trackingid",
+                "refid",
+                "mc_cid",
+                "mc_eid",
+            }
+        ]
     )
-    return urlunparse((parsed.scheme or "https", parsed.netloc.lower(), parsed.path.rstrip("/"), "", query, ""))
+    return urlunparse(
+        (
+            parsed.scheme or "https",
+            parsed.netloc.lower(),
+            parsed.path.rstrip("/"),
+            "",
+            query,
+            "",
+        )
+    )
 
 
 @dataclass(frozen=True)
@@ -37,15 +57,28 @@ class Job:
 
     @property
     def content_hash(self) -> str:
-        # Posting-age/date labels can change every day without the vacancy changing.
-        # Exclude them from notification identity so "1 day ago" -> "2 days ago" cannot resend a job.
+        # Exclude posting-age/date labels: "1 day ago" -> "2 days ago" is not a content change.
         material = "\n".join(
-            [self.title, self.company, self.location, self.text, self.salary_text]
+            [
+                normalize_space(self.title),
+                normalize_space(self.company),
+                normalize_space(self.location),
+                normalize_space(self.text),
+                normalize_space(self.salary_text),
+            ]
         ).encode("utf-8", "ignore")
         return sha256(material).hexdigest()
 
     @property
     def identity_key(self) -> str:
+        # A posting URL/requisition is the safest state identity. Two distinct vacancies may
+        # legitimately share title/company/location, so those fields must not be the primary key.
+        material = self.canonical_url.encode("utf-8", "ignore")
+        return sha256(material).hexdigest()
+
+    @property
+    def legacy_identity_key(self) -> str:
+        """Version-2 state key retained only to migrate existing persisted records."""
         title = normalize_space(self.title).casefold()
         company = normalize_space(self.company).casefold()
         location = normalize_space(self.location).casefold()
@@ -54,6 +87,14 @@ class Job:
         else:
             material = self.canonical_url.encode("utf-8", "ignore")
         return sha256(material).hexdigest()
+
+    @property
+    def duplicate_signature(self) -> str:
+        """Conservative cross-source duplicate signature; not used as persistent identity."""
+        title = normalize_space(self.title).casefold()
+        company = normalize_space(self.company).casefold()
+        location = normalize_space(self.location).casefold()
+        return f"{title}|{company}|{location}"
 
 
 @dataclass

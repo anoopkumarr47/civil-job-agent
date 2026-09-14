@@ -1,117 +1,136 @@
 # Ireland Civil Job Agent
 
-Daily, precision-first discovery of Republic of Ireland civil-engineering jobs for an experienced India-based highway/infrastructure engineer seeking relocation.
+Production-oriented discovery, ranking and notification for Republic of Ireland civil-engineering jobs, tailored to an experienced India-based highway/infrastructure engineer seeking relocation.
 
-## Candidate fit encoded
+## Design goals
 
-The profile is derived from the supplied CV but excludes personal contact details. It targets a B.Tech Civil Engineer with 6.5+ years of experience, especially highways/roads/infrastructure, Civil 3D/AutoCAD, alignment design, DPRs, plans/profiles/cross-sections, estimates/tenders/BOQ, site supervision, QA/QC and contractor/consultant coordination.
+The system is optimized for two competing requirements:
 
-## Production source coverage
+- **high recall**: retain genuine civil opportunities even when the title is generic, multidisciplinary or outside the strongest highway niche;
+- **high precision**: do not treat generic terms such as `Infrastructure Engineer`, `Project Engineer` or `Design Engineer` as civil unless the vacancy evidence supports physical/civil infrastructure.
 
-Enabled sources include:
+No scraper can guarantee capture of every vacancy on the internet because employers and job boards change, block automation, or publish roles privately. This project therefore uses multiple independent source types, logs source health, preserves ambiguous candidates for review, and fails closed when source coverage is too weak.
+
+## Candidate profile
+
+The checked-in profile excludes personal contact details and targets a B.Tech Civil Engineer with 6.5+ years of experience, strongest in highways/roads/transport infrastructure, Civil 3D/AutoCAD, alignment design, DPRs, plans/profiles/cross-sections, estimates/tenders/BOQ, site supervision, QA/QC and contractor/consultant/utility coordination.
+
+## Civil-domain precision
+
+A shared relevance layer is used by employer boards, SmartRecruiters, email alerts and final scoring.
+
+Strong civil signals include civil engineering, highways/roads, drainage/water/wastewater, earthworks, rail civil works, setting out, transport infrastructure, public realm, pavement, construction/site supervision and Civil 3D.
+
+Strong non-civil signals include AWS/Azure/GCP, Kubernetes, Terraform, DevOps, cloud/network infrastructure, Windows/Linux server administration, Active Directory, VMware, cybersecurity, software development and site reliability engineering.
+
+Generic titles are deliberately treated as ambiguous until the description establishes the domain. Clearly non-civil technology roles are rejected before AI calls.
+
+## Source coverage
+
+Configured production sources include:
 
 - LocalGovernmentJobs
-- JobsIreland through a dedicated browser-first, single-session adapter across civil/site/highway/roads/resident/project/transportation/setting-out/infrastructure/construction/drainage/water/assistant-engineer/civil-inspector searches
+- JobsIreland via a dedicated browser-first paginated search adapter
 - Roughan O'Donovan / HireHive
 - DBFL / HireHive
-- AtkinsRéalis Ireland careers
-- Arup Ireland careers
-- AECOM Ireland via SmartRecruiters public Posting API
-- Egis Ireland via SmartRecruiters public Posting API
-- TOBIN direct careers
-- SYSTRA direct careers with explicit-location validation
-- LinkedIn daily job-alert emails via Gmail IMAP
-- Indeed daily job-alert emails via Gmail IMAP
+- AtkinsRéalis Ireland
+- Arup Ireland
+- AECOM via SmartRecruiters
+- Egis via SmartRecruiters
+- TOBIN
+- SYSTRA
+- Mott MacDonald via a paginated SAP SuccessFactors adapter
+- PublicJobs via a paginated Oleeo/TAL adapter discovered from the official publicjobs.ie landing page
+- LinkedIn job-alert email ingestion
+- Indeed job-alert email ingestion
 
-IrishJobs, Jobs.ie and PublicJobs generic adapters remain disabled because their current automated endpoints were not reliable enough. Nicholas O'Dwyer remains disabled until a dedicated current-vacancies adapter is verified.
+PublicJobs is queried through its current Oleeo job board with pagination. IrishJobs, Jobs.ie and Nicholas O'Dwyer remain disabled where live automation has not been reliable enough. A disabled source is not counted as coverage.
 
-This is broad coverage, not a claim that every civil vacancy published anywhere in Ireland is captured. Source health/counts are logged so coverage gaps remain visible.
+JobsIreland searches civil/site/highway/roads/resident/project/transport/setting-out/drainage/water/wastewater/structural/geotechnical/traffic/pavement/rail/permanent-way/utilities/inspection families. Specialized civil roles are no longer discarded merely by title; fit is handled later by scoring and AI review.
 
-## AI architecture
+## Matching pipeline
 
-Cerebras is the primary reasoning provider.
+```text
+discover
+  -> normalize
+  -> exact-URL dedupe
+  -> conservative cross-source duplicate merge
+  -> location / sponsorship / early-career hard gates
+  -> civil-domain classification
+  -> permit-aware deterministic scoring
+  -> Groq adjudication for plausible roles
+  -> Gemini fallback / independent review where useful
+  -> conservative final policy gate
+  -> notify only new non-provisional matches
+  -> persist state
+```
 
-1. deterministic rules hard-reject only obvious bad fits/blockers;
-2. every plausible civil/infrastructure vacancy receives AI review;
-3. Cerebras `gpt-oss-120b` receives a compact evidence packet (up to 6,000 decision-relevant characters);
-4. routine roles use medium reasoning effort;
-5. senior, borderline, permit-sensitive or requirement-gap roles use high reasoning effort;
-6. Groq `openai/gpt-oss-120b` provides independent review for borderline/high-risk Cerebras decisions and acts as first fallback if Cerebras is unavailable;
-7. Gemini is optional as a tertiary fallback/tie-breaker;
-8. provider outputs are consolidated conservatively, preserving plausible candidates while downgrading uncertain permit conclusions;
-9. unchanged jobs reuse state and are not reclassified on every run.
+Distinct requisitions with the same title/company/location are preserved. Cross-source duplicates are merged only when their normalized identity fields match and their descriptions are strongly similar.
+
+## AI providers
+
+Production uses two independent providers:
+
+1. Groq `openai/gpt-oss-20b` as primary.
+2. Gemini `gemini-3.5-flash-lite` as fallback and independent reviewer.
+
+Provider output is strict-schema validated. Permanent provider/auth/model 4xx errors trip a run-level circuit breaker. Rate-limit/provider failures do not automatically turn uncertain classifications into notifications; those assessments remain provisional and are retried later.
 
 ## Required GitHub Actions secrets
 
 - `EMAIL_ADDRESS`
 - `EMAIL_PASSWORD`
 - `EMAIL_TO`
-- `CEREBRAS_API_KEY`
 - `GROQ_API_KEY`
-
-Optional:
 - `GEMINI_API_KEY`
-
-Required Gmail values:
-
-```text
-EMAIL_ADDRESS = anoopkumarremesanpillai@gmail.com
-EMAIL_TO      = anoopkumarremesanpillai@gmail.com
-```
-
-`EMAIL_PASSWORD` must be the Google App Password for that Gmail account, not the normal Gmail password.
 
 Recommended Actions variables:
 
-- `CEREBRAS_MODEL=gpt-oss-120b`
-- `AI_MODEL=openai/gpt-oss-120b`
-- optional `GEMINI_MODEL=gemini-3.5-flash-lite`
+- `GROQ_MODEL=openai/gpt-oss-20b`
+- `GEMINI_MODEL=gemini-3.5-flash-lite`
 
-## Schedule
+Legacy `AI_MODEL` is still accepted as a fallback for `GROQ_MODEL`.
 
-The production workflow runs exactly twice daily:
+## Gemini key setup
 
-- 08:00 India Standard Time
-- 20:00 India Standard Time
+Create a Gemini API key in Google AI Studio and save it as the repository Actions secret `GEMINI_API_KEY`:
 
-IST is UTC+05:30, so GitHub Actions uses:
+`Repository -> Settings -> Secrets and variables -> Actions -> New repository secret`
+
+Never commit API keys or store them as repository variables.
+
+## Schedule and deployment
+
+The workflow is configured for 08:00 and 20:00 India Standard Time:
 
 ```yaml
 cron: "30 2,14 * * *"
 ```
 
-## Validation
+GitHub scheduled workflows execute only from the repository default branch. Therefore the production implementation and `.github/workflows/daily.yml` must be merged to `main` (the current default branch) before the twice-daily schedule is actually active.
 
-- CI runs the regression suite.
-- The real `Ireland Civil Job Agent` workflow also runs on pushes to `build/end-to-end-v1` in forced dry-run mode.
-- Branch dry-runs use the same discovery/ranking entry point as production.
-- Dry-run sends no job email and writes no state.
-- The workflow fails early if `CEREBRAS_API_KEY` is missing.
+Ordinary code pushes use the lightweight CI workflow. A live source/AI validation run is intentionally manual through `workflow_dispatch` so free-tier AI quotas are not consumed on every commit.
 
-## Manual test
+## State and notification safety
 
-After configuring secrets:
+State version 3 uses the canonical posting URL as the durable posting identity. Version-2 state is migrated lazily so already-notified jobs are not resent after the upgrade.
 
-1. GitHub → Actions → Ireland Civil Job Agent.
-2. Open the latest run for `build/end-to-end-v1`, or re-run the latest jobs.
-3. Confirm `Validate Cerebras configuration` succeeds.
-4. Confirm Gmail mailbox and SMTP validation succeeds.
-5. Inspect `Run actual job agent`.
-6. Look for source counts, `AI calls by model`, final matches and `Dry run complete`.
+Dry runs load existing state read-only. They never send email or write state, while unchanged postings avoid unnecessary AI reclassification.
 
-The branch run is automatically forced to `DRY_RUN=true`, so it will not email or persist state.
+Email is sent only after source-health checks pass. State is saved before notification, and notification hashes are recorded only after SMTP success.
 
+## Manual production validation
 
-### JobsIreland reliability
+After secrets are configured and the code is on the default branch:
 
-JobsIreland does not use the generic Requests-first web-board adapter. Its dedicated adapter:
+1. Open **Actions -> Ireland Civil Job Agent -> Run workflow**.
+2. Choose `dry_run=true`.
+3. Confirm AI and SMTP validation steps succeed.
+4. Inspect source-health counts and any source errors.
+5. Inspect `AI calls by model`, provisional count and dry-run matches.
+6. Spot-check generic titles such as Infrastructure Engineer to confirm IT/cloud roles are excluded and physical-infrastructure roles are retained.
+7. Run a normal manual workflow only after the dry-run is clean.
 
-- opens one Chromium browser/context for the entire JobsIreland sweep;
-- reuses that session across all configured search terms;
-- extracts numeric vacancy IDs from rendered job-detail links;
-- deduplicates the same vacancy across overlapping searches before detail parsing;
-- uses canonical `/en-US/job-Details?id=<id>` detail URLs;
-- applies one global search-time budget and one global detail-time budget;
-- never performs the old two-attempt 25-second Requests timeout before browser fallback.
+## Permit policy
 
-This avoids the repeated ~50-second-per-search timeout pattern seen from GitHub-hosted runners while preserving broad JobsIreland keyword coverage.
+Employment-permit figures are configuration, not guarantees. The candidate profile records the date on which the configured thresholds were reviewed. Changes to permit policy must bump either the profile version or scoring policy version so persisted jobs are re-evaluated.

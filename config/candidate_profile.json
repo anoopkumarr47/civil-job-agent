@@ -1,5 +1,5 @@
 {
-  "profile_version": "2026-09-13.1",
+  "profile_version": "2026-09-14.2",
   "years_experience": 6.5,
   "degree": "B.Tech Civil Engineering",
   "degree_year": 2018,
@@ -40,5 +40,23 @@
   "general_permit_salary_eur": 36605,
   "minimum_target_score": 76,
   "high_confidence_score": 90,
-  "include_northern_ireland": false
+  "include_northern_ireland": false,
+  "permit_policy_checked_date": "2026-09-14",
+  "target_role_families": [
+    "highways",
+    "roads",
+    "transportation",
+    "civil design",
+    "site engineering",
+    "resident engineering",
+    "project engineering",
+    "setting out",
+    "drainage",
+    "water/wastewater",
+    "rail civil",
+    "traffic/pavement",
+    "utilities",
+    "public realm",
+    "land/site development"
+  ]
 }

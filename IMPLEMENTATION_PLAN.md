@@ -1,76 +1,81 @@
-# Implementation plan / operating model
+# Production operating model
 
-## Goal
-Find realistic Republic of Ireland civil-engineering roles for an experienced India-based highway/infrastructure engineer, rank them for professional fit and relocation feasibility, and email only new high-quality matches daily.
+## Objective
 
-## Architecture
-Discover -> normalize -> cross-source dedupe -> deterministic hard filters -> permit-aware profile scoring -> AI adjudication for ambiguous roles -> rank -> notify -> persist content-hash state.
+Discover realistic Republic of Ireland civil-engineering opportunities with broad coverage, reject unrelated engineering/IT roles, rank candidate fit and relocation feasibility, and notify only new high-confidence opportunities.
 
-## Precision rules
-- experienced roles only; graduate/intern/apprentice roles are rejected;
-- explicit no-sponsorship/existing-right-to-work language is a hard reject;
-- Northern Ireland is excluded because it uses the UK immigration system;
-- highways/roads/transport/site/resident/civil-design roles receive the strongest fit scores;
-- generic and senior titles receive contextual/AI review instead of title-only acceptance;
-- mandatory Chartered status or mandatory Irish experience blocks a final match;
-- experience requirements above the candidate profile are capped/penalised;
-- contracts under 12 months are rejected as poor first-relocation targets;
-- 12-23 month offers are not treated as Critical Skills-compatible;
-- salary is used only from explicit salary/remuneration context so project values cannot be mistaken for pay;
-- public-sector pay-scale roles are not automatically rejected because employment-permit remuneration treatment can differ.
+## Recall strategy
 
-## Verified production source baseline
-Enabled after live GitHub Actions validation:
-- LocalGovernmentJobs
-- JobsIreland
-- Roughan O'Donovan / HireHive
-- DBFL / HireHive
-- AtkinsRéalis Ireland
-- Arup Ireland
-- LinkedIn alert email ingestion
-- Indeed alert email ingestion
+- search multiple independent employer/job-board sources plus LinkedIn and Indeed alert email;
+- retain generic titles when the description is ambiguous rather than dropping them at discovery time;
+- explicitly cover highways, roads, transportation, site/resident/project engineering, setting out, drainage, water/wastewater, rail/permanent way, traffic, pavement, structural, geotechnical, utilities, public realm and site-development families;
+- do not source-filter structural/geotechnical/bridge roles solely because they are outside the strongest CV niche;
+- preserve distinct requisitions even if title/company/location are identical;
+- use URL identity plus conservative content-similarity merging for duplicates;
+- log productive source counts and refuse notification if too few sources produce candidates.
 
-Disabled until dedicated adapters are independently validated:
-- IrishJobs
-- Jobs.ie
-- PublicJobs
-- Nicholas O'Dwyer
+## Precision strategy
 
-A disabled source must not be counted as coverage.
+- Republic of Ireland only; Northern Ireland is rejected;
+- graduate/intern/apprentice/placement roles are rejected;
+- explicit no-sponsorship/existing-right-to-work blockers are rejected;
+- generic titles do not establish civil domain by themselves;
+- cloud/network/software/data/DevOps infrastructure signals are a hard non-civil domain gate;
+- physical/civil evidence such as roads, drainage, earthworks, rail, construction/site works, Civil 3D, alignment, pavement and public realm establishes civil domain;
+- mandatory Chartered status and mandatory Irish experience block a final match;
+- excessive experience and specialist requirements reduce fit rather than causing indiscriminate source-level exclusion;
+- salary is parsed only from explicit compensation context;
+- short contracts are treated conservatively for first-time relocation.
 
-## Reliability rules
-- one failed source does not abort the whole run;
-- a minimum number of productive sources is required before notification;
-- malformed vacancy URLs are rejected before detail fetching;
-- each web source has a processing time budget;
-- transient HTTP/429 failures retry and honor Retry-After;
-- Groq JSON-schema generation failures retry in JSON-object mode with the same application-side validation;
-- permanent AI provider/model/auth failures disable AI for the rest of the run;
-- ambiguous AI-dependent classifications become provisional and retry when AI recovers;
-- unchanged vacancies are not reclassified;
-- profile or policy-version changes force reclassification;
-- volatile posting-age text is excluded from the notification content hash;
-- state is persisted before email and exact content hashes are marked notified only after SMTP success;
+## AI architecture
+
+Groq GPT-OSS 20B is the primary adjudicator. Gemini Flash-Lite is an independent fallback/reviewer. Both must conform to the same strict output schema.
+
+A provider that returns a permanent API/auth/model error is disabled for the remainder of the run. Provider outages create provisional assessments rather than unsafe notifications.
+
+Two-provider disagreement is resolved conservatively: an ambiguous deterministic candidate cannot become a final match on a one-versus-one AI split; a strong deterministic civil candidate can be retained when one reviewer provides a strong positive assessment.
+
+## Source adapters
+
+### JobsIreland
+
+Browser-first, one Chromium session per sweep, multiple civil search families, numeric vacancy-ID dedupe, JSON-LD/detail parsing, and global search/detail budgets.
+
+### SmartRecruiters
+
+Uses the public Posting API. Non-target postings do not consume the candidate cap, so later civil roles remain discoverable.
+
+### SAP SuccessFactors
+
+Paginates the employer job index and filters by Republic of Ireland location plus plausible engineering title before detail fetches. Mott MacDonald is configured through this adapter.
+
+### Oleeo / PublicJobs
+
+The adapter discovers the current Oleeo board URL from the stable publicjobs.ie landing page, follows pagination and filters plausible engineering titles before detail requests.
+
+### Generic employer boards
+
+Requests-first discovery with Chromium fallback. Detail pages prefer JobPosting JSON-LD and then rendered HTML. The shared civil-domain relevance gate runs before a candidate reaches scoring.
+
+### Email alerts
+
+LinkedIn and Indeed alerts are read via Gmail IMAP. Alert links are restricted to allowed hosts and pass the same shared relevance gate.
+
+## State and notification
+
+- state v3 identity = canonical posting URL;
+- v2 state remains readable and migrates lazily;
+- content changes, profile-version changes and scoring-policy changes force review;
+- provisional assessments retry when AI becomes available;
+- dry runs load state read-only;
+- notification hashes prevent repeat email;
 - SMTP retries three times;
-- stale job state is pruned after 90 days.
+- stale state is pruned after 90 days.
 
-## Pre-merge verification gate
-A push to the build branch must pass unit/regression tests and a secret-backed dry run that validates public sources, Gmail IMAP, Groq and SMTP authentication without sending mail or writing state.
+## Production deployment gate
 
-
-## JobsIreland dedicated adapter
-
-JobsIreland is intentionally excluded from the generic Requests-first board adapter.
-
-The dedicated `JobsIrelandSource` is browser-first because GitHub-hosted runners repeatedly experienced long Requests timeouts even though the site itself remained usable in Chromium. The adapter:
-
-- starts Chromium once per JobsIreland sweep;
-- reuses one browser context across all searches;
-- searches the configured civil/highway/site/resident/project/transport/infrastructure role families;
-- extracts numeric vacancy IDs from rendered links;
-- deduplicates vacancy IDs across overlapping searches before visiting details;
-- parses JSON-LD JobPosting data when available, with rendered-page fallback;
-- has global search and detail budgets so one source cannot monopolize the workflow;
-- reports partial results if the time budget is reached rather than hanging the full daily run.
-
-The old generic JobsIreland configuration remains disabled as an explicit record of why it was replaced.
+1. Regression CI must pass.
+2. Groq, Gemini and Gmail secrets must be present.
+3. A manual dry-run must show healthy source counts and sensible matches.
+4. The workflow must exist on the repository default branch, because GitHub schedules execute only from the default branch.
+5. Only after the dry-run is clean should a non-dry manual run be used to validate state persistence and notification.
