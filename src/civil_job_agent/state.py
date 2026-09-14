@@ -92,7 +92,7 @@ class StateStore:
             self.dirty = True
 
     def assessment_for(self, job: Job, profile_version: str, policy_version: str) -> Assessment | None:
-        record = self.data["jobs"].get(job.identity_key)
+        record = self._record_for(job)
         if not record:
             return None
         if record.get("content_hash") != job.content_hash:
