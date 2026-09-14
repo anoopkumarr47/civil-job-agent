@@ -4,6 +4,7 @@ import json
 import logging
 import re
 import time
+from dataclasses import dataclass
 
 import requests
 
@@ -104,6 +105,19 @@ EVIDENCE_KEYWORDS = (
 )
 
 
+@dataclass
+class ProviderState:
+    configured: bool
+    mode: str = "auto"
+    disabled_reason: str = ""
+    cooldown_until: float = 0.0
+    failures: int = 0
+    last_error: str = ""
+
+    def ready(self) -> bool:
+        return self.configured and not self.disabled_reason and time.monotonic() >= self.cooldown_until
+
+
 def compact_job_evidence(job: Job, max_chars: int) -> str:
     text = normalize_space(job.text)
     if not text:
@@ -119,12 +133,12 @@ def compact_job_evidence(job: Job, max_chars: int) -> str:
             seen.add(key)
             pieces.append(piece)
 
-    add(text[:900])
+    add(text[:700])
     fragments = re.split(r"(?<=[.!?])\s+|\s*[|•·]\s*|\n+", text)
     for fragment in fragments:
         lowered = fragment.casefold()
         if any(keyword in lowered for keyword in EVIDENCE_KEYWORDS):
-            add(fragment[:900])
+            add(fragment[:700])
 
     return "\n".join(pieces)[:max_chars]
 
@@ -133,38 +147,122 @@ class AIClient:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.http = HttpClient()
-        self.groq_available = bool(
-            settings.groq_api_key and settings.groq_model and settings.groq_api_url
-        )
-        self.gemini_available = bool(settings.gemini_api_key and settings.gemini_model)
-        self.available = self.groq_available or self.gemini_available
         self.calls_by_model: dict[str, int] = {}
         self._last_groq_at = 0.0
-        self._disabled_providers: set[str] = set()
+        self.providers: dict[str, ProviderState] = {
+            "groq": ProviderState(
+                configured=bool(
+                    settings.groq_api_key
+                    and settings.groq_model
+                    and settings.groq_api_url
+                )
+            ),
+            "gemini": ProviderState(
+                configured=bool(settings.gemini_api_key and settings.gemini_model)
+            ),
+        }
+
+    @property
+    def available(self) -> bool:
+        return any(state.ready() for state in self.providers.values())
 
     @staticmethod
-    def _permanent_provider_error(exc: Exception) -> bool:
-        if not isinstance(exc, requests.HTTPError) or exc.response is None:
-            return False
-        return exc.response.status_code in {400, 401, 402, 403, 404}
+    def _http_status(exc: Exception) -> int | None:
+        if isinstance(exc, requests.HTTPError) and exc.response is not None:
+            return exc.response.status_code
+        return None
 
-    def _disable_on_permanent_error(self, provider: str, exc: Exception) -> None:
-        if self._permanent_provider_error(exc):
-            self._disabled_providers.add(provider)
-            logger.warning(
-                "%s disabled for the remainder of this run after permanent API error: %s",
-                provider,
-                exc,
-            )
+    @staticmethod
+    def _http_detail(exc: Exception, limit: int = 1200) -> str:
+        if isinstance(exc, requests.HTTPError) and exc.response is not None:
+            text = normalize_space(exc.response.text)
+            return text[:limit] or str(exc)
+        return str(exc)[:limit]
+
+    @staticmethod
+    def _retry_after_seconds(exc: Exception, default: float) -> float:
+        if isinstance(exc, requests.HTTPError) and exc.response is not None:
+            value = exc.response.headers.get("Retry-After")
+            if value:
+                try:
+                    return max(1.0, min(300.0, float(value)))
+                except ValueError:
+                    pass
+        return default
 
     @staticmethod
     def _schema_generation_error(detail: str) -> bool:
         lowered = detail.casefold()
-        return (
-            "json_validate_failed" in lowered
-            or "failed to validate json" in lowered
-            or "generated json does not match" in lowered
+        return any(
+            marker in lowered
+            for marker in (
+                "json_validate_failed",
+                "failed to validate json",
+                "generated json does not match",
+                "json schema",
+                "response_format",
+                "responseschema",
+                "response schema",
+            )
         )
+
+    def _handle_provider_error(
+        self,
+        provider: str,
+        exc: Exception,
+        *,
+        preflight: bool = False,
+    ) -> None:
+        state = self.providers[provider]
+        state.failures += 1
+        state.last_error = self._http_detail(exc)
+        status = self._http_status(exc)
+
+        if status in {401, 402, 403, 404}:
+            state.disabled_reason = f"HTTP {status}: {state.last_error}"
+            logger.warning(
+                "%s disabled for this run after permanent API/model/auth error: %s",
+                provider,
+                state.last_error,
+            )
+            return
+
+        if status == 429:
+            cooldown = self._retry_after_seconds(exc, 60.0)
+            state.cooldown_until = time.monotonic() + cooldown
+            logger.warning(
+                "%s rate-limited; cooling down %.0fs and failing over immediately",
+                provider,
+                cooldown,
+            )
+            return
+
+        if status in {408, 425, 500, 502, 503, 504} or isinstance(
+            exc,
+            (requests.Timeout, requests.ConnectionError),
+        ):
+            cooldown = 30.0
+            state.cooldown_until = time.monotonic() + cooldown
+            logger.warning(
+                "%s temporarily unavailable; cooling down %.0fs and failing over immediately: %s",
+                provider,
+                cooldown,
+                state.last_error,
+            )
+            return
+
+        # A generic 400 can be request/schema specific. Never kill the whole provider
+        # on the first real vacancy. Preflight is the only place where an exhausted
+        # request-format fallback proves run-wide incompatibility.
+        if status == 400 and preflight:
+            state.disabled_reason = f"preflight incompatible: {state.last_error}"
+            logger.warning("%s disabled after failed capability preflight", provider)
+        elif status == 400 and state.failures >= 2:
+            state.disabled_reason = f"repeated request incompatibility: {state.last_error}"
+            logger.warning(
+                "%s disabled after repeated independent 400 responses",
+                provider,
+            )
 
     @staticmethod
     def _canonicalize(data: object) -> object:
@@ -247,13 +345,25 @@ class AIClient:
             source="ai-refined",
         )
 
-    def _messages(self, job: Job, preliminary: Assessment) -> list[dict[str, str]]:
+    def _messages(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        preflight: bool = False,
+    ) -> list[dict[str, str]]:
         evidence = compact_job_evidence(job, self.settings.ai_max_evidence_chars)
+        prefix = (
+            "Capability check. Classify this synthetic civil vacancy and obey the schema."
+            if preflight
+            else ""
+        )
         return [
             {"role": "system", "content": SYSTEM + "\n\n" + JSON_CONTRACT},
             {
                 "role": "user",
-                "content": json.dumps(
+                "content": prefix
+                + json.dumps(
                     {
                         "preliminary": preliminary.to_dict(),
                         "job": {
@@ -283,17 +393,19 @@ class AIClient:
         preliminary: Assessment,
         *,
         reasoning_effort: str,
-        strict_schema: bool,
+        mode: str,
+        preflight: bool = False,
     ) -> Assessment:
         if not self.settings.groq_api_key:
             raise RuntimeError("Groq API key is not configured")
         self._pace_groq()
         payload = {
             "model": self.settings.groq_model,
-            "messages": self._messages(job, preliminary),
+            "messages": self._messages(job, preliminary, preflight=preflight),
             "temperature": 0,
-            "max_tokens": 500,
+            "max_completion_tokens": 500,
             "reasoning_effort": reasoning_effort,
+            "include_reasoning": False,
             "response_format": (
                 {
                     "type": "json_schema",
@@ -303,7 +415,7 @@ class AIClient:
                         "schema": SCHEMA,
                     },
                 }
-                if strict_schema
+                if mode == "strict"
                 else {"type": "json_object"}
             ),
         }
@@ -336,42 +448,70 @@ class AIClient:
         job: Job,
         preliminary: Assessment,
         *,
-        reasoning_effort: str = "medium",
+        reasoning_effort: str = "low",
+        preflight: bool = False,
     ) -> Assessment:
+        state = self.providers["groq"]
+        if not state.ready():
+            raise RuntimeError("Groq is not currently available")
+        preferred = "json_object" if state.mode == "json_object" else "strict"
         try:
-            return self._groq_request(
+            result = self._groq_request(
                 job,
                 preliminary,
                 reasoning_effort=reasoning_effort,
-                strict_schema=True,
+                mode=preferred,
+                preflight=preflight,
             )
+            state.mode = preferred
+            state.failures = 0
+            return result
         except requests.HTTPError as exc:
-            status = exc.response.status_code if exc.response is not None else None
-            detail = exc.response.text[:800] if exc.response is not None else str(exc)
-            if status == 400 and self._schema_generation_error(detail):
+            detail = self._http_detail(exc)
+            if (
+                preferred == "strict"
+                and self._http_status(exc) == 400
+                and self._schema_generation_error(detail)
+            ):
                 logger.warning(
-                    "Groq strict schema generation failed; retrying JSON-object mode"
+                    "Groq strict structured output failed; retrying validated JSON-object mode"
                 )
-                return self._groq_request(
+                result = self._groq_request(
                     job,
                     preliminary,
                     reasoning_effort=reasoning_effort,
-                    strict_schema=False,
+                    mode="json_object",
+                    preflight=preflight,
                 )
+                state.mode = "json_object"
+                state.failures = 0
+                return result
             raise
-        except (ValueError, KeyError, TypeError, json.JSONDecodeError) as exc:
-            logger.warning(
-                "Groq validation failed; retrying JSON-object mode: %s",
-                exc,
-            )
-            return self._groq_request(
-                job,
-                preliminary,
-                reasoning_effort=reasoning_effort,
-                strict_schema=False,
-            )
+        except (ValueError, KeyError, TypeError, json.JSONDecodeError):
+            if preferred == "strict":
+                logger.warning(
+                    "Groq strict response could not be validated; retrying JSON-object mode"
+                )
+                result = self._groq_request(
+                    job,
+                    preliminary,
+                    reasoning_effort=reasoning_effort,
+                    mode="json_object",
+                    preflight=preflight,
+                )
+                state.mode = "json_object"
+                state.failures = 0
+                return result
+            raise
 
-    def _gemini_call(self, job: Job, preliminary: Assessment) -> Assessment:
+    def _gemini_request(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        mode: str,
+        preflight: bool = False,
+    ) -> Assessment:
         if not self.settings.gemini_api_key:
             raise RuntimeError("Gemini API key is not configured")
         evidence = compact_job_evidence(job, self.settings.ai_max_evidence_chars)
@@ -380,37 +520,42 @@ class AIClient:
             + self.settings.gemini_model
             + ":generateContent"
         )
+        user_text = (
+            ("Capability check. " if preflight else "")
+            + json.dumps(
+                {
+                    "preliminary": preliminary.to_dict(),
+                    "job": {
+                        "title": job.title,
+                        "company": job.company,
+                        "location": job.location,
+                        "salary": job.salary_text,
+                        "evidence": evidence,
+                    },
+                },
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+        )
+        generation_config: dict[str, object] = {
+            "temperature": 0,
+            "maxOutputTokens": 500,
+            "responseMimeType": "application/json",
+        }
+        if mode == "schema":
+            generation_config["responseSchema"] = SCHEMA
+
         payload = {
-            "systemInstruction": {"parts": [{"text": SYSTEM + "\n\n" + JSON_CONTRACT}]},
+            "systemInstruction": {
+                "parts": [{"text": SYSTEM + "\n\n" + JSON_CONTRACT}]
+            },
             "contents": [
                 {
                     "role": "user",
-                    "parts": [
-                        {
-                            "text": json.dumps(
-                                {
-                                    "preliminary": preliminary.to_dict(),
-                                    "job": {
-                                        "title": job.title,
-                                        "company": job.company,
-                                        "location": job.location,
-                                        "salary": job.salary_text,
-                                        "evidence": evidence,
-                                    },
-                                },
-                                ensure_ascii=False,
-                                separators=(",", ":"),
-                            )
-                        }
-                    ],
+                    "parts": [{"text": user_text}],
                 }
             ],
-            "generationConfig": {
-                "temperature": 0,
-                "maxOutputTokens": 500,
-                "responseMimeType": "application/json",
-                "responseSchema": SCHEMA,
-            },
+            "generationConfig": generation_config,
         }
         key = f"gemini:{self.settings.gemini_model}"
         self.calls_by_model[key] = self.calls_by_model.get(key, 0) + 1
@@ -436,6 +581,132 @@ class AIClient:
         result.source = "ai-gemini"
         return result
 
+    def _gemini_call(
+        self,
+        job: Job,
+        preliminary: Assessment,
+        *,
+        preflight: bool = False,
+    ) -> Assessment:
+        state = self.providers["gemini"]
+        if not state.ready():
+            raise RuntimeError("Gemini is not currently available")
+        preferred = "json" if state.mode == "json" else "schema"
+        try:
+            result = self._gemini_request(
+                job,
+                preliminary,
+                mode=preferred,
+                preflight=preflight,
+            )
+            state.mode = preferred
+            state.failures = 0
+            return result
+        except requests.HTTPError as exc:
+            detail = self._http_detail(exc)
+            if (
+                preferred == "schema"
+                and self._http_status(exc) == 400
+                and self._schema_generation_error(detail)
+            ):
+                logger.warning(
+                    "Gemini schema mode failed; retrying validated JSON mode"
+                )
+                result = self._gemini_request(
+                    job,
+                    preliminary,
+                    mode="json",
+                    preflight=preflight,
+                )
+                state.mode = "json"
+                state.failures = 0
+                return result
+            raise
+        except (ValueError, KeyError, TypeError, json.JSONDecodeError):
+            if preferred == "schema":
+                logger.warning(
+                    "Gemini schema response could not be validated; retrying JSON mode"
+                )
+                result = self._gemini_request(
+                    job,
+                    preliminary,
+                    mode="json",
+                    preflight=preflight,
+                )
+                state.mode = "json"
+                state.failures = 0
+                return result
+            raise
+
+    def preflight(self) -> dict[str, dict[str, object]]:
+        if not self.settings.ai_preflight:
+            return self.health_summary()
+
+        job = Job(
+            "preflight",
+            "https://example.invalid/preflight",
+            "Highway Engineer",
+            "Preflight",
+            "Dublin, Ireland",
+            "Civil engineering roads highway design Civil 3D permanent role.",
+        )
+        preliminary = Assessment(
+            True,
+            95,
+            "highway_engineer",
+            "critical_skills",
+            "high",
+            "synthetic preflight",
+        )
+
+        if self.providers["groq"].configured:
+            try:
+                self._groq_call(
+                    job,
+                    preliminary,
+                    reasoning_effort="low",
+                    preflight=True,
+                )
+                logger.info(
+                    "AI preflight OK: Groq %s mode=%s",
+                    self.settings.groq_model,
+                    self.providers["groq"].mode,
+                )
+            except Exception as exc:
+                self._handle_provider_error("groq", exc, preflight=True)
+                logger.warning("AI preflight failed: Groq: %s", self._http_detail(exc))
+
+        if self.providers["gemini"].configured:
+            try:
+                self._gemini_call(job, preliminary, preflight=True)
+                logger.info(
+                    "AI preflight OK: Gemini %s mode=%s",
+                    self.settings.gemini_model,
+                    self.providers["gemini"].mode,
+                )
+            except Exception as exc:
+                self._handle_provider_error("gemini", exc, preflight=True)
+                logger.warning("AI preflight failed: Gemini: %s", self._http_detail(exc))
+
+        return self.health_summary()
+
+    def health_summary(self) -> dict[str, dict[str, object]]:
+        now = time.monotonic()
+        return {
+            name: {
+                "configured": state.configured,
+                "ready": state.configured
+                and not state.disabled_reason
+                and now >= state.cooldown_until,
+                "mode": state.mode,
+                "disabled_reason": state.disabled_reason[:300],
+                "cooldown_seconds": max(0, round(state.cooldown_until - now)),
+                "failures": state.failures,
+                "last_error": state.last_error[:300],
+            }
+            for name, state in self.providers.items()
+        }
+
     @staticmethod
     def _needs_second_opinion(
         job: Job,
@@ -458,12 +729,19 @@ class AIClient:
             "infrastructure_engineer",
             "ambiguous_engineering_role",
             "engineer",
+            "project_manager",
+            "construction_manager",
+            "site_manager",
+            "design_manager",
         }
         return (
             near_threshold
             or permit_unclear
             or changed_decision
-            or (primary.matched and (senior or risky_family or primary.relocation_fit != "high"))
+            or (
+                primary.matched
+                and (senior or risky_family or primary.relocation_fit != "high")
+            )
         )
 
     @staticmethod
@@ -482,9 +760,10 @@ class AIClient:
         if agree:
             matched = matched_values[0]
         else:
-            # Preserve recall only when deterministic rules already considered the role a
-            # genuine high-fit civil opportunity and one independent provider strongly agrees.
-            strongest = max((item.score for item in assessments if item.matched), default=0)
+            strongest = max(
+                (item.score for item in assessments if item.matched),
+                default=0,
+            )
             matched = preliminary.matched and strongest >= threshold + 6
 
         scores = sorted(item.score for item in assessments)
@@ -520,7 +799,8 @@ class AIClient:
         if not agree:
             gaps = list(
                 dict.fromkeys(
-                    gaps + ["AI providers disagreed; conservative consensus applied"]
+                    gaps
+                    + ["AI providers disagreed; conservative consensus applied"]
                 )
             )[:6]
 
@@ -543,40 +823,46 @@ class AIClient:
         *,
         threshold: int = 76,
     ) -> Assessment:
-        if not self.available:
-            if self.settings.ai_required:
-                raise RuntimeError("No AI provider is configured")
-            preliminary.provisional = True
-            return preliminary
-
         assessments: list[Assessment] = []
-        failed_this_job: set[str] = set()
+        attempted: set[str] = set()
 
-        if self.groq_available and "groq" not in self._disabled_providers:
+        # Groq is primary when healthy.
+        if self.providers["groq"].ready():
+            attempted.add("groq")
             try:
                 assessments.append(
-                    self._groq_call(job, preliminary, reasoning_effort="medium")
+                    self._groq_call(
+                        job,
+                        preliminary,
+                        reasoning_effort="low",
+                    )
                 )
             except Exception as exc:
-                failed_this_job.add("groq")
-                self._disable_on_permanent_error("groq", exc)
-                logger.warning("Groq primary failed for %s: %s", job.title, exc)
+                self._handle_provider_error("groq", exc)
+                logger.warning(
+                    "Groq failed for %s; switching provider immediately: %s",
+                    job.title,
+                    self._http_detail(exc),
+                )
 
-        if (
-            not assessments
-            and self.gemini_available
-            and "gemini" not in self._disabled_providers
-        ):
+        # Gemini is the independent immediate fallback.
+        if not assessments and self.providers["gemini"].ready():
+            attempted.add("gemini")
             try:
                 assessments.append(self._gemini_call(job, preliminary))
             except Exception as exc:
-                failed_this_job.add("gemini")
-                self._disable_on_permanent_error("gemini", exc)
-                logger.warning("Gemini fallback failed for %s: %s", job.title, exc)
+                self._handle_provider_error("gemini", exc)
+                logger.warning(
+                    "Gemini failed for %s: %s",
+                    job.title,
+                    self._http_detail(exc),
+                )
 
         if not assessments:
             if self.settings.ai_required:
-                raise RuntimeError(f"All configured AI providers failed for {job.title}")
+                raise RuntimeError(
+                    f"All configured AI providers failed for {job.title}"
+                )
             preliminary.provisional = True
             return preliminary
 
@@ -584,37 +870,39 @@ class AIClient:
         if self._needs_second_opinion(job, preliminary, primary, threshold):
             if (
                 primary.source != "ai-gemini"
-                and self.gemini_available
-                and "gemini" not in failed_this_job
-                and "gemini" not in self._disabled_providers
+                and "gemini" not in attempted
+                and self.providers["gemini"].ready()
             ):
+                attempted.add("gemini")
                 try:
-                    logger.info("Requesting Gemini independent review: %s", job.title)
                     assessments.append(self._gemini_call(job, preliminary))
                 except Exception as exc:
-                    self._disable_on_permanent_error("gemini", exc)
+                    self._handle_provider_error("gemini", exc)
                     logger.warning(
                         "Gemini independent review failed for %s: %s",
                         job.title,
-                        exc,
+                        self._http_detail(exc),
                     )
             elif (
                 primary.source != "ai-groq"
-                and self.groq_available
-                and "groq" not in failed_this_job
-                and "groq" not in self._disabled_providers
+                and "groq" not in attempted
+                and self.providers["groq"].ready()
             ):
+                attempted.add("groq")
                 try:
-                    logger.info("Requesting Groq independent review: %s", job.title)
                     assessments.append(
-                        self._groq_call(job, preliminary, reasoning_effort="high")
+                        self._groq_call(
+                            job,
+                            preliminary,
+                            reasoning_effort="medium",
+                        )
                     )
                 except Exception as exc:
-                    self._disable_on_permanent_error("groq", exc)
+                    self._handle_provider_error("groq", exc)
                     logger.warning(
                         "Groq independent review failed for %s: %s",
                         job.title,
-                        exc,
+                        self._http_detail(exc),
                     )
 
         return self._consolidate(preliminary, assessments, threshold)

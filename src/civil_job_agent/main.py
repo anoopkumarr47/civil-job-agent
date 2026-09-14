@@ -1,14 +1,21 @@
 from __future__ import annotations
 
+import json
 import logging
 import re
 from collections import Counter
+from pathlib import Path
 
 from .ai import AIClient
 from .config import Settings, load_json
 from .models import Assessment, Job, SourceReport
 from .notify import send_email
-from .scoring import POLICY_VERSION, enforce_final_policy, preliminary_assessment, should_ai_refine
+from .scoring import (
+    POLICY_VERSION,
+    enforce_final_policy,
+    preliminary_assessment,
+    should_ai_refine,
+)
 from .sources import (
     ConfiguredWebBoard,
     GmailJobAlertSource,
@@ -138,6 +145,82 @@ def _summary(jobs: list[Job], assessments: dict[str, Assessment], reports: list[
     logger.info("Assessments=%s final_matches=%s provisional=%s", len(assessments), len(matched), provisional)
 
 
+def _write_run_health(settings: Settings, payload: dict) -> None:
+    path = Path(settings.run_health_file)
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    logger.info("Run health: %s", payload.get("status"))
+
+
+def _health_payload(
+    settings: Settings,
+    *,
+    reports: list[SourceReport],
+    jobs: list[Job],
+    assessments: dict[str, Assessment],
+    ai: AIClient | None,
+) -> dict:
+    productive_sources = sum(1 for report in reports if report.ok and report.jobs > 0)
+    provisional = sum(1 for assessment in assessments.values() if assessment.provisional)
+    ai_relevant = sum(
+        1
+        for assessment in assessments.values()
+        if assessment.provisional or assessment.source.startswith("ai-")
+    )
+    provisional_ratio = provisional / ai_relevant if ai_relevant else 0.0
+    provider_health = ai.health_summary() if ai else {}
+    configured = [
+        name for name, state in provider_health.items() if state.get("configured")
+    ]
+    ready = [name for name, state in provider_health.items() if state.get("ready")]
+
+    reasons: list[str] = []
+    status = "healthy"
+    if productive_sources < settings.min_successful_sources:
+        status = "failed"
+        reasons.append(
+            f"only {productive_sources} productive sources; "
+            f"minimum is {settings.min_successful_sources}"
+        )
+    if configured and not ready:
+        status = "degraded" if status == "healthy" else status
+        reasons.append("no configured AI provider passed health checks")
+    elif len(configured) > 1 and len(ready) < len(configured):
+        status = "degraded" if status == "healthy" else status
+        reasons.append(
+            f"AI redundancy reduced: {len(ready)}/{len(configured)} configured providers ready"
+        )
+    if ai_relevant and provisional_ratio > settings.ai_max_provisional_ratio:
+        status = "degraded" if status == "healthy" else status
+        reasons.append(
+            f"provisional ratio {provisional_ratio:.1%} exceeds "
+            f"{settings.ai_max_provisional_ratio:.1%}"
+        )
+
+    return {
+        "status": status,
+        "reasons": reasons,
+        "jobs": len(jobs),
+        "productive_sources": productive_sources,
+        "source_reports": {
+            report.name: {
+                "ok": report.ok,
+                "jobs": report.jobs,
+                "error": report.error[:240],
+            }
+            for report in reports
+        },
+        "assessments": len(assessments),
+        "ai_relevant_assessments": ai_relevant,
+        "provisional": provisional,
+        "provisional_ratio": round(provisional_ratio, 4),
+        "providers": provider_health,
+        "ai_calls_by_model": dict(sorted(ai.calls_by_model.items())) if ai else {},
+    }
+
+
 def run(settings: Settings) -> int:
     profile = load_json(settings.profile_file)
     sources_cfg = load_json(settings.sources_file)
@@ -173,29 +256,68 @@ def run(settings: Settings) -> int:
             logger.exception("Source failed: %s", source.name)
             reports.append(SourceReport(source.name, 0, False, str(exc)))
 
-    productive_sources = sum(1 for report in reports if report.ok and report.jobs > 0)
+    productive_sources = sum(
+        1 for report in reports if report.ok and report.jobs > 0
+    )
     if productive_sources < settings.min_successful_sources:
+        payload = _health_payload(
+            settings,
+            reports=reports,
+            jobs=[],
+            assessments={},
+            ai=None,
+        )
+        _write_run_health(settings, payload)
         raise RuntimeError(
-            f"Only {productive_sources} source(s) produced candidate jobs; minimum is {settings.min_successful_sources}. "
+            f"Only {productive_sources} source(s) produced candidate jobs; "
+            f"minimum is {settings.min_successful_sources}. "
             "Refusing to treat empty/broken source pages as a complete daily sweep."
         )
 
     jobs = _dedupe(jobs_raw)
-    logger.info("Collected %s raw and %s unique candidate jobs", len(jobs_raw), len(jobs))
+    logger.info(
+        "Collected %s raw and %s unique candidate jobs",
+        len(jobs_raw),
+        len(jobs),
+    )
     ai = AIClient(settings)
+    if ai.available:
+        ai.preflight()
     profile_version = str(profile["profile_version"])
 
     for job in jobs:
-        if not state.needs_review(job, profile_version, POLICY_VERSION, ai.available):
+        if not state.needs_review(
+            job,
+            profile_version,
+            POLICY_VERSION,
+            ai.available,
+        ):
             state.touch(job)
             continue
-        assessment = preliminary_assessment(job, profile)
-        if should_ai_refine(job, assessment):
-            assessment = ai.refine(job, assessment, threshold=int(profile["minimum_target_score"]))
-        assessment = enforce_final_policy(assessment, profile)
-        state.record(job, assessment, profile_version, POLICY_VERSION)
 
-    logger.info("AI calls by model: %s", dict(sorted(ai.calls_by_model.items())))
+        assessment = preliminary_assessment(job, profile)
+        if should_ai_refine(job, assessment, profile):
+            if ai.available:
+                assessment = ai.refine(
+                    job,
+                    assessment,
+                    threshold=int(profile["minimum_target_score"]),
+                )
+            else:
+                assessment.provisional = True
+        assessment = enforce_final_policy(assessment, profile)
+        state.record(
+            job,
+            assessment,
+            profile_version,
+            POLICY_VERSION,
+        )
+
+    logger.info(
+        "AI calls by model: %s",
+        dict(sorted(ai.calls_by_model.items())),
+    )
+    logger.info("AI provider health: %s", ai.health_summary())
     assessments: dict[str, Assessment] = {}
     matches: list[tuple[Job, Assessment]] = []
     for job in jobs:
@@ -206,8 +328,24 @@ def run(settings: Settings) -> int:
         if assessment.matched and not assessment.provisional and not state.is_notified(job):
             matches.append((job, assessment))
 
-    matches.sort(key=lambda item: (-item[1].score, item[0].title.casefold()))
+    matches.sort(
+        key=lambda item: (-item[1].score, item[0].title.casefold())
+    )
     _summary(jobs, assessments, reports)
+    health = _health_payload(
+        settings,
+        reports=reports,
+        jobs=jobs,
+        assessments=assessments,
+        ai=ai,
+    )
+    _write_run_health(settings, health)
+    if health["status"] != "healthy":
+        logger.warning(
+            "Production sweep is %s: %s",
+            health["status"],
+            "; ".join(health["reasons"]),
+        )
 
     if settings.dry_run:
         for job, assessment in matches:
