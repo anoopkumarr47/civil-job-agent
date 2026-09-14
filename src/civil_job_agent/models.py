@@ -23,9 +23,6 @@ def canonicalize_url(url: str) -> str:
                 "trk",
                 "trackingid",
                 "refid",
-                "ref",
-                "source",
-                "campaign",
                 "mc_cid",
                 "mc_eid",
             }
