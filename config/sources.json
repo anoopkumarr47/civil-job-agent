@@ -86,29 +86,6 @@
       "disabled_reason": "Direct search endpoint is not reliably fetchable from automation. Re-enable only after a dedicated verified adapter."
     },
     {
-      "name": "PublicJobs",
-      "enabled": true,
-      "search_urls": [
-        "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-ext/brand-4/xf-423dd989250d/candidate/jobboard/vacancy/3/adv/"
-      ],
-      "allowed_hosts": [
-        "publicjobs.tal.net"
-      ],
-      "job_link_patterns": [
-        "/candidate/so/",
-        "/opp/"
-      ],
-      "exclude_link_patterns": [
-        "/login",
-        "/register",
-        "help-centre"
-      ],
-      "max_links": 160,
-      "assume_ireland": true,
-      "plausible_title_links_only": true,
-      "max_detail_seconds": 120
-    },
-    {
       "name": "Roughan O'Donovan",
       "enabled": true,
       "search_urls": [
@@ -354,6 +331,30 @@
       "max_links": 160,
       "require_location": true,
       "max_detail_seconds": 120
+    }
+  ],
+  "oleeo_sources": [
+    {
+      "name": "PublicJobs",
+      "enabled": true,
+      "landing_url": "https://www.publicjobs.ie/en/",
+      "board_host": "publicjobs.tal.net",
+      "allowed_hosts": [
+        "publicjobs.tal.net"
+      ],
+      "job_link_patterns": [
+        "/candidate/so/",
+        "/opp/"
+      ],
+      "exclude_link_patterns": [
+        "/login",
+        "/register",
+        "help-centre"
+      ],
+      "max_pages": 30,
+      "max_links": 160,
+      "assume_ireland": true,
+      "max_detail_seconds": 150
     }
   ]
 }
