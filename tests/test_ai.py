@@ -80,60 +80,64 @@ def test_borderline_cerebras_result_needs_second_opinion():
     assert AIClient._needs_second_opinion(vacancy, preliminary, primary, 76)
 
 
-def test_refine_uses_cerebras_primary_and_groq_second_opinion(settings, monkeypatch):
+def test_refine_uses_groq_primary_and_gemini_second_opinion(settings, monkeypatch):
     from dataclasses import replace
 
     client = AIClient(
         replace(
             settings,
-            cerebras_api_key="cerebras-key",
             ai_api_key="groq-key",
+            gemini_api_key="gemini-key",
         )
     )
     vacancy = Job("test", "https://example/1", "Project Engineer", "Firm", "Dublin", "civil roads")
     preliminary = Assessment(True, 84, "project_engineer", "critical_skills_plausible", "high", "fit")
     calls = []
 
-    def fake_cerebras(job, preliminary, threshold):
-        calls.append("cerebras")
-        return Assessment(True, 78, "project_engineer", "critical_skills", "high", "c", source="ai-cerebras")
-
     def fake_groq(job, preliminary, reasoning_effort="medium"):
         calls.append(("groq", reasoning_effort))
-        return Assessment(True, 88, "project_engineer", "critical_skills", "high", "g", source="ai-groq")
+        return Assessment(True, 78, "project_engineer", "critical_skills", "high", "g", source="ai-groq")
 
-    monkeypatch.setattr(client, "_cerebras_call", fake_cerebras)
+    def fake_gemini(job, preliminary):
+        calls.append("gemini")
+        return Assessment(True, 88, "project_engineer", "critical_skills", "high", "m", source="ai-gemini")
+
     monkeypatch.setattr(client, "_groq_call", fake_groq)
+    monkeypatch.setattr(client, "_gemini_call", fake_gemini)
 
     result = client.refine(vacancy, preliminary, threshold=76)
-    assert calls == ["cerebras", ("groq", "high")]
+    assert calls == [("groq", "medium"), "gemini"]
     assert result.source == "ai-consensus"
     assert result.matched
 
 
-def test_groq_falls_back_when_cerebras_fails(settings, monkeypatch):
+def test_gemini_falls_back_when_groq_fails(settings, monkeypatch):
     from dataclasses import replace
 
     client = AIClient(
         replace(
             settings,
-            cerebras_api_key="cerebras-key",
             ai_api_key="groq-key",
+            gemini_api_key="gemini-key",
         )
     )
     vacancy = Job("test", "https://example/1", "Civil Engineer", "Firm", "Dublin", "civil roads")
     preliminary = Assessment(True, 90, "civil_engineer", "critical_skills_plausible", "high", "fit")
 
-    monkeypatch.setattr(client, "_cerebras_call", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("down")))
     monkeypatch.setattr(
         client,
         "_groq_call",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("down")),
+    )
+    monkeypatch.setattr(
+        client,
+        "_gemini_call",
         lambda *args, **kwargs: Assessment(
-            True, 91, "civil_engineer", "critical_skills", "high", "groq", source="ai-groq"
+            True, 91, "civil_engineer", "critical_skills", "high", "gemini", source="ai-gemini"
         ),
     )
     result = client.refine(vacancy, preliminary)
-    assert result.source == "ai-groq"
+    assert result.source == "ai-gemini"
     assert result.score == 91
 
 
@@ -143,17 +147,16 @@ def test_all_provider_failures_become_provisional_in_production(settings, monkey
     client = AIClient(
         replace(
             settings,
-            cerebras_api_key="cerebras-key",
             ai_api_key="groq-key",
-            gemini_api_key=None,
+            gemini_api_key="gemini-key",
             ai_required=False,
         )
     )
     vacancy = Job("test", "https://example/1", "Project Engineer", "Firm", "Dublin", "civil roads")
     preliminary = Assessment(True, 85, "project_engineer", "critical_skills", "high", "candidate")
 
-    monkeypatch.setattr(client, "_cerebras_call", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("cerebras")))
     monkeypatch.setattr(client, "_groq_call", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("groq")))
+    monkeypatch.setattr(client, "_gemini_call", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("gemini")))
 
     result = client.refine(vacancy, preliminary)
     assert result.provisional
