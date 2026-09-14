@@ -40,10 +40,11 @@ Configured production sources include:
 - TOBIN
 - SYSTRA
 - Mott MacDonald via a paginated SAP SuccessFactors adapter
+- PublicJobs via a paginated Oleeo/TAL adapter discovered from the official publicjobs.ie landing page
 - LinkedIn job-alert email ingestion
 - Indeed job-alert email ingestion
 
-IrishJobs, Jobs.ie, PublicJobs and Nicholas O'Dwyer generic adapters remain disabled where live automation has not been reliable enough. A disabled source is not counted as coverage.
+PublicJobs is queried through its current Oleeo job board with pagination. IrishJobs, Jobs.ie and Nicholas O'Dwyer remain disabled where live automation has not been reliable enough. A disabled source is not counted as coverage.
 
 JobsIreland searches civil/site/highway/roads/resident/project/transport/setting-out/drainage/water/wastewater/structural/geotechnical/traffic/pavement/rail/permanent-way/utilities/inspection families. Specialized civil roles are no longer discarded merely by title; fit is handled later by scoring and AI review.
 
