@@ -30,19 +30,19 @@ class Settings:
     request_timeout: int
     max_links_per_source: int
 
-    # Groq: independent second opinion / fallback.
+    # Groq: primary free-tier classifier.
     ai_api_url: str
     ai_api_key: str | None
     ai_model: str
     ai_escalation_model: str
 
-    # Cerebras: primary analysis provider.
+    # Legacy Cerebras settings retained for backwards compatibility only.
     cerebras_api_url: str
     cerebras_api_key: str | None
     cerebras_model: str
     cerebras_min_interval_seconds: float
 
-    # Optional tertiary provider.
+    # Gemini: independent fallback / reviewer.
     gemini_api_key: str | None
     gemini_model: str
 
@@ -66,7 +66,7 @@ class Settings:
         groq_model = (
             os.environ.get("AI_MODEL")
             or os.environ.get("AI_ESCALATION_MODEL")
-            or "openai/gpt-oss-120b"
+            or "openai/gpt-oss-20b"
         )
         return cls(
             state_file=os.environ.get("STATE_FILE", "job_state.json"),
@@ -91,9 +91,9 @@ class Settings:
             gemini_model=os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite"),
             ai_timeout=_env_int("AI_TIMEOUT", 90),
             ai_required=_env_bool("AI_REQUIRED", False),
-            ai_min_interval_seconds=max(0.0, _env_float("AI_MIN_INTERVAL_SECONDS", 4.0)),
+            ai_min_interval_seconds=max(0.0, _env_float("AI_MIN_INTERVAL_SECONDS", 15.0)),
             ai_token_reserve=max(0, _env_int("AI_TOKEN_RESERVE", 2400)),
-            ai_max_evidence_chars=max(1800, _env_int("AI_MAX_EVIDENCE_CHARS", 6000)),
+            ai_max_evidence_chars=max(1800, _env_int("AI_MAX_EVIDENCE_CHARS", 3600)),
             email_address=sender,
             email_password=os.environ.get("EMAIL_PASSWORD"),
             email_to=os.environ.get("EMAIL_TO") or sender,
