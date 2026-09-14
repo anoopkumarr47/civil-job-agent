@@ -49,6 +49,9 @@ def test_schema_generation_error_is_retryable():
         '{"code":"json_validate_failed","message":"Failed to validate JSON"}'
     )
     assert AIClient._schema_generation_error("response_format json_schema invalid")
+    assert AIClient._schema_generation_error(
+        "Unknown name additionalProperties at generation_config.response_schema"
+    )
     assert not AIClient._schema_generation_error("invalid API key")
 
 
@@ -365,7 +368,7 @@ def test_groq_request_uses_current_reasoning_parameters(settings, monkeypatch):
         mode="strict",
     )
     assert captured["model"] == "openai/gpt-oss-20b"
-    assert captured["max_completion_tokens"] == 500
+    assert captured["max_completion_tokens"] == 350
     assert captured["include_reasoning"] is False
     assert "max_tokens" not in captured
     assert "reasoning_format" not in captured
@@ -428,3 +431,104 @@ def test_two_provider_disagreement_can_preserve_strong_deterministic_civil_candi
     )
     result = AIClient._consolidate(preliminary, [first, second], 76)
     assert result.matched
+
+
+def test_gemini_schema_uses_json_schema_field(settings, monkeypatch):
+    client = AIClient(replace(settings, gemini_api_key="gemini-key"))
+    captured = {}
+
+    class FakeResponse:
+        def json(self):
+            return {
+                "candidates": [
+                    {
+                        "content": {
+                            "parts": [
+                                {"text": __import__("json").dumps(valid())}
+                            ]
+                        }
+                    }
+                ]
+            }
+
+    def fake_request(method, url, **kwargs):
+        captured.update(kwargs["json"])
+        return FakeResponse()
+
+    monkeypatch.setattr(client.http, "request", fake_request)
+    vacancy = Job(
+        "test",
+        "https://example/1",
+        "Civil Engineer",
+        "Firm",
+        "Dublin",
+        "civil roads",
+    )
+    preliminary = Assessment(
+        True, 90, "civil_engineer", "critical_skills", "high", "fit"
+    )
+
+    client._gemini_request(vacancy, preliminary, mode="schema")
+    generation = captured["generationConfig"]
+    assert "responseJsonSchema" in generation
+    assert "responseSchema" not in generation
+    assert generation["maxOutputTokens"] == 350
+
+
+def test_short_groq_cooldown_is_waited_and_retried(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="groq-key"))
+    vacancy = Job(
+        "test",
+        "https://example/1",
+        "Project Engineer",
+        "Firm",
+        "Dublin",
+        "civil roads",
+    )
+    preliminary = Assessment(
+        True, 84, "project_engineer", "critical_skills", "high", "fit"
+    )
+    calls = []
+
+    def fake_groq(*args, **kwargs):
+        calls.append("groq")
+        if len(calls) == 1:
+            raise http_error(429, "quota", retry_after="1")
+        return Assessment(
+            True,
+            86,
+            "project_engineer",
+            "critical_skills",
+            "high",
+            "fit",
+            source="ai-groq",
+        )
+
+    monkeypatch.setattr(client, "_groq_call", fake_groq)
+    monkeypatch.setattr("civil_job_agent.ai.time.sleep", lambda *_: None)
+    monkeypatch.setattr(client, "_wait_for_short_cooldown", lambda max_wait=6.0: True)
+    # Simulate cooldown expiry when the retry is attempted.
+    original_ready = client.providers["groq"].ready
+    monkeypatch.setattr(
+        client.providers["groq"],
+        "ready",
+        lambda: len(calls) >= 1,
+    )
+
+    result = client.refine(vacancy, preliminary)
+    assert calls == ["groq", "groq"]
+    assert result.source == "ai-groq"
+
+
+def test_groq_rate_headers_schedule_pause_when_token_budget_low(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="groq-key"))
+
+    class FakeResponse:
+        headers = {
+            "x-ratelimit-remaining-tokens": "1458",
+            "x-ratelimit-reset-tokens": "1.6s",
+        }
+
+    before = client.providers["groq"].cooldown_until
+    client._apply_groq_rate_headers(FakeResponse())
+    assert client.providers["groq"].cooldown_until > before
