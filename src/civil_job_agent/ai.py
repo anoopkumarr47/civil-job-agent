@@ -410,8 +410,9 @@ class AIClient:
         return minutes * 60.0 + seconds
 
     def _apply_groq_rate_headers(self, response: requests.Response) -> None:
-        remaining_raw = response.headers.get("x-ratelimit-remaining-tokens")
-        reset_raw = response.headers.get("x-ratelimit-reset-tokens", "")
+        headers = getattr(response, "headers", {})
+        remaining_raw = headers.get("x-ratelimit-remaining-tokens")
+        reset_raw = headers.get("x-ratelimit-reset-tokens", "")
         if not remaining_raw:
             return
         try:
@@ -419,16 +420,16 @@ class AIClient:
         except ValueError:
             return
         reset_seconds = self._duration_seconds(reset_raw)
-        if remaining < 1800 and reset_seconds > 0:
+        if remaining < 2600 and reset_seconds > 0:
             state = self.providers["groq"]
             state.cooldown_until = max(
                 state.cooldown_until,
-                time.monotonic() + min(reset_seconds, 15.0),
+                time.monotonic() + min(reset_seconds, 30.0),
             )
             logger.info(
                 "Groq token budget low (%s remaining); pausing %.2fs until TPM reset",
                 remaining,
-                min(reset_seconds, 15.0),
+                min(reset_seconds, 30.0),
             )
 
     def _pace_groq(self) -> None:
@@ -474,7 +475,7 @@ class AIClient:
             "model": self.settings.groq_model,
             "messages": self._messages(job, preliminary, preflight=preflight),
             "temperature": 0,
-            "max_completion_tokens": 400,
+            "max_completion_tokens": 350,
             "reasoning_effort": reasoning_effort,
             "include_reasoning": False,
             "response_format": (
@@ -611,7 +612,7 @@ class AIClient:
         )
         generation_config: dict[str, object] = {
             "temperature": 0,
-            "maxOutputTokens": 400,
+            "maxOutputTokens": 350,
             "responseMimeType": "application/json",
         }
         if mode == "schema":
