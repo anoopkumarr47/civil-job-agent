@@ -49,6 +49,10 @@ Uses the public Posting API. Non-target postings do not consume the candidate ca
 
 Paginates the employer job index and filters by Republic of Ireland location plus plausible engineering title before detail fetches. Mott MacDonald is configured through this adapter.
 
+### Oleeo / PublicJobs
+
+The adapter discovers the current Oleeo board URL from the stable publicjobs.ie landing page, follows pagination and filters plausible engineering titles before detail requests.
+
 ### Generic employer boards
 
 Requests-first discovery with Chromium fallback. Detail pages prefer JobPosting JSON-LD and then rendered HTML. The shared civil-domain relevance gate runs before a candidate reaches scoring.
