@@ -52,9 +52,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           set -euo pipefail
-          test -n "$GROQ_API_KEY"
-          test -n "$GEMINI_API_KEY"
-          echo "Groq and Gemini API keys are configured"
+          if [ -z "$GROQ_API_KEY" ] && [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::At least one AI provider key is required"
+            exit 1
+          fi
+          [ -n "$GROQ_API_KEY" ] || echo "::warning::GROQ_API_KEY is missing; Gemini will be the only AI provider"
+          [ -n "$GEMINI_API_KEY" ] || echo "::warning::GEMINI_API_KEY is missing; Groq will be the only AI provider"
+          echo "AI provider secrets validated"
 
       - name: Validate mail configuration
         env:
@@ -90,10 +94,14 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.5-flash-lite' }}
-          GROQ_MODEL: ${{ vars.GROQ_MODEL || vars.AI_MODEL || 'openai/gpt-oss-20b' }}
-          GROQ_MIN_INTERVAL_SECONDS: "15"
-          AI_MAX_EVIDENCE_CHARS: "4200"
+          # Model IDs are intentionally pinned in version control. Do not inherit stale repo variables.
+          GROQ_MODEL: "openai/gpt-oss-20b"
+          GEMINI_MODEL: "gemini-3.5-flash"
+          GROQ_MIN_INTERVAL_SECONDS: "8"
+          AI_MAX_EVIDENCE_CHARS: "3000"
+          AI_PREFLIGHT: "true"
+          AI_MAX_PROVISIONAL_RATIO: "0.25"
+          RUN_HEALTH_FILE: "run_health.json"
           AI_REQUIRED: "false"
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
@@ -130,3 +138,25 @@ jobs:
             sleep $((attempt * 3))
           done
           exit 1
+
+      - name: Enforce sweep health
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("run_health.json")
+          if not path.exists():
+              raise SystemExit("run_health.json was not produced; the sweep did not complete cleanly")
+
+          health = json.loads(path.read_text(encoding="utf-8"))
+          status = health.get("status", "failed")
+          reasons = health.get("reasons", [])
+          print(f"Sweep health: {status}")
+          if reasons:
+              print("Reasons: " + "; ".join(reasons))
+          if status != "healthy":
+              print(f"::error::Civil job sweep is {status}: {'; '.join(reasons)}")
+              raise SystemExit(1)
+          PY
