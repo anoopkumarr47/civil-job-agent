@@ -11,9 +11,6 @@ on:
         required: false
         type: boolean
         default: false
-  push:
-    branches:
-      - build/end-to-end-v1
 
 concurrency:
   group: ireland-civil-job-agent-${{ github.ref }}
@@ -49,13 +46,15 @@ jobs:
       - name: Run regression tests
         run: pytest
 
-      - name: Validate Cerebras configuration
+      - name: Validate AI configuration
         env:
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           set -euo pipefail
-          test -n "$CEREBRAS_API_KEY"
-          echo "Cerebras API key is configured"
+          test -n "$GROQ_API_KEY"
+          test -n "$GEMINI_API_KEY"
+          echo "Groq and Gemini API keys are configured"
 
       - name: Validate configured mailbox
         env:
@@ -97,22 +96,19 @@ jobs:
 
       - name: Run actual job agent
         env:
-          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
-          CEREBRAS_MODEL: ${{ vars.CEREBRAS_MODEL || 'gpt-oss-120b' }}
-          CEREBRAS_MIN_INTERVAL_SECONDS: "2.2"
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: ${{ vars.GEMINI_MODEL || 'gemini-3.5-flash-lite' }}
-          AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-120b' }}
-          AI_MIN_INTERVAL_SECONDS: "12"
-          AI_MAX_EVIDENCE_CHARS: "6000"
+          AI_MODEL: ${{ vars.AI_MODEL || 'openai/gpt-oss-20b' }}
+          AI_MIN_INTERVAL_SECONDS: "15"
+          AI_MAX_EVIDENCE_CHARS: "3600"
           AI_TOKEN_RESERVE: "2400"
-          AI_REQUIRED: ${{ github.event_name == 'push' && 'true' || 'false' }}
+          AI_REQUIRED: "false"
           EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
           STATE_FILE: "job_state.json"
-          DRY_RUN: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
           MAIL_LOOKBACK_DAYS: "3"
           MAX_LINKS_PER_SOURCE: "120"
           MIN_SUCCESSFUL_SOURCES: "2"
