@@ -51,6 +51,10 @@ AMBIGUOUS_TITLE_PATTERNS: tuple[str, ...] = (
     r"\bsite\s+agent\b",
     r"\bclerk\s+of\s+works\b",
     r"\bengineering\s+inspector\b",
+    r"\b(?:assistant\s+|senior\s+)?project\s+manager\b",
+    r"\bconstruction\s+manager\b",
+    r"\bsite\s+manager\b",
+    r"\bdesign\s+manager\b",
 )
 
 EARLY_CAREER_TITLE_PATTERNS: tuple[str, ...] = (
@@ -87,6 +91,8 @@ CIVIL_SIGNAL_WEIGHTS: dict[str, int] = {
     "civil engineering": 6,
     "civil engineer": 6,
     "civil works": 5,
+    "discipline: civil": 6,
+    "discipline civil": 6,
     "civil 3d": 6,
     "highway": 5,
     "motorway": 5,
@@ -204,6 +210,10 @@ ROLE_FAMILIES: tuple[tuple[str, str, int], ...] = (
     (r"\bengineering\s+inspector\b", "civil_inspector", 72),
     (r"\bsite\s+agent\b", "site_agent", 80),
     (r"\bclerk\s+of\s+works\b", "clerk_of_works", 74),
+    (r"\b(?:assistant\s+|senior\s+)?project\s+manager\b", "project_manager", 64),
+    (r"\bconstruction\s+manager\b", "construction_manager", 64),
+    (r"\bsite\s+manager\b", "site_manager", 62),
+    (r"\bdesign\s+manager\b", "design_manager", 60),
     (r"\bengineer\s*/\s*senior\s+engineer\b", "engineer", 70),
     (r"\bsenior\s+engineer\b", "engineer", 68),
     (r"\bprincipal\s+engineer\b", "engineer", 66),
@@ -258,6 +268,10 @@ def is_plausible_target_title(title: str) -> bool:
             "engineering inspector",
             "site agent",
             "clerk of works",
+            "project manager",
+            "construction manager",
+            "site manager",
+            "design manager",
             "civil inspector",
             "works inspector",
         )
