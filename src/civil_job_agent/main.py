@@ -174,6 +174,9 @@ def _health_payload(
     configured = [
         name for name, state in provider_health.items() if state.get("configured")
     ]
+    operational = [
+        name for name, state in provider_health.items() if state.get("operational")
+    ]
     ready = [name for name, state in provider_health.items() if state.get("ready")]
 
     reasons: list[str] = []
@@ -184,13 +187,13 @@ def _health_payload(
             f"only {productive_sources} productive sources; "
             f"minimum is {settings.min_successful_sources}"
         )
-    if configured and not ready:
+    if configured and not operational:
         status = "degraded" if status == "healthy" else status
-        reasons.append("no configured AI provider passed health checks")
-    elif len(configured) > 1 and len(ready) < len(configured):
+        reasons.append("no configured AI provider passed capability health checks")
+    elif len(configured) > 1 and len(operational) < len(configured):
         status = "degraded" if status == "healthy" else status
         reasons.append(
-            f"AI redundancy reduced: {len(ready)}/{len(configured)} configured providers ready"
+            f"AI redundancy reduced: {len(operational)}/{len(configured)} configured providers operational"
         )
     if ai_relevant and provisional_ratio > settings.ai_max_provisional_ratio:
         status = "degraded" if status == "healthy" else status
@@ -290,14 +293,14 @@ def run(settings: Settings) -> int:
             job,
             profile_version,
             POLICY_VERSION,
-            ai.available,
+            ai.operational,
         ):
             state.touch(job)
             continue
 
         assessment = preliminary_assessment(job, profile)
         if should_ai_refine(job, assessment, profile):
-            if ai.available:
+            if ai.operational:
                 assessment = ai.refine(
                     job,
                     assessment,

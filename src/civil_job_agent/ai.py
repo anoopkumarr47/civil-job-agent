@@ -163,8 +163,19 @@ class AIClient:
         }
 
     @property
+    def configured(self) -> bool:
+        return any(state.configured for state in self.providers.values())
+
+    @property
     def available(self) -> bool:
         return any(state.ready() for state in self.providers.values())
+
+    @property
+    def operational(self) -> bool:
+        return any(
+            state.configured and not state.disabled_reason
+            for state in self.providers.values()
+        )
 
     @staticmethod
     def _http_status(exc: Exception) -> int | None:
@@ -203,6 +214,11 @@ class AIClient:
                 "response_format",
                 "responseschema",
                 "response schema",
+                "response_schema",
+                "responsejsonschema",
+                "response_json_schema",
+                "additionalproperties",
+                "additional_properties",
             )
         )
 
@@ -380,12 +396,68 @@ class AIClient:
             },
         ]
 
+    @staticmethod
+    def _duration_seconds(value: str) -> float:
+        value = (value or "").strip().casefold()
+        match = re.fullmatch(
+            r"(?:(?P<minutes>\d+(?:\.\d+)?)m)?(?:(?P<seconds>\d+(?:\.\d+)?)s)?",
+            value,
+        )
+        if not match:
+            return 0.0
+        minutes = float(match.group("minutes") or 0.0)
+        seconds = float(match.group("seconds") or 0.0)
+        return minutes * 60.0 + seconds
+
+    def _apply_groq_rate_headers(self, response: requests.Response) -> None:
+        headers = getattr(response, "headers", {})
+        remaining_raw = headers.get("x-ratelimit-remaining-tokens")
+        reset_raw = headers.get("x-ratelimit-reset-tokens", "")
+        if not remaining_raw:
+            return
+        try:
+            remaining = int(float(remaining_raw))
+        except ValueError:
+            return
+        reset_seconds = self._duration_seconds(reset_raw)
+        if remaining < 2600 and reset_seconds > 0:
+            state = self.providers["groq"]
+            state.cooldown_until = max(
+                state.cooldown_until,
+                time.monotonic() + min(reset_seconds, 30.0),
+            )
+            logger.info(
+                "Groq token budget low (%s remaining); pausing %.2fs until TPM reset",
+                remaining,
+                min(reset_seconds, 30.0),
+            )
+
     def _pace_groq(self) -> None:
         delay = self.settings.groq_min_interval_seconds - (
             time.monotonic() - self._last_groq_at
         )
         if delay > 0:
             time.sleep(delay)
+
+    def _wait_for_short_cooldown(self, max_wait: float = 6.0) -> bool:
+        if self.available:
+            return True
+        now = time.monotonic()
+        waits = [
+            state.cooldown_until - now
+            for state in self.providers.values()
+            if state.configured
+            and not state.disabled_reason
+            and state.cooldown_until > now
+        ]
+        if not waits:
+            return False
+        delay = min(waits)
+        if delay > max_wait:
+            return False
+        logger.info("All usable AI providers are cooling down; waiting %.2fs", delay)
+        time.sleep(delay + 0.15)
+        return self.available
 
     def _groq_request(
         self,
@@ -403,7 +475,7 @@ class AIClient:
             "model": self.settings.groq_model,
             "messages": self._messages(job, preliminary, preflight=preflight),
             "temperature": 0,
-            "max_completion_tokens": 500,
+            "max_completion_tokens": 350,
             "reasoning_effort": reasoning_effort,
             "include_reasoning": False,
             "response_format": (
@@ -436,6 +508,7 @@ class AIClient:
         finally:
             self._last_groq_at = time.monotonic()
 
+        self._apply_groq_rate_headers(response)
         raw = response.json()["choices"][0]["message"]["content"]
         if not isinstance(raw, str):
             raise ValueError("Groq content is not a string")
@@ -539,11 +612,13 @@ class AIClient:
         )
         generation_config: dict[str, object] = {
             "temperature": 0,
-            "maxOutputTokens": 500,
+            "maxOutputTokens": 350,
             "responseMimeType": "application/json",
         }
         if mode == "schema":
-            generation_config["responseSchema"] = SCHEMA
+            # responseSchema is the older OpenAPI-style schema field. responseJsonSchema
+            # accepts JSON Schema and supports additionalProperties/minimum/maximum.
+            generation_config["responseJsonSchema"] = SCHEMA
 
         payload = {
             "systemInstruction": {
@@ -695,6 +770,7 @@ class AIClient:
         return {
             name: {
                 "configured": state.configured,
+                "operational": state.configured and not state.disabled_reason,
                 "ready": state.configured
                 and not state.disabled_reason
                 and now >= state.cooldown_until,
@@ -857,6 +933,36 @@ class AIClient:
                     job.title,
                     self._http_detail(exc),
                 )
+
+        if not assessments and self._wait_for_short_cooldown():
+            # A short TPM cooldown (commonly 1–3 seconds on Groq) must not turn the
+            # remainder of a batch provisional. Retry one recovered provider once.
+            if self.providers["groq"].ready():
+                try:
+                    assessments.append(
+                        self._groq_call(
+                            job,
+                            preliminary,
+                            reasoning_effort="low",
+                        )
+                    )
+                except Exception as exc:
+                    self._handle_provider_error("groq", exc)
+                    logger.warning(
+                        "Groq retry after cooldown failed for %s: %s",
+                        job.title,
+                        self._http_detail(exc),
+                    )
+            if not assessments and self.providers["gemini"].ready():
+                try:
+                    assessments.append(self._gemini_call(job, preliminary))
+                except Exception as exc:
+                    self._handle_provider_error("gemini", exc)
+                    logger.warning(
+                        "Gemini retry after cooldown failed for %s: %s",
+                        job.title,
+                        self._http_detail(exc),
+                    )
 
         if not assessments:
             if self.settings.ai_required:

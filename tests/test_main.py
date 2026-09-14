@@ -224,3 +224,29 @@ def test_health_degrades_when_configured_backup_is_down(settings):
     )
     assert health["status"] == "degraded"
     assert any("redundancy reduced" in reason for reason in health["reasons"])
+
+
+def test_health_does_not_degrade_for_temporary_provider_cooldown(settings):
+    import time
+    from civil_job_agent.ai import AIClient
+    from civil_job_agent.models import SourceReport
+
+    ai = AIClient(
+        replace(
+            settings,
+            groq_api_key="groq-key",
+            gemini_api_key=None,
+        )
+    )
+    ai.providers["groq"].cooldown_until = time.monotonic() + 2
+
+    health = main._health_payload(
+        settings,
+        reports=[SourceReport("Fake", 1, True)],
+        jobs=[],
+        assessments={},
+        ai=ai,
+    )
+    assert health["status"] == "healthy"
+    assert health["providers"]["groq"]["operational"]
+    assert not health["providers"]["groq"]["ready"]
