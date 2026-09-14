@@ -65,11 +65,22 @@ def test_compact_evidence_keeps_domain_and_blocker_signals():
     assert "sponsorship" in evidence
 
 
-def test_provider_states_are_model_specific(settings):
-    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+def test_provider_states_are_model_and_vendor_specific(settings):
+    client = AIClient(
+        replace(
+            settings,
+            groq_api_key="g",
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+            gemini_api_key="m",
+        )
+    )
     assert client.providers["groq_primary"].model == "openai/gpt-oss-20b"
+    assert client.providers["groq_primary"].vendor == "groq"
+    assert client.providers["cloudflare"].model == "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+    assert client.providers["cloudflare"].vendor == "cloudflare"
     assert client.providers["groq_backup"].model == "openai/gpt-oss-120b"
-    assert client.providers["gemini"].model == "gemini-3.1-flash-lite"
+    assert client.providers["gemini"].vendor == "gemini"
 
 
 def test_generic_400_does_not_disable_lane_immediately(settings):
@@ -297,3 +308,130 @@ def test_groq_rate_headers_cool_only_current_model(settings):
     client._apply_groq_rate_headers("groq_primary", FakeResponse())
     assert not client.providers["groq_primary"].ready()
     assert client.providers["groq_backup"].ready()
+
+
+def test_cloudflare_request_uses_openai_compatible_schema(settings, monkeypatch):
+    client = AIClient(
+        replace(
+            settings,
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf-token",
+        )
+    )
+    captured = {}
+
+    class FakeResponse:
+        def json(self):
+            return {
+                "choices": [
+                    {"message": {"content": __import__("json").dumps(valid())}}
+                ]
+            }
+
+    def fake_request(method, url, **kwargs):
+        captured["url"] = url
+        captured["payload"] = kwargs["json"]
+        captured["headers"] = kwargs["headers"]
+        return FakeResponse()
+
+    monkeypatch.setattr(client.http, "request", fake_request)
+    result = client._cloudflare_request(vacancy(), preliminary())
+
+    assert "/accounts/acct/ai/v1/chat/completions" in captured["url"]
+    assert captured["payload"]["model"] == "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+    assert captured["payload"]["response_format"]["type"] == "json_schema"
+    assert captured["headers"]["Authorization"] == "Bearer cf-token"
+    assert result.source == "ai-cloudflare"
+
+
+def test_cloudflare_budget_stops_new_requests(settings):
+    client = AIClient(
+        replace(
+            settings,
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+            cloudflare_run_call_budget=2,
+        )
+    )
+    client.providers["cloudflare"].requests_made = 2
+    assert not client._cloudflare_budget_available()
+    assert "cloudflare" not in client._routing_order()
+
+
+def test_cloudflare_daily_neuron_exhaustion_disables_lane(settings):
+    client = AIClient(
+        replace(
+            settings,
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+        )
+    )
+    client._handle_provider_error(
+        "cloudflare",
+        http_error(429, "3036 You have used up your daily free allocation of 10,000 Neurons"),
+    )
+    assert client.providers["cloudflare"].disabled_reason == "daily quota exhausted"
+
+
+def test_cloudflare_out_of_capacity_is_temporary(settings):
+    client = AIClient(
+        replace(
+            settings,
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+        )
+    )
+    client._handle_provider_error(
+        "cloudflare",
+        http_error(429, "3040 Out of capacity"),
+    )
+    assert not client.providers["cloudflare"].disabled_reason
+    assert not client.providers["cloudflare"].ready()
+
+
+def test_workhorses_balance_between_groq_and_cloudflare(settings):
+    client = AIClient(
+        replace(
+            settings,
+            groq_api_key="g",
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+            gemini_api_key="m",
+        )
+    )
+    first = client._routing_order()
+    assert first[:2] == ["groq_primary", "cloudflare"]
+
+    client.providers["groq_primary"].successes = 2
+    client.providers["cloudflare"].successes = 1
+    second = client._routing_order()
+    assert second[0] == "cloudflare"
+
+
+def test_preflight_checks_cloudflare_too(settings, monkeypatch):
+    client = AIClient(
+        replace(
+            settings,
+            groq_api_key="g",
+            cloudflare_account_id="acct",
+            cloudflare_api_token="cf",
+            gemini_api_key="m",
+        )
+    )
+    calls = []
+
+    def fake_call(provider, job, prelim, preflight=False):
+        calls.append((provider, preflight))
+        return Assessment(
+            True, 95, "highway_engineer", "critical_skills", "high", "ok",
+            source=f"ai-{provider}",
+        )
+
+    monkeypatch.setattr(client, "_call_provider", fake_call)
+    client.preflight()
+    assert calls == [
+        ("groq_primary", True),
+        ("cloudflare", True),
+        ("groq_backup", True),
+        ("gemini", True),
+    ]
