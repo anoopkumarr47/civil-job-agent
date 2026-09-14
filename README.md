@@ -11,7 +11,7 @@ The profile is derived from the supplied CV but excludes personal contact detail
 Enabled sources include:
 
 - LocalGovernmentJobs
-- JobsIreland across civil/site/highway/roads/resident/project/transportation/setting-out/infrastructure/construction/drainage/water/assistant-engineer/civil-inspector searches
+- JobsIreland through a dedicated browser-first, single-session adapter across civil/site/highway/roads/resident/project/transportation/setting-out/infrastructure/construction/drainage/water/assistant-engineer/civil-inspector searches
 - Roughan O'Donovan / HireHive
 - DBFL / HireHive
 - AtkinsRéalis Ireland careers
@@ -100,3 +100,18 @@ After configuring secrets:
 6. Look for source counts, `AI calls by model`, final matches and `Dry run complete`.
 
 The branch run is automatically forced to `DRY_RUN=true`, so it will not email or persist state.
+
+
+### JobsIreland reliability
+
+JobsIreland does not use the generic Requests-first web-board adapter. Its dedicated adapter:
+
+- opens one Chromium browser/context for the entire JobsIreland sweep;
+- reuses that session across all configured search terms;
+- extracts numeric vacancy IDs from rendered job-detail links;
+- deduplicates the same vacancy across overlapping searches before detail parsing;
+- uses canonical `/en-US/job-Details?id=<id>` detail URLs;
+- applies one global search-time budget and one global detail-time budget;
+- never performs the old two-attempt 25-second Requests timeout before browser fallback.
+
+This avoids the repeated ~50-second-per-search timeout pattern seen from GitHub-hosted runners while preserving broad JobsIreland keyword coverage.
