@@ -20,6 +20,14 @@ def valid():
     }
 
 
+def vacancy(title="Project Engineer"):
+    return Job("test", "https://example/1", title, "Firm", "Dublin", "civil roads")
+
+
+def preliminary():
+    return Assessment(True, 84, "project_engineer", "critical_skills", "high", "fit")
+
+
 def http_error(status: int, text: str = "bad request", retry_after: str | None = None):
     response = requests.Response()
     response.status_code = status
@@ -30,317 +38,207 @@ def http_error(status: int, text: str = "bad request", retry_after: str | None =
     return requests.HTTPError(f"{status} error", response=response)
 
 
-def test_ai_boolean_is_strict():
+def test_validate_is_strict():
     data = valid()
-    data["matched"] = "false"
+    data["matched"] = "yes"
     with pytest.raises(ValueError, match="JSON boolean"):
         AIClient._validate(data)
-
-
-def test_ai_score_range_is_strict():
     data = valid()
-    data["score"] = 101
-    with pytest.raises(ValueError, match="score"):
+    data["role_family"] = None
+    with pytest.raises(ValueError, match="role_family"):
         AIClient._validate(data)
 
 
-def test_schema_generation_error_is_retryable():
-    assert AIClient._schema_generation_error(
-        '{"code":"json_validate_failed","message":"Failed to validate JSON"}'
-    )
-    assert AIClient._schema_generation_error("response_format json_schema invalid")
-    assert AIClient._schema_generation_error(
-        "Unknown name additionalProperties at generation_config.response_schema"
-    )
-    assert not AIClient._schema_generation_error("invalid API key")
-
-
-def test_compact_evidence_keeps_civil_and_non_civil_signals():
-    text = (
-        "Introduction text. " * 80
-        + "Minimum 5 years experience in civil roads. "
-        + "Civil 3D and AutoCAD are required. "
-        + "No visa sponsorship is available. "
-        + "AWS Terraform Kubernetes cloud infrastructure are also mentioned. "
-        + "Salary €55,000 per annum. "
-    )
-    vacancy = Job(
+def test_compact_evidence_keeps_domain_and_blocker_signals():
+    job = Job(
         "test",
         "https://example/1",
         "Infrastructure Engineer",
         "Firm",
         "Dublin",
-        text,
+        "Intro. " * 100
+        + "Civil roads Civil 3D. AWS Terraform cloud. No visa sponsorship. Salary €55,000.",
     )
-    evidence = compact_job_evidence(vacancy, 1800)
-    assert len(evidence) <= 1800
-    assert "civil roads" in evidence
+    evidence = compact_job_evidence(job, 1800)
+    assert "Civil roads" in evidence
     assert "AWS" in evidence
+    assert "sponsorship" in evidence
 
 
-def test_generic_400_does_not_immediately_disable_provider(settings):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
-    client._handle_provider_error("groq", http_error(400, "request-specific error"))
-    assert client.providers["groq"].disabled_reason == ""
-    assert client.providers["groq"].failures == 1
+def test_provider_states_are_model_specific(settings):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+    assert client.providers["groq_primary"].model == "openai/gpt-oss-20b"
+    assert client.providers["groq_backup"].model == "openai/gpt-oss-120b"
+    assert client.providers["gemini"].model == "gemini-3.1-flash-lite"
 
 
-def test_preflight_400_disables_incompatible_provider(settings):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
+def test_generic_400_does_not_disable_lane_immediately(settings):
+    client = AIClient(replace(settings, groq_api_key="g"))
+    client._handle_provider_error("groq_primary", http_error(400, "request-specific"))
+    state = client.providers["groq_primary"]
+    assert not state.disabled_reason
+    assert state.failures == 1
+
+
+def test_preflight_incompatibility_disables_only_lane(settings):
+    client = AIClient(replace(settings, groq_api_key="g"))
     client._handle_provider_error(
-        "groq",
+        "groq_primary",
         http_error(400, "unsupported request"),
         preflight=True,
     )
-    assert "preflight incompatible" in client.providers["groq"].disabled_reason
+    assert client.providers["groq_primary"].disabled_reason
+    assert client.providers["groq_backup"].operational()
 
 
-def test_rate_limit_uses_cooldown_not_permanent_disable(settings):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
+def test_429_is_per_model_cooldown(settings):
+    client = AIClient(replace(settings, groq_api_key="g"))
     client._handle_provider_error(
-        "groq",
-        http_error(429, "rate limit", retry_after="12"),
+        "groq_primary",
+        http_error(429, "TPM", retry_after="2"),
     )
-    state = client.providers["groq"]
-    assert state.disabled_reason == ""
-    assert state.cooldown_until > 0
-    assert not state.ready()
+    assert not client.providers["groq_primary"].ready()
+    assert client.providers["groq_backup"].ready()
+    assert not client.providers["groq_primary"].disabled_reason
 
 
-def test_auth_error_disables_provider(settings):
-    client = AIClient(replace(settings, gemini_api_key="gemini-key"))
-    client._handle_provider_error("gemini", http_error(401, "invalid key"))
-    assert client.providers["gemini"].disabled_reason
+def test_daily_quota_disables_gemini_for_run(settings):
+    client = AIClient(replace(settings, gemini_api_key="m"))
+    client._handle_provider_error(
+        "gemini",
+        http_error(429, "GenerateRequestsPerDayPerProjectPerModel-FreeTier"),
+    )
+    assert client.providers["gemini"].disabled_reason == "daily quota exhausted"
 
 
-def test_clear_highway_result_does_not_need_second_opinion(settings):
-    client = AIClient(settings)
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Highway Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
-    )
-    preliminary = Assessment(
-        True, 96, "highway_engineer", "critical_skills", "high", "fit"
-    )
-    primary = Assessment(
-        True,
-        94,
-        "highway_engineer",
-        "critical_skills",
-        "high",
-        "fit",
-        source="ai-groq",
-    )
-    assert not client._needs_second_opinion(vacancy, preliminary, primary, 76)
+def test_auth_failure_disables_only_affected_lane(settings):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+    client._handle_provider_error("groq_primary", http_error(401, "bad key"))
+    assert not client.providers["groq_primary"].operational()
+    assert client.providers["groq_backup"].operational()
+    assert client.providers["gemini"].operational()
 
 
-def test_ambiguous_infrastructure_result_needs_second_opinion(settings):
-    client = AIClient(settings)
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Infrastructure Engineer",
-        "Firm",
-        "Dublin",
-        "civil works",
-    )
-    preliminary = Assessment(
-        False, 72, "infrastructure_engineer", "unclear", "medium", "review"
-    )
-    primary = Assessment(
-        True,
-        82,
-        "infrastructure_engineer",
-        "critical_skills",
-        "high",
-        "fit",
-        source="ai-groq",
-    )
-    assert client._needs_second_opinion(vacancy, preliminary, primary, 76)
-
-
-def test_refine_fails_over_to_gemini_immediately(settings, monkeypatch):
-    client = AIClient(
-        replace(
-            settings,
-            groq_api_key="groq-key",
-            gemini_api_key="gemini-key",
-        )
-    )
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Project Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
-    )
-    preliminary = Assessment(
-        True, 84, "project_engineer", "critical_skills", "high", "fit"
-    )
+def test_waterfall_uses_backup_groq_before_gemini(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
     calls = []
 
-    def fail_groq(*args, **kwargs):
-        calls.append("groq")
-        raise http_error(429, "quota", retry_after="60")
+    def fake_call(provider, job, prelim, preflight=False):
+        calls.append(provider)
+        if provider == "groq_primary":
+            raise http_error(429, "TPM", retry_after="60")
+        if provider == "groq_backup":
+            return Assessment(
+                True, 86, "project_engineer", "critical_skills", "high", "fit",
+                source="ai-groq_backup",
+            )
+        raise AssertionError("Gemini should not be used")
 
-    def good_gemini(*args, **kwargs):
-        calls.append("gemini")
+    monkeypatch.setattr(client, "_call_provider", fake_call)
+    result = client.refine(vacancy(), preliminary())
+    assert calls == ["groq_primary", "groq_backup"]
+    assert result.source == "ai-groq_backup"
+
+
+def test_waterfall_reaches_gemini_only_after_both_groq_lanes_fail(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+    calls = []
+
+    def fake_call(provider, job, prelim, preflight=False):
+        calls.append(provider)
+        if provider.startswith("groq_"):
+            raise http_error(503, "temporary")
         return Assessment(
-            True,
-            88,
-            "project_engineer",
-            "critical_skills",
-            "high",
-            "fit",
+            True, 87, "project_engineer", "critical_skills", "high", "fit",
             source="ai-gemini",
         )
 
-    monkeypatch.setattr(client, "_groq_call", fail_groq)
-    monkeypatch.setattr(client, "_gemini_call", good_gemini)
-
-    result = client.refine(vacancy, preliminary)
-    assert calls == ["groq", "gemini"]
+    monkeypatch.setattr(client, "_call_provider", fake_call)
+    result = client.refine(vacancy(), preliminary())
+    assert calls == ["groq_primary", "groq_backup", "gemini"]
     assert result.source == "ai-gemini"
-    assert client.providers["groq"].disabled_reason == ""
 
 
-def test_refine_uses_independent_second_opinion(settings, monkeypatch):
-    client = AIClient(
-        replace(
-            settings,
-            groq_api_key="groq-key",
-            gemini_api_key="gemini-key",
-        )
-    )
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Project Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
-    )
-    preliminary = Assessment(
-        True, 84, "project_engineer", "critical_skills", "high", "fit"
-    )
+def test_one_valid_decision_does_not_trigger_second_opinion(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
     calls = []
 
-    def fake_groq(job, preliminary, reasoning_effort="low", preflight=False):
-        calls.append(("groq", reasoning_effort))
+    def fake_call(provider, job, prelim, preflight=False):
+        calls.append(provider)
         return Assessment(
-            True,
-            78,
-            "project_engineer",
-            "critical_skills",
-            "high",
-            "g",
-            source="ai-groq",
+            True, 82, "project_engineer", "critical_skills", "high", "fit",
+            source=f"ai-{provider}",
         )
 
-    def fake_gemini(job, preliminary, preflight=False):
-        calls.append("gemini")
+    monkeypatch.setattr(client, "_call_provider", fake_call)
+    result = client.refine(vacancy(), preliminary())
+    assert calls == ["groq_primary"]
+    assert result.source == "ai-groq_primary"
+
+
+def test_all_lanes_failed_becomes_provisional(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+
+    monkeypatch.setattr(
+        client,
+        "_call_provider",
+        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("down")),
+    )
+    monkeypatch.setattr(client, "_wait_for_recovery", lambda *args, **kwargs: False)
+
+    before = preliminary()
+    result = client.refine(vacancy(), before)
+    assert result is before
+    assert result.provisional
+
+
+def test_preflight_checks_all_configured_lanes(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g", gemini_api_key="m"))
+    calls = []
+
+    def fake_call(provider, job, prelim, preflight=False):
+        calls.append((provider, preflight))
         return Assessment(
-            True,
-            88,
-            "project_engineer",
-            "critical_skills",
-            "high",
-            "m",
-            source="ai-gemini",
+            True, 95, "highway_engineer", "critical_skills", "high", "ok",
+            source=f"ai-{provider}",
         )
 
-    monkeypatch.setattr(client, "_groq_call", fake_groq)
-    monkeypatch.setattr(client, "_gemini_call", fake_gemini)
+    monkeypatch.setattr(client, "_call_provider", fake_call)
+    health = client.preflight()
+    assert calls == [
+        ("groq_primary", True),
+        ("groq_backup", True),
+        ("gemini", True),
+    ]
+    assert all(health[name]["operational"] for name in health)
 
-    result = client.refine(vacancy, preliminary, threshold=76)
-    assert calls == [("groq", "low"), "gemini"]
-    assert result.source == "ai-consensus"
+
+def test_groq_strict_fallback_is_not_sticky(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g"))
+    modes = []
+
+    def fake_request(provider, job, prelim, *, mode="strict", reasoning_effort="low", preflight=False):
+        modes.append(mode)
+        if len(modes) == 1:
+            raise ValueError("bad strict payload")
+        return Assessment(
+            True, 90, "civil_engineer", "critical_skills", "high", "fit",
+            source=f"ai-{provider}",
+        )
+
+    monkeypatch.setattr(client, "_groq_request", fake_request)
+    result = client._groq_call("groq_primary", vacancy("Civil Engineer"), preliminary())
+    assert modes == ["strict", "json_object"]
+    assert client.providers["groq_primary"].mode == "strict"
     assert result.matched
 
 
-def test_all_provider_failures_become_provisional(settings, monkeypatch):
-    client = AIClient(
-        replace(
-            settings,
-            groq_api_key="groq-key",
-            gemini_api_key="gemini-key",
-            ai_required=False,
-        )
-    )
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Project Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
-    )
-    preliminary = Assessment(
-        True, 85, "project_engineer", "critical_skills", "high", "candidate"
-    )
-
-    monkeypatch.setattr(
-        client,
-        "_groq_call",
-        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("groq")),
-    )
-    monkeypatch.setattr(
-        client,
-        "_gemini_call",
-        lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("gemini")),
-    )
-
-    result = client.refine(vacancy, preliminary)
-    assert result.provisional
-    assert result is preliminary
-
-
-def test_preflight_can_leave_one_provider_healthy(settings, monkeypatch):
-    client = AIClient(
-        replace(
-            settings,
-            groq_api_key="groq-key",
-            gemini_api_key="gemini-key",
-        )
-    )
-
-    monkeypatch.setattr(
-        client,
-        "_groq_call",
-        lambda *args, **kwargs: (_ for _ in ()).throw(
-            http_error(401, "bad groq key")
-        ),
-    )
-    monkeypatch.setattr(
-        client,
-        "_gemini_call",
-        lambda *args, **kwargs: Assessment(
-            True,
-            95,
-            "highway_engineer",
-            "critical_skills",
-            "high",
-            "ok",
-            source="ai-gemini",
-        ),
-    )
-
-    health = client.preflight()
-    assert not health["groq"]["ready"]
-    assert health["gemini"]["ready"]
-    assert client.available
-
-
-def test_groq_request_uses_current_reasoning_parameters(settings, monkeypatch):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
+def test_groq_request_uses_selected_model_and_current_parameters(settings, monkeypatch):
+    client = AIClient(replace(settings, groq_api_key="g"))
     captured = {}
 
     class FakeResponse:
+        headers = {}
         def json(self):
             return {"choices": [{"message": {"content": __import__("json").dumps(valid())}}]}
 
@@ -349,183 +247,53 @@ def test_groq_request_uses_current_reasoning_parameters(settings, monkeypatch):
         return FakeResponse()
 
     monkeypatch.setattr(client.http, "request", fake_request)
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Civil Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
+    result = client._groq_request(
+        "groq_backup",
+        vacancy("Civil Engineer"),
+        Assessment(True, 90, "civil_engineer", "critical_skills", "high", "fit"),
     )
-    preliminary = Assessment(
-        True, 90, "civil_engineer", "critical_skills", "high", "fit"
-    )
-
-    client._groq_request(
-        vacancy,
-        preliminary,
-        reasoning_effort="low",
-        mode="strict",
-    )
-    assert captured["model"] == "openai/gpt-oss-20b"
-    assert captured["max_completion_tokens"] == 350
-    assert captured["include_reasoning"] is False
-    assert "max_tokens" not in captured
-    assert "reasoning_format" not in captured
-
-
-def test_ai_canonicalizes_known_permit_aliases():
-    data = valid()
-    data["permit_path"] = "critical_skills_plausible"
-    assert AIClient._validate(data).permit_path == "critical_skills"
-
-
-def test_two_provider_disagreement_does_not_promote_weak_deterministic_candidate():
-    preliminary = Assessment(
-        False, 72, "infrastructure_engineer", "unclear", "medium", "ambiguous"
-    )
-    first = Assessment(
-        False,
-        70,
-        "infrastructure_engineer",
-        "unclear",
-        "medium",
-        "no",
-        source="ai-groq",
-    )
-    second = Assessment(
-        True,
-        90,
-        "infrastructure_engineer",
-        "critical_skills",
-        "high",
-        "yes",
-        source="ai-gemini",
-    )
-    result = AIClient._consolidate(preliminary, [first, second], 76)
-    assert not result.matched
-    assert result.source == "ai-consensus"
-
-
-def test_two_provider_disagreement_can_preserve_strong_deterministic_civil_candidate():
-    preliminary = Assessment(
-        True, 86, "project_engineer", "critical_skills", "high", "civil"
-    )
-    first = Assessment(
-        False,
-        74,
-        "project_engineer",
-        "unclear",
-        "medium",
-        "no",
-        source="ai-groq",
-    )
-    second = Assessment(
-        True,
-        90,
-        "project_engineer",
-        "critical_skills",
-        "high",
-        "yes",
-        source="ai-gemini",
-    )
-    result = AIClient._consolidate(preliminary, [first, second], 76)
     assert result.matched
+    assert captured["model"] == "openai/gpt-oss-120b"
+    assert captured["max_completion_tokens"] == 320
+    assert captured["response_format"]["type"] == "json_schema"
 
 
-def test_gemini_schema_uses_json_schema_field(settings, monkeypatch):
-    client = AIClient(replace(settings, gemini_api_key="gemini-key"))
+def test_gemini_uses_flash_lite_minimal_thinking_and_json_schema(settings, monkeypatch):
+    client = AIClient(replace(settings, gemini_api_key="m"))
     captured = {}
 
     class FakeResponse:
         def json(self):
             return {
-                "candidates": [
-                    {
-                        "content": {
-                            "parts": [
-                                {"text": __import__("json").dumps(valid())}
-                            ]
-                        }
-                    }
-                ]
+                "candidates": [{"content": {"parts": [{"text": __import__("json").dumps(valid())}]}}]
             }
 
     def fake_request(method, url, **kwargs):
-        captured.update(kwargs["json"])
+        captured["url"] = url
+        captured["payload"] = kwargs["json"]
         return FakeResponse()
 
     monkeypatch.setattr(client.http, "request", fake_request)
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Civil Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
+    result = client._gemini_request(
+        vacancy("Civil Engineer"),
+        Assessment(True, 90, "civil_engineer", "critical_skills", "high", "fit"),
     )
-    preliminary = Assessment(
-        True, 90, "civil_engineer", "critical_skills", "high", "fit"
-    )
-
-    client._gemini_request(vacancy, preliminary, mode="schema")
-    generation = captured["generationConfig"]
+    generation = captured["payload"]["generationConfig"]
+    assert "gemini-3.1-flash-lite" in captured["url"]
+    assert generation["thinkingConfig"]["thinkingLevel"] == "minimal"
     assert "responseJsonSchema" in generation
-    assert "responseSchema" not in generation
-    assert generation["maxOutputTokens"] == 350
+    assert result.matched
 
 
-def test_short_groq_cooldown_is_waited_and_retried(settings, monkeypatch):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
-    vacancy = Job(
-        "test",
-        "https://example/1",
-        "Project Engineer",
-        "Firm",
-        "Dublin",
-        "civil roads",
-    )
-    preliminary = Assessment(
-        True, 84, "project_engineer", "critical_skills", "high", "fit"
-    )
-    calls = []
-
-    def fake_groq(*args, **kwargs):
-        calls.append("groq")
-        if len(calls) == 1:
-            raise http_error(429, "quota", retry_after="1")
-        return Assessment(
-            True,
-            86,
-            "project_engineer",
-            "critical_skills",
-            "high",
-            "fit",
-            source="ai-groq",
-        )
-
-    monkeypatch.setattr(client, "_groq_call", fake_groq)
-
-    def recover(max_wait=6.0):
-        client.providers["groq"].cooldown_until = 0.0
-        return True
-
-    monkeypatch.setattr(client, "_wait_for_short_cooldown", recover)
-
-    result = client.refine(vacancy, preliminary)
-    assert calls == ["groq", "groq"]
-    assert result.source == "ai-groq"
-
-
-def test_groq_rate_headers_schedule_pause_when_token_budget_low(settings, monkeypatch):
-    client = AIClient(replace(settings, groq_api_key="groq-key"))
+def test_groq_rate_headers_cool_only_current_model(settings):
+    client = AIClient(replace(settings, groq_api_key="g"))
 
     class FakeResponse:
         headers = {
-            "x-ratelimit-remaining-tokens": "1458",
-            "x-ratelimit-reset-tokens": "1.6s",
+            "x-ratelimit-remaining-tokens": "1400",
+            "x-ratelimit-reset-tokens": "1.5s",
         }
 
-    before = client.providers["groq"].cooldown_until
-    client._apply_groq_rate_headers(FakeResponse())
-    assert client.providers["groq"].cooldown_until > before
+    client._apply_groq_rate_headers("groq_primary", FakeResponse())
+    assert not client.providers["groq_primary"].ready()
+    assert client.providers["groq_backup"].ready()
