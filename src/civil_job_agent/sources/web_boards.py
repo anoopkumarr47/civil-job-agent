@@ -11,6 +11,7 @@ from playwright.sync_api import sync_playwright
 
 from ..http import USER_AGENT, HttpClient
 from ..models import Job, canonicalize_url, normalize_space
+from ..relevance import NON_CIVIL, classify_civil_domain, is_plausible_target_title
 from .base import Source
 
 logger = logging.getLogger(__name__)
@@ -237,8 +238,13 @@ class ConfiguredWebBoard(Source):
         if self.config.get("require_location", False) and not location:
             return None
         required_terms = [str(x).casefold() for x in self.config.get("required_any_terms", [])]
-        haystack = f"{title} {description[:4000]}".casefold()
+        haystack = f"{title} {description[:6000]}".casefold()
         if required_terms and not any(term in haystack for term in required_terms):
+            return None
+        if not is_plausible_target_title(title):
+            return None
+        domain = classify_civil_domain(title, description[:8000])
+        if domain.domain == NON_CIVIL:
             return None
         return Job(
             self.name,
