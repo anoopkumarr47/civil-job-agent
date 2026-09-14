@@ -166,9 +166,7 @@
         "privacy",
         "jobexpired",
         "#",
-        "graduate",
-        "geotechnical",
-        "bridge"
+        "graduate"
       ],
       "required_any_terms": [
         "engineer",
@@ -312,8 +310,7 @@
       ],
       "exclude_link_patterns": [
         "graduate",
-        "student-placement",
-        "structural-engineer"
+        "student-placement"
       ],
       "required_any_terms": [
         "civil",
@@ -387,30 +384,6 @@
       ]
     }
   ],
-  "future_employer_watchlist": [
-    "Arup",
-    "AECOM",
-    "Jacobs",
-    "SYSTRA",
-    "Egis",
-    "RPS",
-    "TOBIN",
-    "Nicholas O'Dwyer",
-    "Tetra Tech",
-    "Mott MacDonald",
-    "Glanua",
-    "Murphy",
-    "BAM",
-    "Sisk",
-    "John Paul Construction",
-    "PJ Hegarty",
-    "Cairn",
-    "Walls Construction",
-    "Coffey",
-    "Kilsaran",
-    "Farrans",
-    "Wills Bros"
-  ],
   "smartrecruiters_sources": [
     {
       "name": "AECOM",
@@ -437,21 +410,65 @@
       "roads engineer",
       "resident engineer",
       "project engineer civil",
-      "transportation engineer",
+      "transport engineer",
       "setting out engineer",
-      "infrastructure engineer",
-      "construction engineer",
       "drainage engineer",
       "water engineer",
-      "assistant engineer",
+      "wastewater engineer",
+      "structural engineer",
+      "geotechnical engineer",
+      "traffic engineer",
+      "pavement engineer",
+      "rail engineer",
+      "permanent way engineer",
+      "utilities engineer",
       "civil inspector"
     ],
     "page_size": 100,
     "max_pages": 1,
-    "max_links": 120,
+    "max_links": 160,
     "navigation_timeout_ms": 25000,
-    "search_budget_seconds": 180,
-    "detail_budget_seconds": 180,
+    "search_budget_seconds": 240,
+    "detail_budget_seconds": 240,
     "settle_ms": 1000
-  }
+  },
+  "successfactors_sources": [
+    {
+      "name": "Mott MacDonald",
+      "enabled": true,
+      "search_url": "https://apply.mottmac.com/search/?q=",
+      "allowed_hosts": [
+        "apply.mottmac.com"
+      ],
+      "job_link_patterns": [
+        "/job/"
+      ],
+      "exclude_link_patterns": [
+        "graduate",
+        "intern",
+        "apprentice",
+        "placement"
+      ],
+      "required_any_terms": [
+        "civil",
+        "road",
+        "highway",
+        "transport",
+        "drainage",
+        "water",
+        "wastewater",
+        "rail",
+        "structural",
+        "geotechnical",
+        "site",
+        "infrastructure",
+        "engineer"
+      ],
+      "page_size": 20,
+      "max_pages": 60,
+      "max_links": 160,
+      "require_location": true,
+      "max_detail_seconds": 120
+    }
+  ]
 }
