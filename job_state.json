@@ -3510,6 +3510,39 @@
       "title": "Senior Project Manager 1",
       "url": "https://www.systra.com/ireland/job-offers/senior-project-manager-1-en-9420"
     },
+    "45624506296650203b7c55bbd7574950e02ad3827ca383718c7ddc65e4e83e77": {
+      "assessment": {
+        "gaps": [
+          "civil‑engineering responsibilities",
+          "road/highway design experience",
+          "construction site supervision",
+          "Civil 3D/AutoCAD usage"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Power Supply Engineer focused on high‑speed train electrical systems, which does not involve civil engineering, road/highway design, or construction site supervision. It lacks any civil‑engineering duties or tools such as Civil 3D, AutoCAD, alignment design, or infrastructure construction. Therefore it is not a match for a civil infrastructure engineer.",
+        "relocation_fit": "low",
+        "role_family": "none",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "7e8925d04c14f5a5c0a4f5aa4b68d07ead97ff8557cadafcd385d33c3064d8e1",
+      "first_seen": "2026-09-27T18:42:40.319882+00:00",
+      "identity_key": "45624506296650203b7c55bbd7574950e02ad3827ca383718c7ddc65e4e83e77",
+      "last_seen": "2026-09-27T18:42:40.319895+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Power Supply Engineer- Lead – High Speed Train",
+      "url": "https://www.systra.com/ireland/job-offers/power-supply-engineer-lead-high-speed-train-en-6417"
+    },
     "456df17af298f7bf315898d26125fd9fcaa518d7cd82df47e9c0c2b67a72da55": {
       "assessment": {
         "gaps": [],
@@ -3604,6 +3637,41 @@
       "source": "LinkedIn",
       "title": "Engineer Matheus Ferreira Engineer| civil | Planner | CAD |…",
       "url": "https://ie.linkedin.com/comm/in/engineer-matheus-ferreira?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BG%2B0JNrtOSXas8SZTblmlow%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0k9hcLiSYGbIs1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mu8pn4vw~fl-null-null&eid=uk2z7p-mu8pn4vw-fl&otpToken=OWZlYjUwN2NhMjYyOWU0MTUwOTM0NzE3ZDA5MTlmNWNiNzhmYmQ0M2Q0MWExM2U3Yjk2NWI3ZjA0MGYwMTVlNjZmNjRmN2M2MDcxZjg2MTM5YmE5ZGEyZjk3OWZiOGI5ZGRjY2Y0NDIxNmQ1YmIwNzlkZDI0OTExODcxZjFhNWFlMGEzN2Y4MmVkNWE2ZjVjNGQsMiwx"
+    },
+    "4b4de0d9d7c69605a355281d69469d08441a97181bd61abb5bd4933cb8a576c2": {
+      "assessment": {
+        "gaps": [
+          "lack of explicit highways/roads alignment design experience",
+          "technician level role may not match seniority"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is a civil engineering role focused on flood risk management, aligning with the candidate’s civil engineering background and experience in drainage and public works. However, it does not specifically involve highways/roads or the candidate’s strongest domain, and the role title suggests a technician level, which may not fully match the 6.5+ years of experience. Permit eligibility is unclear from the vacancy details.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 70,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "civil engineering background",
+          "experience in drainage and flood risk",
+          "public works context"
+        ]
+      },
+      "company": "",
+      "content_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "first_seen": "2026-09-27T18:42:57.982362+00:00",
+      "identity_key": "4b4de0d9d7c69605a355281d69469d08441a97181bd61abb5bd4933cb8a576c2",
+      "last_seen": "2026-09-27T18:42:57.982375+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-6c363c2e5fe9/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
     "4c85c710bac22f58c485dd289393fe937f59f84dfd517215ab03dcae0b084212": {
       "assessment": {
@@ -5747,6 +5815,46 @@
       "title": "Principal Engineer (Systems Safety)",
       "url": "https://www.systra.com/ireland/job-offers/principal-engineer-systems-safety-en-9930"
     },
+    "824f582c99d6964516d2adc92912eb4472aab8a60cdd1f477e9f7b32e2cbb637": {
+      "assessment": {
+        "gaps": [
+          "posting appears to require about 15+ years of experience",
+          "lack of explicit mention of Civil 3D, AutoCAD, alignment design, DPRs, plans/profiles/cross-sections, estimates/BOQ/tenders, construction/site supervision, contractor/consultant/utility coordination"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility, but experience requirement exceeds candidate's experience",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 72,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, highway, road design",
+          "highway",
+          "roads",
+          "road design",
+          "quality control",
+          "qa/qc",
+          "transport infrastructure",
+          "road safety"
+        ]
+      },
+      "company": "",
+      "content_hash": "5f25c096dc67eb4dc41d2c994bf67bb5a72e88e0e180410bdf9e068122816d52",
+      "first_seen": "2026-09-27T18:42:46.168596+00:00",
+      "identity_key": "824f582c99d6964516d2adc92912eb4472aab8a60cdd1f477e9f7b32e2cbb637",
+      "last_seen": "2026-09-27T18:42:46.168610+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Senior Materials Engineer (Roads) – Bid Opportunity",
+      "url": "https://www.systra.com/ireland/job-offers/senior-materials-engineer-roads-bid-opportunity-en-10814"
+    },
     "82b7feec6c91323cffe8a4aa9343207e316702ecff8308cca8a6a7658ba0ffb3": {
       "assessment": {
         "gaps": [
@@ -7103,7 +7211,7 @@
       "content_hash": "051fb7abe1c8367c60d4954909487c288d80819ba43cede533bdd5f6d5183d55",
       "first_seen": "2026-09-26T17:57:42.466964+00:00",
       "identity_key": "9bc0067c7a8efb3a18c258427de61e0aa69ca93eb28078d898ef2dee37966b33",
-      "last_seen": "2026-09-26T17:57:42.466970+00:00",
+      "last_seen": "2026-09-27T18:42:46.174405+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -9266,6 +9374,41 @@
       "source": "AECOM",
       "title": "Senior Rail Engineering Manager",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000112113911-senior-rail-engineering-manager?oga=true"
+    },
+    "cfc45050d4f61e0970ad93ca7a54226cab55790a9efad84cb5ae5f8e9c7782d1": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of evidence for highways/roads/transport infrastructure experience",
+          "no mention of Civil 3D, AutoCAD, or alignment design"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title and job description do not provide sufficient evidence of civil engineering duties, particularly in highways/roads/transport infrastructure",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "permanent role",
+          "management experience"
+        ]
+      },
+      "company": "",
+      "content_hash": "cb3f72c7eeec4baea2a475b468505920b859837c70491869bda16ddfe7cf0b59",
+      "first_seen": "2026-09-27T18:43:02.708272+00:00",
+      "identity_key": "cfc45050d4f61e0970ad93ca7a54226cab55790a9efad84cb5ae5f8e9c7782d1",
+      "last_seen": "2026-09-27T18:43:02.708286+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Head of Operations Engineering",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-6c363c2e5fe9/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
     "cfcc40e49f2a0f952c37400902bca82c15befe0ee83175975ab2d5b171d7acbd": {
       "assessment": {
@@ -11649,6 +11792,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-09-27T08:32:39.728312+00:00",
+  "updated_at": "2026-09-27T18:43:02.758492+00:00",
   "version": 3
 }
