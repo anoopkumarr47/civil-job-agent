@@ -5453,27 +5453,24 @@
     "5e90893d219367ab3dff976e2926625102190f3ee147dd85d96216284b81fd29": {
       "assessment": {
         "gaps": [
-          "role has a geotechnical-design specialism outside the strongest CV evidence",
-          "mandatory Chartered status not explicitly excluded"
+          "No clear civil engineering responsibilities or required skills listed."
         ],
         "hard_reject": false,
         "matched": false,
-        "permit_path": "unclear",
+        "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility, but role has a geotechnical-design specialism outside the strongest CV evidence",
-        "relocation_fit": "medium",
+        "reason": "The vacancy description is incomplete and lacks specific civil engineering duties such as roads, highways, transport infrastructure, Civil 3D/AutoCAD usage, alignment design, or construction supervision. The evidence provided is insufficient to confirm a civil role, and the title alone does not guarantee a civil engineering position. Therefore, the role is not considered a match for the specified civil engineering profile.",
+        "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 69,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil-domain evidence: civil engineering, civil engineer, nta"
-        ]
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "1d7ec854c2042b1c43ec7f6d241381b270f4970dde2a3064c79e082c68df5f78",
+      "content_hash": "f4e06e83a1e9916f9d553d0a86ae22613d3b27d6614737ff5306d9e964b536b5",
       "first_seen": "2026-09-29T19:38:30.900400+00:00",
       "identity_key": "5e90893d219367ab3dff976e2926625102190f3ee147dd85d96216284b81fd29",
-      "last_seen": "2026-10-04T08:43:58.090460+00:00",
+      "last_seen": "2026-10-04T18:22:25.157191+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -6490,27 +6487,29 @@
     "701631995b1eea4f9c769894fe8dca843b4f5f87248069061db577c7bf49de27": {
       "assessment": {
         "gaps": [
-          "role has a geotechnical-design specialism outside the strongest CV evidence",
-          "mandatory Chartered status not explicitly excluded"
+          "Limited geotechnical engineering experience",
+          "No evidence of ground investigation or soil testing work"
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility, but role has a geotechnical-design specialism outside the strongest CV evidence",
+        "reason": "The vacancy is for a Ground Engineering role, which primarily focuses on geotechnical engineering. The candidate’s strongest experience is in highways, roads, and transport infrastructure, with limited evidence of geotechnical design or ground investigation work. Therefore, the role does not align closely with the candidate’s core expertise, and the permit eligibility cannot be confirmed from the provided information.",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 69,
-        "source": "ai-cloudflare",
+        "score": 45,
+        "source": "ai-groq_primary",
         "strengths": [
-          "civil-domain evidence: civil engineering, civil engineer, nta"
+          "Civil engineering background",
+          "Experience with highways/roads/transport infrastructure",
+          "Proficiency in Civil 3D and AutoCAD"
         ]
       },
       "company": "",
-      "content_hash": "6417e4e2225233d017e7ec20d5563e0e847d0ff75efc976b95109b705f396737",
+      "content_hash": "ad5bded82c3907850cb50a32f84ac8102a239bf33d8500e3fbaf6044fefb8fe9",
       "first_seen": "2026-09-19T07:33:22.086104+00:00",
       "identity_key": "701631995b1eea4f9c769894fe8dca843b4f5f87248069061db577c7bf49de27",
-      "last_seen": "2026-10-04T08:43:58.090216+00:00",
+      "last_seen": "2026-10-04T18:22:16.790012+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -10094,6 +10093,38 @@
       "title": "Water Engineer",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000152927266-water-engineer?oga=true"
     },
+    "a24679bde7aaa2cb1d793c0b57c74f854809d403ff1c0a390bb966cf486f7698": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 90,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, flood risk management, drainage, arterial drainage",
+          "permanent role",
+          "Civil Engineering Technician Grade I"
+        ]
+      },
+      "company": "",
+      "content_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "first_seen": "2026-10-04T18:22:28.200358+00:00",
+      "identity_key": "a24679bde7aaa2cb1d793c0b57c74f854809d403ff1c0a390bb966cf486f7698",
+      "last_seen": "2026-10-04T18:22:28.200373+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": "2026-10-04T18:22:34.894377+00:00",
+      "notified_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1575833984d7/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
+    },
     "a279c352280246fa58fc423b1798f43628c79080b34bb4245349fb8ee5337a06": {
       "assessment": {
         "gaps": [
@@ -10295,24 +10326,25 @@
     "a70bbeba4987c52b1298a1a8dd3af044d145d98519c0208eb963479a5aa26c05": {
       "assessment": {
         "gaps": [
-          "No evidence of civil engineering duties or tools; role is outside civil domain"
+          "lack of civil engineering focus",
+          "electrical engineering title"
         ],
         "hard_reject": false,
         "matched": false,
-        "permit_path": "not_eligible",
+        "permit_path": "unclear",
         "provisional": false,
-        "reason": "Job title and duties indicate an Electrical Engineering role, lacking civil engineering responsibilities such as roads, highways, Civil 3D, AutoCAD, alignment design, or construction supervision. Therefore it does not match the required civil domain for a B.Tech Civil Engineer with 6.5+ years in highways/roads/transport infrastructure.",
+        "reason": "Job title and evidence suggest an electrical engineering role, which does not match the required civil engineering specialization",
         "relocation_fit": "low",
-        "role_family": "civil_infrastructure_engineer",
-        "score": 10,
-        "source": "ai-groq_primary",
+        "role_family": "electrical_engineer",
+        "score": 0,
+        "source": "ai-cloudflare",
         "strengths": []
       },
       "company": "",
-      "content_hash": "c706903bfce02e3d05be854af720a28899f9f8ad3eb5ac5a2918c86eef208592",
+      "content_hash": "5f8cbc5e45f0562cd9dd0f4d8c08a169318c38962c053431533c142e2e3d1128",
       "first_seen": "2026-09-17T18:29:34.916278+00:00",
       "identity_key": "a70bbeba4987c52b1298a1a8dd3af044d145d98519c0208eb963479a5aa26c05",
-      "last_seen": "2026-10-04T08:43:58.090333+00:00",
+      "last_seen": "2026-10-04T18:22:19.271936+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -11003,6 +11035,43 @@
       "source": "PublicJobs",
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-8edd8e61913f/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
+    },
+    "b344bf77ae6382e71ce44834ef843d3c5c2301d6c4c8b961349538d969fe6225": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "utilities_engineer",
+        "score": 100,
+        "source": "deterministic",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, civil 3d, highway",
+          "civil 3d",
+          "autocad",
+          "highway",
+          "roads",
+          "road design",
+          "qa/qc",
+          "transport infrastructure"
+        ]
+      },
+      "company": "",
+      "content_hash": "b1002c3915840d40c0d2264fa4765270307c81f4f2d26242e073b9ed76e03abf",
+      "first_seen": "2026-10-04T18:22:25.176304+00:00",
+      "identity_key": "b344bf77ae6382e71ce44834ef843d3c5c2301d6c4c8b961349538d969fe6225",
+      "last_seen": "2026-10-04T18:22:25.176312+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-10-04T18:22:34.894155+00:00",
+      "notified_hash": "b1002c3915840d40c0d2264fa4765270307c81f4f2d26242e073b9ed76e03abf",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Lead Utilities Engineer -Section 1",
+      "url": "https://www.systra.com/ireland/job-offers/lead-stakeholder-engineer-section-1-en-10502"
     },
     "b3468a9137fe191de5ef01a6d2ea5eb9ad64861539e30cece1157296146e4bb8": {
       "assessment": {
@@ -14281,6 +14350,36 @@
       "title": "Site Engineer",
       "url": "https://www.linkedin.com/comm/jobs/view/4283795773?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3B6m0uYaANRQiFG1V2fniECA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0N57eSq6tOvcs1&trkEmail=eml-email_next_best_action_digest_01-9wqbiV99QGmkBgogKBzCrg%3D%3D-0-qZo3m6GACfe2j77TUSCNyw%3D%3D-null-uk2z7p~musliro3~ee-null-null&eid=uk2z7p-musliro3-ee&otpToken=OTJhNTZmZTFmMDY0YjA0NTNlYzFhNWExYTY2MGQ4ZGNjYWYwNjk2OWRmNmFiNjBiNWFiNWRkNjZkZTRhNzMwY2Y0ZjQxZjhiNDJiMWQxMjZhNTRjN2IwYzAwYjkyZjM0MGJiYjhhZmFmOTUwODhiOTQwMzhiMzBkZDM1MzQyM2ZhZWYzZmE3MGNhZGRlZDYxY2IsMiwx"
     },
+    "eb6db99910138530ad30910fa9839fc6c5bec40061a7d758fbeed850be2ee749": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities or tools (Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision) mentioned."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description focus on operations and data & technology strategy within a police department, with no evidence of civil engineering, road/highway, or related infrastructure duties. Therefore it does not match the required civil engineering profile.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "cb3f72c7eeec4baea2a475b468505920b859837c70491869bda16ddfe7cf0b59",
+      "first_seen": "2026-10-04T18:22:33.851093+00:00",
+      "identity_key": "eb6db99910138530ad30910fa9839fc6c5bec40061a7d758fbeed850be2ee749",
+      "last_seen": "2026-10-04T18:22:33.851127+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Head of Operations Engineering",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1575833984d7/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
+    },
     "eb78f1e03466bfb28b87127cd03ce0d5cc3168b76859a16f2a3dc9d50de43460": {
       "assessment": {
         "gaps": [
@@ -15820,6 +15919,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-04T08:44:36.306427+00:00",
+  "updated_at": "2026-10-04T18:22:34.894381+00:00",
   "version": 3
 }
