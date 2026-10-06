@@ -2735,10 +2735,10 @@
         ]
       },
       "company": "",
-      "content_hash": "7847873d52b1520cb492630fca5aa80576a30e5460c373e430b454f690e82233",
+      "content_hash": "75996a3e485d4386ff32f79338081bd8bdbf729fec24816e33b9cc30acabfb2f",
       "first_seen": "2026-10-05T21:38:32.740220+00:00",
       "identity_key": "21938ca2d0beb872433a675f8f122143e15a622a3541de1c89ff9fbf69780312",
-      "last_seen": "2026-10-06T09:15:26.945157+00:00",
+      "last_seen": "2026-10-06T19:43:45.598947+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-05T21:40:08.806597+00:00",
       "notified_hash": "7847873d52b1520cb492630fca5aa80576a30e5460c373e430b454f690e82233",
@@ -2782,6 +2782,39 @@
       "source": "PublicJobs",
       "title": "Regional Road Safety Engineer - Kerry County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-9fc99b02fa87/candidate/so/pm/1/pl/3/opp/6851-Regional-Road-Safety-Engineer-Kerry-County-Council/en-GB"
+    },
+    "220eb01032edde7cac69c324ec55af914441fe2d9bade87af9ab11c355f16a16": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "site_engineer",
+        "score": 92,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "highways/roads/transport infrastructure experience",
+          "Civil 3D and AutoCAD proficiency",
+          "construction/site supervision experience",
+          "QA/QC and contractor/consultant/utility coordination experience"
+        ]
+      },
+      "company": "",
+      "content_hash": "554fac3259d1448c35602a67000b40381adb8b6ac943d76c88e9a847f9453f29",
+      "first_seen": "2026-10-06T19:44:46.596682+00:00",
+      "identity_key": "220eb01032edde7cac69c324ec55af914441fe2d9bade87af9ab11c355f16a16",
+      "last_seen": "2026-10-06T19:44:46.596696+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-10-06T19:45:03.744868+00:00",
+      "notified_hash": "554fac3259d1448c35602a67000b40381adb8b6ac943d76c88e9a847f9453f29",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Jose Vitor Araujo Site Engineer at M&N Civils Ltd",
+      "url": "https://ie.linkedin.com/comm/in/eng-josevitor?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
     },
     "220eeda92222857954c3f0c53a4cd2f90032cd82d1d9c3fd18d0d4dcfdb3ffaf": {
       "assessment": {
@@ -2949,6 +2982,41 @@
       "source": "PublicJobs",
       "title": "Senior Engineer - Wicklow County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-527be9dc3fb1/candidate/so/pm/1/pl/3/opp/7461-Senior-Engineer-Wicklow-County-Council/en-GB"
+    },
+    "2503f3b59b2335e8b06187391dd27038e5300fa7c3bb375fe3bb162c93f302da": {
+      "assessment": {
+        "gaps": [
+          "specialist structural role"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Rejected due to specialist structural role which is outside the required specialization",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil engineering",
+          "highways and drainage",
+          "transport infrastructure",
+          "road safety"
+        ]
+      },
+      "company": "",
+      "content_hash": "d49d93e08dfb27419a99fc8f95cf2239481ebabb7d72517077aa0b91c2d75984",
+      "first_seen": "2026-10-06T19:44:02.744495+00:00",
+      "identity_key": "2503f3b59b2335e8b06187391dd27038e5300fa7c3bb375fe3bb162c93f302da",
+      "last_seen": "2026-10-06T19:44:02.744509+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Senior Structure Engineer",
+      "url": "https://www.systra.com/ireland/job-offers/senior-structure-engineer-en-7073"
     },
     "2580ceed68647637b2c2fbce4e9b8bee708fd2afc179c4f6bf73250bf966ca5a": {
       "assessment": {
@@ -3467,6 +3535,37 @@
       "source": "PublicJobs",
       "title": "Head of Operations Engineering",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1f78222f2269/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
+    },
+    "2e33448fed31a5660d1abe2a6bf7a9c0e6fac2e533bda498250a8fe66f5b8f4e": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit; AI review required",
+          "lack of specific civil engineering skills or experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title is potentially relevant but the civil domain is ambiguous and requires AI adjudication.",
+        "relocation_fit": "medium",
+        "role_family": "engineer",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "10cc6800fd45d3db7ca370a0981dccd58eb79578a590494d796154c67319c58d",
+      "first_seen": "2026-10-06T19:44:37.262926+00:00",
+      "identity_key": "2e33448fed31a5660d1abe2a6bf7a9c0e6fac2e533bda498250a8fe66f5b8f4e",
+      "last_seen": "2026-10-06T19:44:37.262940+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Owais Hussain MCIOB, MSc Senior Engineer | Project Management |…",
+      "url": "https://ie.linkedin.com/comm/in/mdowaishussain07?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
     },
     "31185ade7044710dc267c18fe45c8997fe16961d3221f4787ad2241bfeed715e": {
       "assessment": {
@@ -5511,6 +5610,36 @@
       "title": "Project Engineer:Aviation",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000146138019-project-engineer-aviation?oga=true"
     },
+    "59140dd9742b33a58be377fda9133678d0f1d4fb29f47646657f6fef13139760": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities or qualifications mentioned; title alone is insufficient to confirm a civil role"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title is generic and lacks any civil engineering or infrastructure-specific duties or requirements. No evidence of roads, highways, Civil 3D, or related civil tasks is provided, so it cannot be confidently matched to a civil engineering role.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "9e88960bf93004396d2267175a25cdf3b3d1c4f5264f8baad1c2b00ea89992a7",
+      "first_seen": "2026-10-06T19:44:52.297365+00:00",
+      "identity_key": "59140dd9742b33a58be377fda9133678d0f1d4fb29f47646657f6fef13139760",
+      "last_seen": "2026-10-06T19:44:52.297379+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Jucelia Barbosa Project Manager at BAM Ireland",
+      "url": "https://ie.linkedin.com/comm/in/jucelia-barbosa-3a956178?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
+    },
     "5969c56c7e8fddfe27a3cdd5e470b954f1592e3d1446542af7dcda5f851a121c": {
       "assessment": {
         "gaps": [
@@ -5646,6 +5775,36 @@
       "source": "PublicJobs",
       "title": "Project Manager - BlueMission Atlantic and Arctic 2030",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f3cc50c7b103/candidate/so/pm/1/pl/3/opp/9304-Project-Manager-BlueMission-Atlantic-and-Arctic-2030/en-GB"
+    },
+    "5b2d028798a202ab372d214dd6dae10d9cedb0917e6cc65a318f7bbbe492485f": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities; no mention of roads/highways, Civil 3D, AutoCAD, alignment design, DPRs, construction supervision, QA/QC, or contractor coordination."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Project Manager in a marine/energy context (BlueMission Atlantic and Arctic 2030) with no evidence of civil engineering, roads, highways, or related infrastructure duties. It does not match the required civil domain expertise.",
+        "relocation_fit": "low",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "00af871ed417db8ac90edb472b99f994e2373678d877c1bad8c8595e8068a728",
+      "first_seen": "2026-10-06T19:44:34.731053+00:00",
+      "identity_key": "5b2d028798a202ab372d214dd6dae10d9cedb0917e6cc65a318f7bbbe492485f",
+      "last_seen": "2026-10-06T19:44:34.731068+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Project Manager - BlueMission Atlantic and Arctic 2030",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-423dd989250d/candidate/so/pm/1/pl/3/opp/9304-Project-Manager-BlueMission-Atlantic-and-Arctic-2030/en-GB"
     },
     "5c305feb7e6231549585c8eb9845bed8dbb273ed822b837701e5b10c4b539b77": {
       "assessment": {
@@ -6946,24 +7105,27 @@
     "701631995b1eea4f9c769894fe8dca843b4f5f87248069061db577c7bf49de27": {
       "assessment": {
         "gaps": [
-          "No evidence of civil engineering duties or required tools (Civil 3D, AutoCAD, alignment design, DPRs, etc.)"
+          "role has a geotechnical-design specialism outside the strongest CV evidence",
+          "graduate role"
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy title and available evidence do not provide clear civil engineering responsibilities such as roads, highways, or transport infrastructure design. The content appears to be generic or unrelated to civil engineering, making it unlikely to match the candidate’s specialized skill set.",
-        "relocation_fit": "low",
+        "reason": "Role is a graduate position and has a geotechnical-design specialism outside the strongest CV evidence",
+        "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 20,
-        "source": "ai-groq_primary",
-        "strengths": []
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, ground engineering"
+        ]
       },
       "company": "",
-      "content_hash": "479fc389ae49dcfe235235d8aee6071ac9c82fccdeae924173775a4c75d6cad3",
+      "content_hash": "441b77659594809ef67250a9cd93ad1990d753ea1f23cfa2ccdf14c255eab117",
       "first_seen": "2026-09-19T07:33:22.086104+00:00",
       "identity_key": "701631995b1eea4f9c769894fe8dca843b4f5f87248069061db577c7bf49de27",
-      "last_seen": "2026-10-06T09:15:26.944920+00:00",
+      "last_seen": "2026-10-06T19:43:45.593287+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -7043,6 +7205,38 @@
       "source": "LinkedIn",
       "title": "Site Engineer",
       "url": "https://www.linkedin.com/comm/jobs/view/4470938563?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BLimG5ceUSH%2B59INARPRQqw%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=26brsJonIilss1&trkEmail=eml-email_next_best_action_digest_01-6qlCwJWiTbiSHfMclWT35Q%3D%3D-0-4P7Xl%2FiLiLcaNMsu294RhA%3D%3D-null-uk2z7p~muilftai~3j-null-null&eid=uk2z7p-muilftai-3j&otpToken=OWI3MTI3NTQwZmJmMWQ3YTMwMWFkODc2MjVjMTlmZGYxMWE4YWMxYTI2MmI5OGViYzMzNDI3MDZhZjVlOTc4MGM5NDBmZjU4NWNmMjgwNTQ3ZWQxM2ZkYjZlNjhlNDQ5MjM4Y2ZkNTkzMWVlMTZiNTNjNzdlOGI0NDljMDdmYjM4MjMxMTA3ODk0YWYzZWZlZDUsMiwx"
+    },
+    "711a9949f24270667c07b77e9431eb6d4c9f8f59cdf7a6896406679f2f620b22": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "site_engineer",
+        "score": 92,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "10+ years of civil engineering experience",
+          "proven site supervision and construction management",
+          "strong knowledge of civil infrastructure projects"
+        ]
+      },
+      "company": "",
+      "content_hash": "a3ed7d9b2c83c35923d240e8cb8b4f37990522984e05fd712deb3f10521311d5",
+      "first_seen": "2026-10-06T19:44:43.238573+00:00",
+      "identity_key": "711a9949f24270667c07b77e9431eb6d4c9f8f59cdf7a6896406679f2f620b22",
+      "last_seen": "2026-10-06T19:44:43.238588+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-10-06T19:45:03.744942+00:00",
+      "notified_hash": "a3ed7d9b2c83c35923d240e8cb8b4f37990522984e05fd712deb3f10521311d5",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Marcio Lubeke Site Engineer |10+ Years in Civil &…",
+      "url": "https://ie.linkedin.com/comm/in/marcio-lubeke?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
     },
     "715750989c6ec189db4e260dd727098066e59cc59ddca03701c93305fb91d43f": {
       "assessment": {
@@ -7241,6 +7435,44 @@
       "title": "Senior Engineer - Kilkenny County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ccd7a8ce1a9f/candidate/so/pm/1/pl/3/opp/5280-Senior-Engineer-Kilkenny-County-Council/en-GB"
     },
+    "748160b555db6146d69887e3a4c8d7330a3b18bc180e25dd1ea5a034fee43a8b": {
+      "assessment": {
+        "gaps": [
+          "Chartered status is mentioned; verify whether essential or desirable",
+          "18-month offer is too short for the usual Critical Skills two-year offer requirement"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "general",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "medium",
+        "role_family": "resident_engineer",
+        "score": 100,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, motorway, site supervision",
+          "autocad",
+          "site supervision",
+          "site inspection",
+          "quality control",
+          "resident engineer"
+        ]
+      },
+      "company": "Roughan & O'Donovan",
+      "content_hash": "0c0625eeeb2fcdc903d1d79fe1ec383156fdecd498677b6fc0aa939cfb8ae881",
+      "first_seen": "2026-10-06T19:43:29.299656+00:00",
+      "identity_key": "748160b555db6146d69887e3a4c8d7330a3b18bc180e25dd1ea5a034fee43a8b",
+      "last_seen": "2026-10-06T19:43:29.299671+00:00",
+      "location": "Cork, IE",
+      "notified_at": "2026-10-06T19:45:03.744746+00:00",
+      "notified_hash": "0c0625eeeb2fcdc903d1d79fe1ec383156fdecd498677b6fc0aa939cfb8ae881",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "Roughan O'Donovan",
+      "title": "Resident Engineer",
+      "url": "https://roughan-and-odonovan.hirehive.com/resident-engineer-cork-gzTPe5"
+    },
     "74982f41cca716754e3e5993cbaf9f94c177866d6f9d0a94aa8c7dc5e74b18bb": {
       "assessment": {
         "gaps": [
@@ -7279,6 +7511,36 @@
       "source": "Roughan O'Donovan",
       "title": "Design Engineer - Transportation",
       "url": "https://roughan-and-odonovan.hirehive.com/design-engineer-transportation-dublin-6Mvb2W"
+    },
+    "74d17d81d85ecff1ad4cffd088b28b3748664c0facd0a619cd7b9cb77e4c4ab3": {
+      "assessment": {
+        "gaps": [
+          "No explicit civil engineering responsibilities or tools (Civil 3D, AutoCAD, road design, alignment, construction supervision) are listed. The role is generic systems engineering, not a civil infrastructure engineer."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and primary responsibilities focus on a Systems Engineering Manager role, which is not a civil engineering position. Although the description references transport infrastructure and civil engineering services, the role is framed as a systems/engineering management position, lacking explicit civil engineering duties such as road design, alignment, Civil 3D usage, or construction supervision. Therefore, it does not meet the civil domain criteria.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "ff55acbb622a3e4106f343fb9bc7883294aa866387204f46e632ff11f6ea91af",
+      "first_seen": "2026-10-06T19:44:08.613304+00:00",
+      "identity_key": "74d17d81d85ecff1ad4cffd088b28b3748664c0facd0a619cd7b9cb77e4c4ab3",
+      "last_seen": "2026-10-06T19:44:08.613319+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Senior Systems Engineering Manager",
+      "url": "https://www.systra.com/ireland/job-offers/systems-engineering-manager-rail-transit-en-10153"
     },
     "74fe2c4871c306f73c5694bb9844f5af73b99b6c27b0eb34c98ae28ef430587a": {
       "assessment": {
@@ -8137,29 +8399,25 @@
     "82b7feec6c91323cffe8a4aa9343207e316702ecff8308cca8a6a7658ba0ffb3": {
       "assessment": {
         "gaps": [
-          "Lack of explicit mention of civil engineering, highways/roads/transport infrastructure, Civil 3D, AutoCAD, alignment design, DPRs, plans/profiles/cross-sections, estimates/BOQ/tenders, construction/site supervision, QA/Q",
-          "Chartered status is mentioned; verify whether essential or desirable"
+          "No evidence of civil‑engineering responsibilities (e.g., road design, pavement, alignment, site supervision).",
+          "Role title and description are generic project‑management, not civil‑engineering specific."
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Insufficient evidence of civil-domain expertise and unclear Ireland employment-permit feasibility",
+        "reason": "The vacancy is a generic project‑management role with no explicit civil‑engineering duties such as road/highway design, Civil 3D/AutoCAD use, alignment design, or construction supervision. The description focuses on contract administration and programme management rather than technical civil tasks, so it does not satisfy the domain‑specific criteria for a civil‑engineering position.",
         "relocation_fit": "medium",
         "role_family": "project_manager",
-        "score": 69,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil-domain evidence: NTA, transport planning",
-          "experience threshold (3+ years) is within range",
-          "tender"
-        ]
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "6c5944d135539fb27b8a2fdc92e3253a717a4e139f00abd73365868bb13804db",
+      "content_hash": "11068af079a8413072a4147cccc77a1345ae5dc746268f7673466a509798c30f",
       "first_seen": "2026-09-14T08:05:24.061873+00:00",
       "identity_key": "82b7feec6c91323cffe8a4aa9343207e316702ecff8308cca8a6a7658ba0ffb3",
-      "last_seen": "2026-10-06T09:15:26.945450+00:00",
+      "last_seen": "2026-10-06T19:43:51.436565+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -8589,6 +8847,39 @@
       "title": "Senior Geotechnical Engineer",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000152945136-senior-geotechnical-engineer?oga=true"
     },
+    "892032674923b4d229643d1e131663688a216c01655bd6e91a8c2b02dfa50ff4": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit; AI review required",
+          "lack of information on highways/roads/transport infrastructure experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title contains 'Civil' but also 'Structural', introducing ambiguity, and the evidence lacks specific details on highways/roads/transport infrastructure experience",
+        "relocation_fit": "medium",
+        "role_family": "design_engineer",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "presence of 'Civil' in the title"
+        ]
+      },
+      "company": "",
+      "content_hash": "4d1929d47ead5ded7882b28d39daff761a689f35da94c84bab8534528ab2e036",
+      "first_seen": "2026-10-06T19:45:02.475166+00:00",
+      "identity_key": "892032674923b4d229643d1e131663688a216c01655bd6e91a8c2b02dfa50ff4",
+      "last_seen": "2026-10-06T19:45:02.475180+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Aneesh Ravindran Civil-Structural Design Engineer !…",
+      "url": "https://ie.linkedin.com/comm/in/aneesh-ravindran-7a501a17b?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
+    },
     "894cf89084e251b51182a19fa326cb38e13f7c23a1c5241adeda2f02709cca7b": {
       "assessment": {
         "gaps": [
@@ -8659,28 +8950,26 @@
     "8a739be37dfccb691ee26d2c37b9be870f6f4df60d5fe7738dbdc29c65ffbcfd": {
       "assessment": {
         "gaps": [
-          "role has a geotechnical-design specialism outside the strongest CV evidence",
-          "Chartered status is mentioned; verify whether essential or desirable"
+          "Lack of geotechnical design experience",
+          "No evidence of ground investigation or numerical analysis skills",
+          "No mention of deep excavation or foundation work"
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Role has a geotechnical-design specialism outside the strongest CV evidence and Chartered status is mentioned",
+        "reason": "The vacancy is for a Senior Geotechnical Engineer, requiring deep expertise in geotechnical design, ground investigation, and related numerical analysis. The candidate’s strongest experience lies in highways, roads, transport infrastructure, Civil 3D, alignment design, and construction supervision, with no explicit evidence of geotechnical design or deep excavation work. Therefore the role does not align with the candidate’s core civil engineering strengths, leading to a low match score.",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 59,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil-domain evidence: earthworks, TII, NTA",
-          "earthworks"
-        ]
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "e54f67cd1852b181b1aea33c5830add6248328c3a88809f78c11000084c401c4",
+      "content_hash": "41f2b2f2560cdd088f7ec8a5fc1a705153174345b2a47f540c651f25b66f9352",
       "first_seen": "2026-09-19T07:33:17.131642+00:00",
       "identity_key": "8a739be37dfccb691ee26d2c37b9be870f6f4df60d5fe7738dbdc29c65ffbcfd",
-      "last_seen": "2026-10-06T09:15:26.944815+00:00",
+      "last_seen": "2026-10-06T19:43:42.506539+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -10314,6 +10603,34 @@
       "title": "Executive Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-423dd989250d/candidate/so/pm/1/pl/3/opp/8865-Executive-Engineer/en-GB"
     },
+    "9e9ef7f939c37ad9fbca78e4b07ec8ead39809742283f402d7fb9a96ddf8106f": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Civil Engineering Technician Grade I, which is an entry‑level support role rather than a professional engineer position. The candidate’s 6.5+ years of experience and specialist highway/road design skills exceed the scope of the technician role, making it a mismatch. No evidence of a civil engineering licence or senior‑level responsibilities is required for this position, so it is not a suitable match.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "first_seen": "2026-10-06T19:44:26.219416+00:00",
+      "identity_key": "9e9ef7f939c37ad9fbca78e4b07ec8ead39809742283f402d7fb9a96ddf8106f",
+      "last_seen": "2026-10-06T19:44:26.219430+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-b23dd1e63d56/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
+    },
     "9eaa5396b40c27a7248157c288c9a12b8c60b79307f93fd612406ae4f98a4081": {
       "assessment": {
         "gaps": [
@@ -11281,6 +11598,46 @@
       "title": "Resident Engineer",
       "url": "https://roughan-and-odonovan.hirehive.com/resident-engineer-limerick-hMYY6K"
     },
+    "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14": {
+      "assessment": {
+        "gaps": [
+          "Chartered status is mentioned; verify whether essential or desirable",
+          "fixed-term duration is unclear; verify the two-year Critical Skills offer requirement"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "medium",
+        "role_family": "highway_engineer",
+        "score": 100,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, civil 3d, highway",
+          "civil 3d",
+          "autocad",
+          "highway",
+          "roads",
+          "road design",
+          "geometric design",
+          "detailed design"
+        ]
+      },
+      "company": "",
+      "content_hash": "e3b8ff7e621606dd6733013c170ab4f1ac1c095ff9ca9d41b9281b12155a2422",
+      "first_seen": "2026-10-06T19:43:55.982271+00:00",
+      "identity_key": "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14",
+      "last_seen": "2026-10-06T19:43:55.982284+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": "2026-10-06T19:45:03.744600+00:00",
+      "notified_hash": "e3b8ff7e621606dd6733013c170ab4f1ac1c095ff9ca9d41b9281b12155a2422",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "Arup",
+      "title": "Highways Engineer",
+      "url": "https://jobs.arup.com/jobs/highways-engineer-32926"
+    },
     "aa7862ed4f86f9758d3d4991b734820b43778736bfada56f4174e38c283a4c89": {
       "assessment": {
         "gaps": [],
@@ -11532,6 +11889,38 @@
       "source": "LinkedIn",
       "title": "Engineers Ireland 73,179 followers",
       "url": "https://www.linkedin.com/comm/feed/update/share:7508510644351016960?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BztA1uaD5S%2F65C6ItXQffLg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1kKi4TF-oysIs1&trkEmail=eml-email_next_best_action_digest_01-network_post-0-actor_card-null-uk2z7p~mupz7pwh~hl-null-null&eid=uk2z7p-mupz7pwh-hl&otpToken=YzllMzcxZjRiYTdhMTU3ZGVkZjZiNzExYWZhNjc2M2Y5MDVkZmUxYTFkZGExNmI5ZjUwNzEwMzE5ZWQyOGViZWVjYTQxMjFmZjMwZWJkYWVkY2I1NjVlMTg4ZWYxZWY0Njc3NzZjZjFmYmQ1ZTFjNjAwNmJjZGEzYjA3NjRiMmZhZWViMjgwODYwYTI0ZjIyZWIsMiwx"
+    },
+    "ae3076cafb4bef0582eeadf336a60a6eddf2632c610003bf0b05a7f55c94e060": {
+      "assessment": {
+        "gaps": [
+          "lack of civil engineering domain evidence",
+          "no mention of highways/roads/transport infrastructure",
+          "no evidence of Civil 3D, AutoCAD, or alignment design skills"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The job title and description do not match the required civil engineering domain, with no evidence of roads/highways, transport infrastructure, or relevant software skills.",
+        "relocation_fit": "low",
+        "role_family": "non_civil_engineering_role",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "cb3f72c7eeec4baea2a475b468505920b859837c70491869bda16ddfe7cf0b59",
+      "first_seen": "2026-10-06T19:44:29.945796+00:00",
+      "identity_key": "ae3076cafb4bef0582eeadf336a60a6eddf2632c610003bf0b05a7f55c94e060",
+      "last_seen": "2026-10-06T19:44:29.945811+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Head of Operations Engineering",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-b23dd1e63d56/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
     "ae4232ac4744c12d307922147091b22d02897eb0d05832860fc62d1b0e3872c5": {
       "assessment": {
@@ -11978,6 +12367,39 @@
       "source": "LinkedIn",
       "title": "Vinod Gopinath Founder, Civil Engineers World | Connecting global… Hornsea 3’s Second Jacket Foundation Is Built for Deeper Water. Two foundations may look almost identical… see more 3 · 2 Comments",
       "url": "https://www.linkedin.com/comm/feed/update/ugcPost:7510728633632878592?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3By2EbRj8WSKuo3b35lN3L%2Fw%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1VPF_Oc9TOpss1&trkEmail=eml-email_next_best_action_digest_01-iCuGEfqAQBWR7MZQzXvPIQ%3D%3D-0-5VlI2HuqcSnLwwE0qCmhbw%3D%3D-null-uk2z7p~mumvrdfw~53-null-null&eid=uk2z7p-mumvrdfw-53&otpToken=ZjRlY2U5YWQzNjEwMTYwODg1ODdhYTQ4OTgyNGIzZTJlMWE3MjhkNGMyODUzNDQ2NTc3NmYwNDVmYWFmNzNkYTRkY2EwMjc0Yzg2YTNlZjIzY2FkMzU4ZmUyZGVmYzQwODc1MjM3Yjg1YzNhYjNmODRiMTVlMDU4NDcwZDE3N2YxNDNjNzQ0ZDhmNjJjZmMzYmUsMiwx"
+    },
+    "b44ed9855411832f95b2dfadc24410c8ba6e271016a9503d0cb4f0abf21d9cdb": {
+      "assessment": {
+        "gaps": [
+          "Chartered status is mentioned; verify whether essential or desirable"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 76,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, discipline: civil, bridge",
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "4e22a77c308a6f40d26b92255e6e524e3dd9da76a5417d2dffe85db8b5592979",
+      "first_seen": "2026-10-06T19:44:11.697964+00:00",
+      "identity_key": "b44ed9855411832f95b2dfadc24410c8ba6e271016a9503d0cb4f0abf21d9cdb",
+      "last_seen": "2026-10-06T19:44:11.697979+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": "2026-10-06T19:45:03.745350+00:00",
+      "notified_hash": "4e22a77c308a6f40d26b92255e6e524e3dd9da76a5417d2dffe85db8b5592979",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "Mott MacDonald",
+      "title": "Expression of Interest: Project Managers and Senior Engineers - Heavy Civil Infrastructure",
+      "url": "https://apply.mottmac.com/job/Cork-Expression-of-Interest-Project-Managers-and-Senior-Engineers-Heavy-Civil-Infrastructure/1374068657"
     },
     "b4d6f04b5b823caf66cbf38399d8640c117eca741450c96b7e952c6a4e357d76": {
       "assessment": {
@@ -12606,13 +13028,13 @@
     "bd99e8f8563b58122414b7c920905ff33a9ea2edf4aea17276b35560454fc27e": {
       "assessment": {
         "gaps": [
-          "No civil engineering responsibilities or tools mentioned; role is unrelated to highways/roads/transport infrastructure."
+          "No civil engineering duties or tools mentioned; role is mechanical engineering"
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "Job title and description indicate a mechanical engineering role with no evidence of civil engineering duties or relevant skills such as Civil 3D, road/highway design, or construction supervision. Therefore it does not match the required civil infrastructure engineer profile.",
+        "reason": "Job title and duties indicate a mechanical engineering role, lacking evidence of civil engineering responsibilities such as roads, highways, or Civil 3D usage. Therefore it does not match the required civil domain criteria.",
         "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
         "score": 0,
@@ -12620,10 +13042,10 @@
         "strengths": []
       },
       "company": "",
-      "content_hash": "e10549511cd618fb45cc42496e2044c55a4c779c08e8c36b3f4aca5c5cae62cf",
+      "content_hash": "a90ddb9b5b8a1a3424dc491f23bc2348422915c1cc2ae4611f24dff2bd3ad00f",
       "first_seen": "2026-09-14T01:53:18.705827+00:00",
       "identity_key": "bd99e8f8563b58122414b7c920905ff33a9ea2edf4aea17276b35560454fc27e",
-      "last_seen": "2026-10-06T09:15:26.944531+00:00",
+      "last_seen": "2026-10-06T19:43:33.913784+00:00",
       "location": "Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -12892,6 +13314,41 @@
       "source": "PublicJobs",
       "title": "Regional Road Safety Engineer - Kerry County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-bab47017738e/candidate/so/pm/1/pl/3/opp/6851-Regional-Road-Safety-Engineer-Kerry-County-Council/en-GB"
+    },
+    "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
+      "assessment": {
+        "gaps": [
+          "no evidence of highway/road design or transport infrastructure work",
+          "no mention of Civil 3D/AutoCAD usage",
+          "no specific project or technical responsibilities"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The posting provides only a generic title and location with no specific duties or required skills that demonstrate a focus on highways, roads, transport infrastructure, Civil 3D, or related civil engineering tasks. Therefore it cannot be confidently matched to the candidate’s specialized profile.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "generic civil engineering title",
+          "location in Dublin, Ireland"
+        ]
+      },
+      "company": "",
+      "content_hash": "25084e0655841280fdba953a0145dcd6d1efb40fde238c81c74a46f8526ac2dc",
+      "first_seen": "2026-10-06T19:44:00.098429+00:00",
+      "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
+      "last_seen": "2026-10-06T19:44:00.098443+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "Arup",
+      "title": "Civil Engineering",
+      "url": "https://jobs.arup.com/jobs/32926/other-jobs-matching/location-and-category"
     },
     "c32251a3bb5b1c4e37e888eb9dcd151814d1ca099a58701f2bf205fc0eec8431": {
       "assessment": {
@@ -17066,6 +17523,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-06T09:16:09.346068+00:00",
+  "updated_at": "2026-10-06T19:45:03.745354+00:00",
   "version": 3
 }
