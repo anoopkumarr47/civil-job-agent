@@ -357,10 +357,10 @@
         "strengths": []
       },
       "company": "Employers",
-      "content_hash": "9e1338674bb2e386c3da74a059b0f592439cea03b93b0d18a08e03e5f6a0e4b2",
+      "content_hash": "2fdf52824fe5e8797f56b3f9678d30fab477bc78c65720b09a7d3c93fff8c22a",
       "first_seen": "2026-09-25T18:52:00.437934+00:00",
       "identity_key": "02ab5570356d288347506ca10adafdaa9c9dfb19bf3bbbc600fac8cb913db2c8",
-      "last_seen": "2026-10-09T09:29:02.238215+00:00",
+      "last_seen": "2026-10-09T19:41:47.766427+00:00",
       "location": "Cork, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -2907,6 +2907,38 @@
       "title": "Engineer Bridges",
       "url": "https://www.systra.com/ireland/job-offers/engineer-bridges-en-8607"
     },
+    "226d74642bec6095ca54a1ac2bc4052f64ce989467455297d0cef36e3461a1d8": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of direct evidence of job vacancy",
+          "insufficient information about job requirements and responsibilities"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The provided text appears to be a social media post or a news article, and does not contain a clear job vacancy or sufficient information about the role, responsibilities, and requirements.",
+        "relocation_fit": "low",
+        "role_family": "engineer",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "6f46cf1858b1de550e4aac37223267e98612b9b1c8932236406e8c50369faf21",
+      "first_seen": "2026-10-09T19:41:56.292265+00:00",
+      "identity_key": "226d74642bec6095ca54a1ac2bc4052f64ce989467455297d0cef36e3461a1d8",
+      "last_seen": "2026-10-09T19:41:56.292278+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Er. Sumit Patel Senior engineer at RK Construction | Ex. Gawar… Follow The proposed Kharagpur–Amaravati Greenfield Expressway is set to become a vital high-speed arterial corridor… see more 696 · 19 Comments Read more",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7512055941119344640?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7512055941119344640&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BhdXweAd9QrOZfZEgrGP74A%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2s3qHKrFuGDIs1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mv1ag7fu~zg-null-null&eid=uk2z7p-mv1ag7fu-zg&otpToken=YzQwZDg4NDdkMWFlNjYxMDYwNDIxNmM3ZmM0YzgxN2ZmMDMxMDBiYmJiMTk5ZWMzNDZhZjc2NTIyODc3NWUzNzVlMmZjZWNkNDUzOWIxNmJjZTkzYTQ5Nzg2Njg1MDQyMzJiZGZmZTBmMWE1NmUwNmQ0YmIyYTE4MmJjYjIxNTY2MTgzNzhkNjJjM2ZhZDI4YTYsMiwx"
+    },
     "22a3b1618294c7d69bf9e5f27690c54890d4339342a531ab923b652200b35c1a": {
       "assessment": {
         "gaps": [],
@@ -3306,6 +3338,40 @@
       "title": "Nitin singh Highway Engineer at RRSM INFRA PRIVATE LIMITED #NHAI #GOVERMENT #TELANGANA #SITEENGINEER #HIGHWAY #ROAD #CONSTRUCTIONWORK #CIVILWORK #MORTH",
       "url": "https://www.linkedin.com/comm/feed/update/share:7511316392126881792?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BztA1uaD5S%2F65C6ItXQffLg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1kKi4TF-oysIs1&trkEmail=eml-email_next_best_action_digest_01-F8WIbvE1Q96JQpgA9xLXXw%3D%3D-0-gUBMAXw55JooMDruoo843A%3D%3D-null-uk2z7p~mupz7pwh~hl-null-null&eid=uk2z7p-mupz7pwh-hl&otpToken=YzllMzcxZjRiYTdhMTU3ZGVkZjZiNzExYWZhNjc2M2Y5MDVkZmUxYTFkZGExNmI5ZjUwNzEwMzE5ZWQyOGViZWVjYTQxMjFmZjMwZWJkYWVkY2I1NjVlMTg4ZWYxZWY0Njc3NzZjZjFmYmQ1ZTFjNjAwNmJjZGEzYjA3NjRiMmZhZWViMjgwODYwYTI0ZjIyZWIsMiwx"
     },
+    "27c9eb722f51e3c33fbb9f30452b5248286830f42669631e4eb51ef68ef754a0": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "Revit is requested but is not in the current CV",
+          "BIM Engineer role may not be a direct match for a Civil Engineer"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title BIM Engineer and the mention of Revit and Architecture + Structure suggest that this role may not be a direct match for a Civil Engineer with a background in highways/roads/transport infrastructure.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "mention of roads in the context"
+        ]
+      },
+      "company": "",
+      "content_hash": "e2a882d21d1f451f5aad9826809f318794696c301334f4f2e08c97ec562f095a",
+      "first_seen": "2026-10-09T19:42:05.337107+00:00",
+      "identity_key": "27c9eb722f51e3c33fbb9f30452b5248286830f42669631e4eb51ef68ef754a0",
+      "last_seen": "2026-10-09T19:42:05.337120+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Boby Chaudhary BIM Engineer | Revit (Architecture + Structure) |… Follow What if roads could drink rain instead of drowning in it? Germany is testing a smarter approach to road… see more 694 · 26 Comments Read more",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7512559387824111616?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7512559387824111616&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BhdXweAd9QrOZfZEgrGP74A%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2s3qHKrFuGDIs1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mv1ag7fu~zg-null-null&eid=uk2z7p-mv1ag7fu-zg&otpToken=YzQwZDg4NDdkMWFlNjYxMDYwNDIxNmM3ZmM0YzgxN2ZmMDMxMDBiYmJiMTk5ZWMzNDZhZjc2NTIyODc3NWUzNzVlMmZjZWNkNDUzOWIxNmJjZTkzYTQ5Nzg2Njg1MDQyMzJiZGZmZTBmMWE1NmUwNmQ0YmIyYTE4MmJjYjIxNTY2MTgzNzhkNjJjM2ZhZDI4YTYsMiwx"
+    },
     "288d6cac63b85bff512448bb76a50aea08cdc30015fb72003e5c413a73cb33f5": {
       "assessment": {
         "gaps": [
@@ -3621,6 +3687,40 @@
       "title": "Owais Hussain MCIOB, MSc Senior Engineer | Project Management |…",
       "url": "https://ie.linkedin.com/comm/in/mdowaishussain07?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B5QB%2B6kSqRdahpkFaVlWciQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2zGeAKpirazss1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mux04nn6~wi-null-null&eid=uk2z7p-mux04nn6-wi&otpToken=MTVmOGU4MGJlMzhkNTE4MWM2NThjNzYzYTU5MTA0OGY3MzA3ZTZiY2M3ODc0OTAxMzdkM2VlNTFmODY2YzkxZmU1MjVjMDk0NjI0OWU4OTk0ZDcxNzQ5YTU2NWM1YThhZTRmOGNlZTgyYjU0MDFkYWZiYjBiODgzMjQxYTg2YTMxOTAyMzBhNzIxNDI4OTZmNGIsMiwx"
     },
+    "2f2914eae13a1aa06715f2b9dbdae2de476008277c1d9091cc46dc0c9333c769": {
+      "assessment": {
+        "gaps": [
+          "specialist structural role",
+          "posting appears to require about 15+ years of experience",
+          "mandatory Chartered status not explicitly excluded"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Role is a specialist structural role which is outside the required specialization and experience threshold is high",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, transport infrastructure, highways and drainage, road safety"
+        ]
+      },
+      "company": "",
+      "content_hash": "dca5e1898eed983eae8a1e59b73e2e2d2c8c0f0392dc98e07b7dc1f437c94c30",
+      "first_seen": "2026-10-09T19:41:47.761131+00:00",
+      "identity_key": "2f2914eae13a1aa06715f2b9dbdae2de476008277c1d9091cc46dc0c9333c769",
+      "last_seen": "2026-10-09T19:41:47.761145+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Engineering Lead – Structural",
+      "url": "https://www.systra.com/ireland/job-offers/engineering-lead-structural-en-9262"
+    },
     "31185ade7044710dc267c18fe45c8997fe16961d3221f4787ad2241bfeed715e": {
       "assessment": {
         "gaps": [],
@@ -3733,6 +3833,36 @@
       "source": "SYSTRA",
       "title": "Principal Engineer 1 (Systems)",
       "url": "https://www.systra.com/ireland/job-offers/principal-engineer-1-systems-en-9821"
+    },
+    "3184eb1bc82b722e54bd619a51651a3cf8b41959721fd3ec374e600fc5a3a6fd": {
+      "assessment": {
+        "gaps": [
+          "No evidence of civil engineering experience or relevant civil design tools (Civil 3D, AutoCAD for road alignment, DPRs, BOQ, construction supervision)."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a BIM Engineer focused on Revit architecture and structure, which does not align with the required civil engineering domain (highways, roads, transport infrastructure, Civil 3D, etc.).",
+        "relocation_fit": "medium",
+        "role_family": "BIM Engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "28cfe5e086f9345323816797e886672e2856820a9545eaea0b55bf8531127f81",
+      "first_seen": "2026-10-09T19:42:10.355646+00:00",
+      "identity_key": "3184eb1bc82b722e54bd619a51651a3cf8b41959721fd3ec374e600fc5a3a6fd",
+      "last_seen": "2026-10-09T19:42:10.355660+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Boby Chaudhary BIM Engineer | Revit (Architecture + Structure) |…",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7512559387824111616?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7512559387824111616&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BhdXweAd9QrOZfZEgrGP74A%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2s3qHKrFuGDIs1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mv1ag7fu~zg-null-null&eid=uk2z7p-mv1ag7fu-zg&otpToken=YzQwZDg4NDdkMWFlNjYxMDYwNDIxNmM3ZmM0YzgxN2ZmMDMxMDBiYmJiMTk5ZWMzNDZhZjc2NTIyODc3NWUzNzVlMmZjZWNkNDUzOWIxNmJjZTkzYTQ5Nzg2Njg1MDQyMzJiZGZmZTBmMWE1NmUwNmQ0YmIyYTE4MmJjYjIxNTY2MTgzNzhkNjJjM2ZhZDI4YTYsMiwx"
     },
     "318f09ce294ca8842669ae30d5ee9a66de726befeee95867ecab4b59e816ab8d": {
       "assessment": {
@@ -13197,6 +13327,38 @@
       "title": "Track Engineer",
       "url": "https://www.systra.com/ireland/job-offers/track-engineer-en-10622"
     },
+    "b6c3b80d2797034cf9d8c0e00e6457d2ed8bac633b411a4544774fbc75cfbfb5": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering duties mentioned",
+          "No evidence of required software or domain expertise",
+          "Insufficient job description to assess fit"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description do not provide any evidence of civil engineering duties such as roads, highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, or construction site supervision. The information is limited to a LinkedIn post about an engineer, with no indication of civil-specific responsibilities. Therefore the role does not match the required civil domain for a B.Tech Civil Engineer with 6.5+ years of experience.",
+        "relocation_fit": "low",
+        "role_family": "engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "eeeaae50e334ed60f2ab9a72c2c1babfcc9da38907ee34d81236fc0a36ba6b5e",
+      "first_seen": "2026-10-09T19:42:01.652070+00:00",
+      "identity_key": "b6c3b80d2797034cf9d8c0e00e6457d2ed8bac633b411a4544774fbc75cfbfb5",
+      "last_seen": "2026-10-09T19:42:01.652084+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Er. Sumit Patel Senior engineer at RK Construction | Ex. Gawar…",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7512055941119344640?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7512055941119344640&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BhdXweAd9QrOZfZEgrGP74A%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2s3qHKrFuGDIs1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mv1ag7fu~zg-null-null&eid=uk2z7p-mv1ag7fu-zg&otpToken=YzQwZDg4NDdkMWFlNjYxMDYwNDIxNmM3ZmM0YzgxN2ZmMDMxMDBiYmJiMTk5ZWMzNDZhZjc2NTIyODc3NWUzNzVlMmZjZWNkNDUzOWIxNmJjZTkzYTQ5Nzg2Njg1MDQyMzJiZGZmZTBmMWE1NmUwNmQ0YmIyYTE4MmJjYjIxNTY2MTgzNzhkNjJjM2ZhZDI4YTYsMiwx"
+    },
     "b6d361f40825e193ff979ca216f47d52a64c61fab038527ad74e0979c0fbbae9": {
       "assessment": {
         "gaps": [],
@@ -14053,28 +14215,25 @@
     },
     "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
       "assessment": {
-        "gaps": [],
+        "gaps": [
+          "No clear civil engineering responsibilities or requirements; no mention of highways, roads, transport infrastructure, Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC, or contractor coordin"
+        ],
         "hard_reject": false,
-        "matched": true,
-        "permit_path": "unclear",
+        "matched": false,
+        "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
-        "relocation_fit": "medium",
+        "reason": "The vacancy text contains only generic search result listings without specific duties, qualifications, or evidence of a civil engineering role. It does not provide sufficient information to determine a match for a B.Tech Civil Engineer with the specified experience and skill set.",
+        "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 89,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil-domain evidence: civil engineering, civil engineer, highway, roads",
-          "highway",
-          "roads",
-          "transport infrastructure"
-        ]
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
+      "content_hash": "ff9c616832408aec3bbfe5e7a4600754eb97f5e23b135a5ea978a5e5ff96a0fc",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-10-09T09:28:58.584545+00:00",
+      "last_seen": "2026-10-09T19:41:44.272277+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -16526,6 +16685,42 @@
       "title": "Join AECOM's Growing Ground Engineering & Tunnelling Teams!",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000153218391-join-aecom-s-growing-ground-engineering-tunnelling-teams-?oga=true"
     },
+    "e4d2cde0370885f70ee391aea7b86f93ba9d54c5b01da2facb6a8e98e2172a2c": {
+      "assessment": {
+        "gaps": [
+          "No explicit mention of experience in hydrometric data analysis or coastal monitoring",
+          "Limited exposure to flood risk specific regulations and standards"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy requires civil engineering skills in flood risk management, drainage, and hydrometric work, which align with the candidate’s civil engineering background and experience in drainage and infrastructure projects. The role’s technical requirements match the candidate’s skill set, but the job description does not specify sponsorship or work‑permit details, so the permit path remains unclear.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 83,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "Civil engineering background",
+          "Experience with drainage and flood risk projects",
+          "Strong technical skills in Civil 3D/AutoCAD",
+          "Project design and supervision experience"
+        ]
+      },
+      "company": "",
+      "content_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "first_seen": "2026-10-09T19:41:53.142445+00:00",
+      "identity_key": "e4d2cde0370885f70ee391aea7b86f93ba9d54c5b01da2facb6a8e98e2172a2c",
+      "last_seen": "2026-10-09T19:41:53.142479+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": "2026-10-09T19:42:11.837849+00:00",
+      "notified_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f1db70f276ce/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
+    },
     "e53937370f08f0418814440bd2671dda7c4f0f76ff1285ce0fdd44c0b4d233c5": {
       "assessment": {
         "gaps": [
@@ -18724,6 +18919,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-09T09:29:14.338063+00:00",
+  "updated_at": "2026-10-09T19:42:11.837866+00:00",
   "version": 3
 }
