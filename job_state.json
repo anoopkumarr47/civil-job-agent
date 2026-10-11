@@ -3,33 +3,32 @@
     "00553486969d0cc1edc95fc227023fc6e67375ae321e70b87739347130787c0d": {
       "assessment": {
         "gaps": [
-          "No explicit mention of Irish or UK design standards familiarity",
-          "No evidence of Chartered Engineer status, which may be desirable for progression",
-          "Permit sponsorship details not provided"
+          "Chartered status is mentioned as desirable for future progression, but unclear if essential",
+          "fixed-term duration is unclear; verify the two-year Critical Skills offer requirement"
         ],
         "hard_reject": false,
         "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy explicitly requires civil engineering experience in roads, highways, public transport and greenways, with duties such as design packages, alignment, and adherence to UK/Irish standards. The candidate’s background in highways/roads/transport infrastructure, Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC, and coordination aligns well with these responsibilities. No explicit sponsorship requirement is stated, but the role is in Ireland and the candidate is India‑based, so the permit path remains unclear. The role is not a graduate or intern position, and the required experience level matches the candidate’s 6.5+ years.",
+        "reason": "Strong civil-domain evidence, role/CV alignment, and potential Ireland employment-permit feasibility, but Chartered status and fixed-term duration are unclear",
         "relocation_fit": "medium",
         "role_family": "civil_engineer",
-        "score": 90,
-        "source": "ai-groq_primary",
+        "score": 95,
+        "source": "ai-cloudflare",
         "strengths": [
-          "Civil engineering background in roads/highways/transport infrastructure",
-          "Proficiency in Civil 3D and AutoCAD",
-          "Experience with alignment design, DPRs, BOQ, and tender processes",
-          "Construction site supervision and QA/QC",
-          "Coordination with contractors, consultants, and utilities"
+          "civil engineering",
+          "highway",
+          "roads",
+          "drainage",
+          "Civil 3D/AutoCAD not explicitly mentioned but design packages management implies potential use"
         ]
       },
       "company": "AECOM",
-      "content_hash": "a5af5d789577e9c3a692b89622a081ba58df6a3bd690322d27ac2cad64dee13f",
+      "content_hash": "6b21a5442602547c9bb37cc7caabeb2cdabb4a6f79ace22e21917bbc525daa6e",
       "first_seen": "2026-09-23T18:36:26.824125+00:00",
       "identity_key": "00553486969d0cc1edc95fc227023fc6e67375ae321e70b87739347130787c0d",
-      "last_seen": "2026-10-11T09:15:03.278923+00:00",
-      "location": "Dublin, ie",
+      "last_seen": "2026-10-11T19:11:12.697574+00:00",
+      "location": "Dublin, 1 BURLINGTON PLAZA, ie",
       "notified_at": "2026-09-23T18:37:04.383911+00:00",
       "notified_hash": "a5af5d789577e9c3a692b89622a081ba58df6a3bd690322d27ac2cad64dee13f",
       "policy_version": "2026-09-14.3",
@@ -8005,6 +8004,43 @@
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-17be9a2b5301/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
+    "70eedd84163eacf619ead59de940ff8536a2415d4a0f99827698bb3543c5e4c1": {
+      "assessment": {
+        "gaps": [
+          "Role is technician grade I, may not match senior experience level",
+          "Specific flood risk management experience not explicitly stated",
+          "No evidence of experience in coastal or hydrometric sections"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is a civil engineering technician role focused on flood risk management, which aligns with civil engineering expertise. The candidate’s experience in highways and transport infrastructure provides relevant civil domain knowledge, though the role’s technician level and flood‑risk focus differ from the candidate’s primary specialization. Permit eligibility is unclear from the posting, and relocation to Dublin is feasible but not guaranteed.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 70,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "Civil engineering background",
+          "Experience with drainage and water infrastructure",
+          "Strong technical skills in Civil 3D/AutoCAD",
+          "Project design and supervision experience"
+        ]
+      },
+      "company": "",
+      "content_hash": "838daa8bcca2cd68ca46198c54320827a955bfb086216779573cf4ecbfa02f18",
+      "first_seen": "2026-10-11T19:11:17.365327+00:00",
+      "identity_key": "70eedd84163eacf619ead59de940ff8536a2415d4a0f99827698bb3543c5e4c1",
+      "last_seen": "2026-10-11T19:11:17.365339+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ecfabed8a29a/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
+    },
     "711a9949f24270667c07b77e9431eb6d4c9f8f59cdf7a6896406679f2f620b22": {
       "assessment": {
         "gaps": [],
@@ -10324,6 +10360,34 @@
       "source": "SYSTRA",
       "title": "Principal Engineer 2 (Geotechnical)",
       "url": "https://www.systra.com/ireland/job-offers/principal-engineer-2-geotechnical-en-10223"
+    },
+    "92218da4fba983be33c1b9ed26507589b4027bfdc4a1d0c5e75cf09d49261b9c": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description are highly multidisciplinary and do not provide clear evidence of a civil engineering role focused on highways, roads, or transport infrastructure. The role is labeled as an Architecture Engineer and the duties span across multiple domains, making it unlikely to match the specified civil engineering criteria.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "7bddf9347dc26cdc0ef5290e956e059dbb0ae6c7eb8584f0c59356e396f4f90c",
+      "first_seen": "2026-10-11T19:11:08.704461+00:00",
+      "identity_key": "92218da4fba983be33c1b9ed26507589b4027bfdc4a1d0c5e75cf09d49261b9c",
+      "last_seen": "2026-10-11T19:11:08.704475+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Lead – Architecture Engineer – Section 1",
+      "url": "https://www.systra.com/ireland/job-offers/lead-architecture-engineer-section-1-en-10702"
     },
     "926b88476a1ea3fef76670856308cdb589b3d43a05c3fdd13e25ecce055ddab3": {
       "assessment": {
@@ -19492,6 +19556,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-11T09:15:12.146219+00:00",
+  "updated_at": "2026-10-11T19:11:17.402617+00:00",
   "version": 3
 }
