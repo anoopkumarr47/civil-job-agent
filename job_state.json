@@ -2291,6 +2291,36 @@
       "title": "Senior Structural Engineer",
       "url": "https://apply.mottmac.com/job/Dublin-Senior-Structural-Engineer/1366034257"
     },
+    "18968cb48d61aeaa170332d9b8e60e77629ecf1a4a2b2e328c2593e4942a0e1a": {
+      "assessment": {
+        "gaps": [
+          "Lack of civil engineering specific responsibilities (e.g., road design, alignment, Civil 3D usage, construction site supervision)."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description focus on architecture and general infrastructure services rather than specific civil engineering tasks such as highway/road design, Civil 3D, alignment design, or construction supervision. No evidence of required civil engineering duties is present, making it ineligible for a civil infrastructure engineer role.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b2678180c29fb0c3f78cd81e46186dec6009866652ea2ec4b9b8158e929187df",
+      "first_seen": "2026-10-18T17:35:30.833148+00:00",
+      "identity_key": "18968cb48d61aeaa170332d9b8e60e77629ecf1a4a2b2e328c2593e4942a0e1a",
+      "last_seen": "2026-10-18T17:35:30.833160+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Junior Architecture Engineer – Section 5",
+      "url": "https://www.systra.com/ireland/job-offers/junior-architecture-engineer-section-5-en-4209"
+    },
     "18b14a1d4045c38849c686fb1c0e60e2ef847a56700ed87e88d2b1a7e384520d": {
       "assessment": {
         "gaps": [
@@ -15240,6 +15270,40 @@
       "title": "Engineers Ireland 73,607 followers",
       "url": "https://www.linkedin.com/comm/feed/update/share:7508510644351016960?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BdVeRWsIZRJe1EXj%2BZPtf4w%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0CQ-XadnwOOYs1&trkEmail=eml-email_next_best_action_digest_01-network_post-0-actor_card-null-uk2z7p~mvcloq2x~k9-null-null&eid=uk2z7p-mvcloq2x-k9&otpToken=NWQ2MWQ5YTMzMGU1Mjc5MWYyNGE3MjY2NzNhNzJkODljZmIwYzljYjllMDdlNjNjN2Q5ZTVhNjk3OWI4Yjg2YzNmN2EyZjA3MzgzNjlhZjZkNzA0ZTA2MGUxZjc0MWUyY2NjZDhiYjYyZDQ1ZTIxOTMxYjRhOTkxZmNhZDhhOGM0YzY3OWJlMTE4ZjY5OGUxZTIsMiwx"
     },
+    "a6f3d31da4bf448af020adf228390cdaaad2f78a80bb99a39ba4507076fa03d0": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of specific evidence of highways/roads/transport infrastructure experience",
+          "insufficient information about required skills such as Civil 3D, AutoCAD, alignment design, DPRs, plans/profiles/cross-sections, estimates/BOQ/tenders, construction/site supervision, QA/QC and contractor/consultant/utili"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title Field Engineer is potentially relevant but the civil domain is ambiguous and requires more specific evidence of highways/roads/transport infrastructure experience.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "194889e257b5268562d6b346ef0a23ee21e8e83eb1f6845a50353fc75eb3048e",
+      "first_seen": "2026-10-18T17:35:37.448753+00:00",
+      "identity_key": "a6f3d31da4bf448af020adf228390cdaaad2f78a80bb99a39ba4507076fa03d0",
+      "last_seen": "2026-10-18T17:35:37.448767+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Field Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-bb8dbdc939a3/candidate/so/pm/1/pl/3/opp/9535-Field-Engineer/en-GB"
+    },
     "a70bbeba4987c52b1298a1a8dd3af044d145d98519c0208eb963479a5aa26c05": {
       "assessment": {
         "gaps": [
@@ -23714,6 +23778,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-18T07:26:45.333383+00:00",
+  "updated_at": "2026-10-18T17:35:37.508535+00:00",
   "version": 3
 }
