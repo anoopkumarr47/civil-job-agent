@@ -6571,6 +6571,41 @@
       "title": "Nitin singh Highway Engineer at RRSM INFRA PRIVATE LIMITED",
       "url": "https://www.linkedin.com/comm/feed/update/share:7511316392126881792?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BHW8nweziSVaZTO9LWWXTmA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0cgnnqlzwiHYs1&trkEmail=eml-email_next_best_action_digest_01-network_post-0-actor_card-null-uk2z7p~mv5ghfqj~8b-null-null&eid=uk2z7p-mv5ghfqj-8b&otpToken=NGUxNGVmMzNiNTRiZWE1ZjA5ZDFlMDU1Y2U1Y2IxMTNkNDBiZTY2MmJiZWQ1Y2YzZmU1NGVkYjlhMmI0ZGZlYjcwMDk1NDg2Y2Q2YWJiYzUyOTM1OGQwOWE2Y2QyMDFlMzc4YmMzZTZjZGVjNzZlN2U5NzU0MDMxNzZjZmI0NjhlOWI3MjAwODJiMWI4MzcwOGMsMiwx"
     },
+    "42eadc8372f5d5086f942130d5f2ab2b9dd6fb0fc323ed97e0bb707c57450084": {
+      "assessment": {
+        "gaps": [
+          "no explicit road/highway or Civil 3D experience mentioned",
+          "no details on construction/site supervision or QA/QC responsibilities"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The role is within the national water authority, implying civil infrastructure responsibilities (asset planning, water infrastructure). However, the vacancy description lacks explicit mention of roads/highways or Civil 3D usage, so suitability for a B.Tech Civil Engineer with highway focus is uncertain.",
+        "relocation_fit": "medium",
+        "role_family": "civil_engineering",
+        "score": 70,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "water infrastructure asset planning",
+          "public sector experience",
+          "potential for civil engineering duties"
+        ]
+      },
+      "company": "",
+      "content_hash": "b1615b4c5918a4dd5866ac4b7347d7d165669825908e00e35d169ae90a0de9de",
+      "first_seen": "2026-10-24T17:38:50.859488+00:00",
+      "identity_key": "42eadc8372f5d5086f942130d5f2ab2b9dd6fb0fc323ed97e0bb707c57450084",
+      "last_seen": "2026-10-24T17:38:50.859503+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Asset Planning Lead Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-9ba7a2d4dec6/candidate/so/pm/1/pl/3/opp/9865-Asset-Planning-Lead-Engineer/en-GB"
+    },
     "43359bf4212be5f9e2314819d29c2a331c6c49e48e1e962b2b968f2c0a1be4fd": {
       "assessment": {
         "gaps": [],
@@ -26136,6 +26171,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-24T07:35:16.595129+00:00",
+  "updated_at": "2026-10-24T17:38:50.903492+00:00",
   "version": 3
 }
