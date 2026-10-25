@@ -14591,6 +14591,44 @@
       "title": "Senior Design Engineer – Building Structures",
       "url": "https://www.systra.com/ireland/job-offers/senior-design-engineer-building-structures-en-10749"
     },
+    "97621137bbbb739ac36870228dae5b7b45fba067b96b00ef5f48406f8566b93f": {
+      "assessment": {
+        "gaps": [
+          "no explicit mention of roads/highways or civil design duties",
+          "no evidence of Civil 3D/AutoCAD usage",
+          "no direct water infrastructure experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is for an Asset Planning Lead Engineer with Uisce Éireann, a water authority, indicating a civil engineering context focused on water infrastructure and asset management. The role likely requires civil engineering knowledge, but the job description does not explicitly mention roads, highways, or typical civil design duties, so the fit is uncertain. The candidate’s background in highways/roads/transport infrastructure is strong, but the missing explicit water or civil infrastructure experience is a gap.",
+        "relocation_fit": "high",
+        "role_family": "civil_engineering",
+        "score": 70,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "asset planning",
+          "water infrastructure",
+          "public works",
+          "experience in civil engineering",
+          "project management"
+        ]
+      },
+      "company": "",
+      "content_hash": "b1615b4c5918a4dd5866ac4b7347d7d165669825908e00e35d169ae90a0de9de",
+      "first_seen": "2026-10-25T18:00:20.497966+00:00",
+      "identity_key": "97621137bbbb739ac36870228dae5b7b45fba067b96b00ef5f48406f8566b93f",
+      "last_seen": "2026-10-25T18:00:20.497982+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Asset Planning Lead Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-20c2a3ad57de/candidate/so/pm/1/pl/3/opp/9865-Asset-Planning-Lead-Engineer/en-GB"
+    },
     "97bb597faa4a52f2806dff6d305c3e0bfc733074307333e102e5b4dd23e47296": {
       "assessment": {
         "gaps": [
@@ -26331,6 +26369,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-25T07:49:31.727293+00:00",
+  "updated_at": "2026-10-25T18:00:20.535867+00:00",
   "version": 3
 }
