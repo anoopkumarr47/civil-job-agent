@@ -2785,6 +2785,46 @@
       "title": "Asset Planning Lead Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-54bb81b15006/candidate/so/pm/1/pl/3/opp/9865-Asset-Planning-Lead-Engineer/en-GB"
     },
+    "1d0a7ed731d9f98604abeaa80e79087d6ce12c6e61f39bb6026f037a80bbc82f": {
+      "assessment": {
+        "gaps": [
+          "no explicit mention of required experience level or specific software proficiency beyond Civil 3D/AutoCAD",
+          "no clear indication of sponsorship or work permit requirements"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy contains extensive civil engineering context—highways, drainage, transport infrastructure, civil engineering services—and the candidate’s background aligns with these duties. The generic title does not disqualify it, and no explicit sponsorship or right‑to‑work restrictions are stated.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 92,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "extensive civil engineering context in description",
+          "highways and drainage focus",
+          "transport infrastructure emphasis",
+          "civil engineering services listed",
+          "candidate’s 6.5+ years in highways/roads/transport",
+          "Civil 3D/AutoCAD experience",
+          "alignment design, DPRs, BOQ, QA/QC",
+          "construction/site supervision"
+        ]
+      },
+      "company": "",
+      "content_hash": "992c8a2d9006f2434f42267b60312750fb48769f718032e398218d190f8801b6",
+      "first_seen": "2026-10-26T20:22:50.522569+00:00",
+      "identity_key": "1d0a7ed731d9f98604abeaa80e79087d6ce12c6e61f39bb6026f037a80bbc82f",
+      "last_seen": "2026-10-26T20:22:50.522583+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-10-26T20:23:00.734943+00:00",
+      "notified_hash": "992c8a2d9006f2434f42267b60312750fb48769f718032e398218d190f8801b6",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Project Manager",
+      "url": "https://www.systra.com/ireland/job-offers/project-manager-en-9851"
+    },
     "1d11a3050acff257c501390da6b6f7c5c7099d05f163ba11867c17e6d47f5382": {
       "assessment": {
         "gaps": [],
@@ -5023,34 +5063,32 @@
     "31661aa1b7ae361c7ec2c01cfbadd3c4c673b65384da323baff6f8bb528ad401": {
       "assessment": {
         "gaps": [
-          "no explicit mention of Civil 3D or AutoCAD usage",
-          "no clear requirement for 6.5+ years experience",
-          "no stated sponsorship or work‑permit conditions"
+          "Chartered status is mentioned; verify whether essential or desirable",
+          "generic title may not fully reflect civil engineering duties"
         ],
         "hard_reject": false,
         "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy lists extensive civil engineering responsibilities—highways, drainage, road safety, transport infrastructure, and civil design—matching the candidate’s expertise. The title is generic, but the duties provide clear civil evidence. No explicit sponsorship requirement is stated, so permit status remains unclear.",
+        "reason": "Fit combines verified civil-domain evidence and role/CV alignment, despite generic title and lack of explicit permit information",
         "relocation_fit": "medium",
-        "role_family": "civil",
-        "score": 80,
-        "source": "ai-groq_primary",
+        "role_family": "civil engineer",
+        "score": 90,
+        "source": "ai-cloudflare",
         "strengths": [
-          "civil engineering duties",
-          "highways and road design",
-          "transport infrastructure focus",
-          "drainage and flood risk",
-          "bridge & viaduct engineering",
-          "tunnel engineering",
-          "geotechnical and structural elements"
+          "civil engineering",
+          "highways",
+          "drainage",
+          "transport infrastructure",
+          "road safety",
+          "civil engineer"
         ]
       },
       "company": "",
-      "content_hash": "5d940d2eb4001602bd351743179b6fb3bcc50321362574d5b1b92607f64792cb",
+      "content_hash": "bb4f3890bee4ba081ec20b8ce75fadb6999bbdab94b4d97b7411352afe07dc12",
       "first_seen": "2026-09-23T18:36:06.724595+00:00",
       "identity_key": "31661aa1b7ae361c7ec2c01cfbadd3c4c673b65384da323baff6f8bb528ad401",
-      "last_seen": "2026-09-24T07:48:22.910050+00:00",
+      "last_seen": "2026-10-26T20:22:53.987933+00:00",
       "location": "Ireland",
       "notified_at": "2026-09-23T18:37:04.385549+00:00",
       "notified_hash": "5d940d2eb4001602bd351743179b6fb3bcc50321362574d5b1b92607f64792cb",
@@ -7895,6 +7933,36 @@
       "source": "AECOM",
       "title": "Senior Geotechnical Engineer",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000152946864-senior-geotechnical-engineer?oga=true"
+    },
+    "53802418ea50a50b50613f5f1e9a18db68bd82edd144bbf66ff15d657f959b76": {
+      "assessment": {
+        "gaps": [
+          "No evidence of civil engineering responsibilities (roads, highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC, contractor coordination)."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description lack explicit civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision. It appears to focus on asset planning for water utilities, which does not align with the required civil infrastructure expertise in highways/roads/transport. Therefore, it does not meet the domain criteria.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b1615b4c5918a4dd5866ac4b7347d7d165669825908e00e35d169ae90a0de9de",
+      "first_seen": "2026-10-26T20:22:59.811734+00:00",
+      "identity_key": "53802418ea50a50b50613f5f1e9a18db68bd82edd144bbf66ff15d657f959b76",
+      "last_seen": "2026-10-26T20:22:59.811747+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Asset Planning Lead Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-5a8d287354c4/candidate/so/pm/1/pl/3/opp/9865-Asset-Planning-Lead-Engineer/en-GB"
     },
     "53f7c9364c248ffe27ae2f1928d187b1c95557de644ebc2260586f7dd321abe0": {
       "assessment": {
@@ -19494,7 +19562,7 @@
       "content_hash": "3ba7da404e79342715f03ce8b17d1eb7c0f62fe8f82151b40efb86bae4185a01",
       "first_seen": "2026-10-23T18:40:17.418979+00:00",
       "identity_key": "bcbecda7e2db4d1533b0f0af32660369cb9cf0ff9f41790f13bde25187ea8f81",
-      "last_seen": "2026-10-24T07:35:04.964748+00:00",
+      "last_seen": "2026-10-26T20:22:50.523816+00:00",
       "location": "Ireland",
       "notified_at": "2026-10-23T18:41:03.883825+00:00",
       "notified_hash": "3ba7da404e79342715f03ce8b17d1eb7c0f62fe8f82151b40efb86bae4185a01",
@@ -26711,6 +26779,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-26T08:04:46.522495+00:00",
+  "updated_at": "2026-10-26T20:23:00.734964+00:00",
   "version": 3
 }
