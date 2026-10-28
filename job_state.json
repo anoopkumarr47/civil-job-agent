@@ -2985,6 +2985,43 @@
       "title": "Civil Engineer",
       "url": "https://dbfl-consulting-engineers.hirehive.com/civil-engineer-dublin-2MQkaV"
     },
+    "1e3a2290157cd1782f43c370fecf89fdacb5a0faa8f3b429cfa90574dc8093d8": {
+      "assessment": {
+        "gaps": [
+          "Chartered status is mentioned; verify whether essential or desirable",
+          "lack of explicit mention of Civil 3D/AutoCAD skills"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility, but Chartered status is mentioned",
+        "relocation_fit": "medium",
+        "role_family": "design_manager",
+        "score": 85,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil engineering",
+          "highways",
+          "drainage",
+          "transport infrastructure",
+          "road safety"
+        ]
+      },
+      "company": "",
+      "content_hash": "e67dfbbe5d40d7c1f55aa5c8ef7ce5f7bac39d746067502894d494252ad34b88",
+      "first_seen": "2026-10-28T19:48:28.380981+00:00",
+      "identity_key": "1e3a2290157cd1782f43c370fecf89fdacb5a0faa8f3b429cfa90574dc8093d8",
+      "last_seen": "2026-10-28T19:48:28.380996+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-10-28T19:48:32.621013+00:00",
+      "notified_hash": "e67dfbbe5d40d7c1f55aa5c8ef7ce5f7bac39d746067502894d494252ad34b88",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Design Manager – MEPHFC",
+      "url": "https://www.systra.com/ireland/job-offers/design-manager-mephfc-en-5464"
+    },
     "1ead797bafc8787f047aed688402235b9b4b9818f32442d8113de2d6639e73d2": {
       "assessment": {
         "gaps": [
@@ -19746,6 +19783,36 @@
       "title": "Senior Design Manager – MEPHFC",
       "url": "https://www.systra.com/ireland/job-offers/senior-design-manager-mephfc-en-3521"
     },
+    "b9e825d47d786b44d5f1211c561ad22a68f18dd14865b4ca2a1450c7c34083e6": {
+      "assessment": {
+        "gaps": [
+          "No evidence of civil engineering duties or tools (Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC, etc.)"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and duties are IT-focused (IT Project Manager) and do not contain any civil engineering responsibilities such as roads, highways, Civil 3D, or construction site supervision. Therefore it does not match the required civil domain for a B.Tech Civil Engineer.",
+        "relocation_fit": "low",
+        "role_family": "project_manager",
+        "score": 10,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "8376456b62702442dd292a9f7e91e1282cb9e7ba71fdf4bb93acf3e7beb60b6c",
+      "first_seen": "2026-10-28T19:48:31.322335+00:00",
+      "identity_key": "b9e825d47d786b44d5f1211c561ad22a68f18dd14865b4ca2a1450c7c34083e6",
+      "last_seen": "2026-10-28T19:48:31.322350+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "IT Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ee9bb30259b5/candidate/so/pm/1/pl/3/opp/9983-IT-Project-Manager/en-GB"
+    },
     "b9f5f1062197df5deb74664bd8333ccf26c6ca3f53f74076805808b8aaeb30e6": {
       "assessment": {
         "gaps": [
@@ -20731,24 +20798,26 @@
     "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
       "assessment": {
         "gaps": [
-          "No clear job description or requirements; cannot assess fit"
+          "No concrete civil infrastructure tasks mentioned",
+          "No mention of Civil 3D/AutoCAD or alignment design",
+          "No indication of road/highway or transport project involvement"
         ],
         "hard_reject": false,
         "matched": false,
-        "permit_path": "not_eligible",
+        "permit_path": "unclear",
         "provisional": false,
-        "reason": "The provided job text is a search results page with no specific role duties, responsibilities, or qualifications. It lacks evidence of a civil engineering position, especially in highways/roads/transport infrastructure, and therefore cannot be matched to the candidate’s profile.",
+        "reason": "The vacancy lacks specific civil engineering duties such as highway/road design, Civil 3D usage, or transport infrastructure responsibilities. It appears to be a generic civil engineering role with insufficient evidence of alignment with the candidate’s specialized experience.",
         "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 0,
+        "score": 20,
         "source": "ai-groq_primary",
         "strengths": []
       },
       "company": "",
-      "content_hash": "9e2d294dda1dfd08dd1c6a5760abe96ffc5033f6b3d5756b7f99e328ac7cb679",
+      "content_hash": "dcc606c7a8e9314c86def4d64f98485d8c777ac9379b36d21b02a5f005ef3581",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-10-28T08:52:28.943455+00:00",
+      "last_seen": "2026-10-28T19:48:22.772816+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -27399,6 +27468,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-28T08:52:51.797002+00:00",
+  "updated_at": "2026-10-28T19:48:32.621032+00:00",
   "version": 3
 }
