@@ -19254,6 +19254,37 @@
       "title": "Project Manager",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-423dd989250d/candidate/so/pm/1/pl/3/opp/8876-Project-Manager/en-GB"
     },
+    "ae6df71490b2cd523a5309c7f18c52a66c6839b16490e19d608511fe981e9df3": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of technical skills relevant to civil engineering"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy does not explicitly mention civil engineering, highways/roads/transport infrastructure, or relevant technical skills like Civil 3D, AutoCAD, or alignment design.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "dfd0920d23c64ad2393765f130c06d2a77d8336bff1eb9adafe68395d7ceaeea",
+      "first_seen": "2026-10-31T18:45:45.778393+00:00",
+      "identity_key": "ae6df71490b2cd523a5309c7f18c52a66c6839b16490e19d608511fe981e9df3",
+      "last_seen": "2026-10-31T18:45:45.778406+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-9d913a4ee17d/candidate/so/pm/1/pl/3/opp/10125-Project-Manager/en-GB"
+    },
     "af37e747b6d8f7cf32b044ca93a3208b6606c47bced3037d0e2c491101898366": {
       "assessment": {
         "gaps": [
@@ -27244,6 +27275,38 @@
       "title": "Engineer Matheus Ferreira Engineer| civil | Planner | CAD |…",
       "url": "https://ie.linkedin.com/comm/in/engineer-matheus-ferreira?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BLl5UBvhfTiii9Wb%2F28eLmg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1B41Kl_UqaTcs1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mvh0apbe~nx-null-null&eid=uk2z7p-mvh0apbe-nx&otpToken=MDExMjQ0ZTU0YjEyZjc4YzAzNmJlZGVjM2ZmZDQzZmFlY2E2YzM1NjQyOGVkZjY5YWNjNGJkZmI2NDZjNzQ0Zjg2MWFhOTkwYTU1Y2VmZWU3ODNjZjlkZWIzNjlhYzY5ZDc1YzYyYmVkYWZmMDc2ZjVhNzI2YjA0MjdmYWZlY2YxYTVlNmI0NmUzNjMzZjc5MDMsMiwx"
     },
+    "f4b037ecbfcc4dde5c34a10a3f7af89f9672fc05724255b592ba9aa55feec5f5": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities mentioned",
+          "No evidence of road/highway or transport infrastructure work",
+          "No mention of Civil 3D/AutoCAD or related tools"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description do not indicate a civil engineering role focused on highways, roads, or transport infrastructure. It appears to be a general engineering technician position without evidence of Civil 3D, AutoCAD, alignment design, or construction supervision duties.",
+        "relocation_fit": "low",
+        "role_family": "technician",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b8e57e7406922a3e5b93ded7fb28984f7989a756439379d0eeecc12f284ad59b",
+      "first_seen": "2026-10-31T18:45:42.493237+00:00",
+      "identity_key": "f4b037ecbfcc4dde5c34a10a3f7af89f9672fc05724255b592ba9aa55feec5f5",
+      "last_seen": "2026-10-31T18:45:42.493252+00:00",
+      "location": "Donegal, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Technician in Engineering and Built Environment",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-9d913a4ee17d/candidate/so/pm/1/pl/3/opp/10105-Technician-in-Engineering-and-Built-Environment/en-GB"
+    },
     "f4c8b5ffc13012d1aec2715bad5d604b76ee8a58e52f5f09da4e1982c11676c9": {
       "assessment": {
         "gaps": [
@@ -28604,6 +28667,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-10-31T08:41:50.348736+00:00",
+  "updated_at": "2026-10-31T18:45:45.814735+00:00",
   "version": 3
 }
