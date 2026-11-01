@@ -4381,6 +4381,38 @@
       "title": "Contracts Engineer K3 – Mumbai",
       "url": "https://www.systra.com/ireland/job-offers/contracts-engineer-k3-mumbai-en-10824"
     },
+    "252da4c439dc61699914053ea1fc0461b19f6532b33143c2a68543bb5b67ce59": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of technical skills related to civil engineering",
+          "no mention of highways/roads/transport infrastructure or relevant software like Civil 3D/AutoCAD"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy does not explicitly mention civil engineering or related duties, and the title 'Project Manager' is too generic.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "dfd0920d23c64ad2393765f130c06d2a77d8336bff1eb9adafe68395d7ceaeea",
+      "first_seen": "2026-11-01T19:05:46.967004+00:00",
+      "identity_key": "252da4c439dc61699914053ea1fc0461b19f6532b33143c2a68543bb5b67ce59",
+      "last_seen": "2026-11-01T19:05:46.967018+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ce6dc4588976/candidate/so/pm/1/pl/3/opp/10125-Project-Manager/en-GB"
+    },
     "2580ceed68647637b2c2fbce4e9b8bee708fd2afc179c4f6bf73250bf966ca5a": {
       "assessment": {
         "gaps": [
@@ -9995,6 +10027,36 @@
       "source": "Roughan O'Donovan",
       "title": "Design Engineer – Transportation (Urban/Light Rail Environment)",
       "url": "https://roughan-and-odonovan.hirehive.com/design-engineer-transportation-urbanlight-rail-environment-dublin-q3q7NI"
+    },
+    "6315b1697bd71201b6fd40ee0e5887ac905fb25c305d9deb1ccb1b9309643502": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering duties or tools mentioned; no alignment design, DPRs, BOQ, or construction supervision responsibilities; no evidence of Civil 3D/AutoCAD usage; role likely not a civil engineering position."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description do not provide evidence of civil engineering responsibilities such as roads, highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, or construction site supervision. It appears to be a general engineering technician role with no explicit civil domain duties, making it unsuitable for a B.Tech Civil Engineer specializing in highways and transport infrastructure.",
+        "relocation_fit": "low",
+        "role_family": "ambiguous_engineering_role",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b8e57e7406922a3e5b93ded7fb28984f7989a756439379d0eeecc12f284ad59b",
+      "first_seen": "2026-11-01T19:05:43.650489+00:00",
+      "identity_key": "6315b1697bd71201b6fd40ee0e5887ac905fb25c305d9deb1ccb1b9309643502",
+      "last_seen": "2026-11-01T19:05:43.650537+00:00",
+      "location": "Donegal, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Technician in Engineering and Built Environment",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ce6dc4588976/candidate/so/pm/1/pl/3/opp/10105-Technician-in-Engineering-and-Built-Environment/en-GB"
     },
     "6381e18358039071ea7c981cdc4fe939575b04f72420b8df161d3d63aeba8259": {
       "assessment": {
@@ -28763,6 +28825,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-01T09:32:53.004504+00:00",
+  "updated_at": "2026-11-01T19:05:47.001773+00:00",
   "version": 3
 }
