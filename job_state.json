@@ -1303,27 +1303,28 @@
     "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05": {
       "assessment": {
         "gaps": [
-          "Chartered status is mentioned; verify whether essential or desirable",
-          "lack of direct relation to highways/roads/transport infrastructure"
+          "Chartered status mentioned as a requirement for some roles",
+          "lack of information about the specific job requirements and responsibilities"
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Role is related to water engineering, which is a subset of civil engineering, but Chartered status is mentioned and the job postings are not directly related to highways/roads/transport infrastructure",
+        "reason": "Role is in the water engineering sector which is related to civil engineering, but the job postings do not provide enough information to determine if the role is a good fit for the candidate's skills and experience.",
         "relocation_fit": "medium",
         "role_family": "water_engineer",
-        "score": 60,
+        "score": 80,
         "source": "ai-cloudflare",
         "strengths": [
-          "civil-domain evidence: civil engineering, water engineering"
+          "civil engineering discipline mentioned",
+          "water engineering sector related to civil engineering"
         ]
       },
       "company": "",
-      "content_hash": "b081aa9f36c6755c1945ae4f79700101c0d8207c520bcbd2f706ee61d2a86243",
+      "content_hash": "fecc0c23f8ffca11db1feb8e3f17b3164a731321dc390553604fcc4bf0c09a0e",
       "first_seen": "2026-09-14T01:53:18.713879+00:00",
       "identity_key": "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05",
-      "last_seen": "2026-11-02T09:48:58.995143+00:00",
+      "last_seen": "2026-11-02T22:55:39.779124+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-09-16T18:24:00.911452+00:00",
       "notified_hash": "973fd299f3962e18de0a7ecd11e30c3a7f7512691e50146bf13442f699aba038",
@@ -10973,7 +10974,7 @@
       "content_hash": "31c02987f185a4b0047fe4abae72217774a331dcd5b62b35c930b77539a4ee9f",
       "first_seen": "2026-09-18T17:50:39.845967+00:00",
       "identity_key": "6bf7a00b19d743e9037df91f216ee24bdacadb36aa6de217dbba171d7c8ebc95",
-      "last_seen": "2026-09-22T07:55:34.407978+00:00",
+      "last_seen": "2026-11-02T22:55:19.898826+00:00",
       "location": "Dublin, Dublin, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -13704,24 +13705,26 @@
     "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b": {
       "assessment": {
         "gaps": [
-          "No evidence of highways/roads/transport infrastructure experience; no mention of Civil 3D or AutoCAD usage; role title and duties are generic water engineering."
+          "No civil infrastructure evidence",
+          "No alignment or road design responsibilities",
+          "No construction/site supervision duties"
         ],
         "hard_reject": false,
         "matched": false,
-        "permit_path": "unclear",
+        "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "The vacancy is for a Water Engineering role with no explicit emphasis on highways, roads, transport infrastructure, Civil 3D, or alignment design. It lacks the required civil engineering domain evidence for a B.Tech Civil Engineer specializing in highways/roads/transport infrastructure. Therefore it does not match the specified criteria.",
-        "relocation_fit": "medium",
+        "reason": "The vacancy is for a Water Engineering role with no evidence of highways/roads/transport infrastructure, Civil 3D, alignment design, or construction supervision duties. It does not match the required civil domain profile.",
+        "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 20,
+        "score": 0,
         "source": "ai-groq_primary",
         "strengths": []
       },
       "company": "",
-      "content_hash": "62ecf5eabca502dc546eaceb5dfa18f7d1ab5375edc38ab1e3138419715b9101",
+      "content_hash": "9b496caf00df00862b64cf641174f2d7bf918563e39cb161e6295eb7c5271d90",
       "first_seen": "2026-09-14T01:53:18.720893+00:00",
       "identity_key": "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b",
-      "last_seen": "2026-11-02T09:48:58.994497+00:00",
+      "last_seen": "2026-11-02T22:55:35.825402+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-12T09:38:23.585427+00:00",
       "notified_hash": "483cad5b133d38d379a484094dd8ca82af1cd6b499930d08c96cd7dcb4036154",
@@ -13828,6 +13831,36 @@
       "source": "AECOM",
       "title": "Infrastructure Strategy Project Manager:Aviation",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000147472229-infrastructure-strategy-project-manager-aviation?oga=true"
+    },
+    "848f188c1bc4ac93ab8f78247bbfb2ac832ee61f3181de35356cad30e0b1d712": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities or tools mentioned; role is unrelated to civil infrastructure"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Project Manager in the communications regulation sector, with no evidence of civil engineering duties such as roads, highways, or construction. It does not match the required civil domain expertise.",
+        "relocation_fit": "low",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "dfd0920d23c64ad2393765f130c06d2a77d8336bff1eb9adafe68395d7ceaeea",
+      "first_seen": "2026-11-02T22:55:52.656654+00:00",
+      "identity_key": "848f188c1bc4ac93ab8f78247bbfb2ac832ee61f3181de35356cad30e0b1d712",
+      "last_seen": "2026-11-02T22:55:52.656669+00:00",
+      "location": "Dublin, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-52276dba2aa4/candidate/so/pm/1/pl/3/opp/10125-Project-Manager/en-GB"
     },
     "855d67c12b9eb3456d7c51bdf7a7ad6da26133ae4fa8497e57e78cf5aab28482": {
       "assessment": {
@@ -15085,31 +15118,24 @@
     "9041456f91a41130ed5256c3fd9ace1207f7a54d9a147b155d048aad3fa23bf7": {
       "assessment": {
         "gaps": [
-          "lack of specific software skills like Civil 3D, AutoCAD",
-          "no explicit mention of alignment design, DPRs, estimates/BOQ/tenders, construction/site supervision, QA/QC and contractor/consultant/utility coordination"
+          "No civil engineering responsibilities or tools mentioned; generic project management language only"
         ],
         "hard_reject": false,
-        "matched": true,
-        "permit_path": "unclear",
+        "matched": false,
+        "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility, but lacks specific details on required skills like Civil 3D, AutoCAD, and alignment design",
-        "relocation_fit": "medium",
+        "reason": "The vacancy description lacks any specific civil engineering duties or tools (e.g., Civil 3D, road design, alignment, DPRs, BOQ, construction supervision). It appears to be a generic project‑management role without evidence of civil infrastructure work, thus it does not meet the civil domain criteria.",
+        "relocation_fit": "low",
         "role_family": "project_manager",
-        "score": 90,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil engineering",
-          "highways",
-          "drainage",
-          "transport infrastructure",
-          "road safety"
-        ]
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "204080f7e3bae2c670eaa9553d0899dea2c74014396fed94ddb1bd42afeaf165",
+      "content_hash": "43d3e30edd9095c22ecca8efa6f756d6b7f4a4803fcd24a33c790842a57ba110",
       "first_seen": "2026-10-16T07:29:17.429968+00:00",
       "identity_key": "9041456f91a41130ed5256c3fd9ace1207f7a54d9a147b155d048aad3fa23bf7",
-      "last_seen": "2026-10-26T08:04:08.454288+00:00",
+      "last_seen": "2026-11-02T22:55:44.266895+00:00",
       "location": "Ireland",
       "notified_at": "2026-10-26T08:04:46.522374+00:00",
       "notified_hash": "204080f7e3bae2c670eaa9553d0899dea2c74014396fed94ddb1bd42afeaf165",
@@ -18785,32 +18811,31 @@
     "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14": {
       "assessment": {
         "gaps": [
-          "No explicit mention of Irish consultancy experience or familiarity with Irish design standards",
-          "Chartered status not confirmed – may be desirable but not mandatory",
-          "Job posting does not clarify visa sponsorship or work‑permit pathway"
+          "No explicit mention of Irish work‑permit sponsorship or critical‑skills visa eligibility",
+          "Chartered status is listed as desirable but not mandatory"
         ],
         "hard_reject": false,
         "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The candidate’s experience in highways, road design, Civil 3D, AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC, and coordination aligns well with the job’s requirements for a Highways Engineer. The role specifies 3‑5 years post‑graduate experience and a level 8 civil engineering degree, which the candidate meets. No explicit sponsorship requirement is stated, but the permit pathway remains unclear as the posting does not detail visa or work‑permit conditions.",
+        "reason": "The vacancy explicitly requires civil engineering experience in road design, Civil 3D/AutoCAD, and alignment work, matching the candidate’s background. No clear evidence of Irish work‑permit sponsorship is provided, so the permit path remains unclear.",
         "relocation_fit": "medium",
         "role_family": "highway_engineer",
-        "score": 90,
+        "score": 100,
         "source": "ai-groq_primary",
         "strengths": [
-          "6.5+ years of highways/road design experience",
-          "proficiency in Civil 3D and AutoCAD",
-          "strong background in alignment design, DPRs, BOQ, and tender preparation",
-          "hands‑on construction supervision and QA/QC",
-          "coordination with contractors, consultants, and utilities"
+          "Civil engineering background",
+          "Road and highway design experience",
+          "Proficiency in Civil 3D and AutoCAD",
+          "Experience with geometric, drainage, and pavement design",
+          "Knowledge of statutory processes and contract administration"
         ]
       },
       "company": "",
-      "content_hash": "ed56edfcb1367d3d239e9383562f7cf52f07d166235279184bb18067fe6a24fe",
+      "content_hash": "4e831b0318b851847b846a25436f299005ec9fd43f098383e89c31df4fe78d61",
       "first_seen": "2026-10-06T19:43:55.982271+00:00",
       "identity_key": "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14",
-      "last_seen": "2026-11-02T09:48:58.381745+00:00",
+      "last_seen": "2026-11-02T22:55:27.342961+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-06T19:45:03.744600+00:00",
       "notified_hash": "e3b8ff7e621606dd6733013c170ab4f1ac1c095ff9ca9d41b9281b12155a2422",
@@ -21957,29 +21982,29 @@
     },
     "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
       "assessment": {
-        "gaps": [
-          "no evidence of highway/road or transport infrastructure work",
-          "no mention of Civil 3D/AutoCAD, alignment design, DPRs, BOQ, construction supervision, QA/QC or contractor coordination"
-        ],
+        "gaps": [],
         "hard_reject": false,
-        "matched": false,
+        "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The posting lists a generic Civil Engineering role in Dublin with no specific duties or required skills disclosed. While the title suggests a civil domain, the absence of detailed responsibilities (e.g., highway/road design, Civil 3D, alignment work, DPRs, BOQ, construction supervision) makes it unclear whether the role aligns with the candidate’s specialty. The location is Ireland, so relocation is possible but the lack of role specifics prevents a definitive match.",
+        "reason": "Strong civil-domain evidence, including transport infrastructure, highways, and civil engineering, aligns with the candidate's CV and suggests potential Ireland employment-permit feasibility",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 60,
-        "source": "ai-groq_primary",
+        "score": 92,
+        "source": "ai-cloudflare",
         "strengths": [
-          "generic civil engineering title",
-          "location in Ireland"
+          "civil engineering",
+          "highways",
+          "roads",
+          "transport infrastructure",
+          "Civil 3D/AutoCAD implied by civil engineering context"
         ]
       },
       "company": "",
-      "content_hash": "b4d40871587dc839224ea71ba1aa3349e1f6d7307fcadd2c7d2fbc46e1bd67f9",
+      "content_hash": "47b73d3c11476fb33886a6dc7c1911f8c63c2024d4244c83a7d2bdf669d82354",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-11-02T09:48:58.994256+00:00",
+      "last_seen": "2026-11-02T22:55:30.584730+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -27726,6 +27751,37 @@
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-39ebce969ead/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
+    "f708de1637618c985705394ed0f5ece6dd26278a5ff6be238036bf12e923fd9d": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of specific details about civil engineering or relevant software skills"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title is potentially relevant but the civil domain is ambiguous and requires further review. The job description lacks specific details about civil engineering, highways/roads/transport infrastructure, or relevant software skills.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b8e57e7406922a3e5b93ded7fb28984f7989a756439379d0eeecc12f284ad59b",
+      "first_seen": "2026-11-02T22:55:47.882961+00:00",
+      "identity_key": "f708de1637618c985705394ed0f5ece6dd26278a5ff6be238036bf12e923fd9d",
+      "last_seen": "2026-11-02T22:55:47.882975+00:00",
+      "location": "Donegal, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Technician in Engineering and Built Environment",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-52276dba2aa4/candidate/so/pm/1/pl/3/opp/10105-Technician-in-Engineering-and-Built-Environment/en-GB"
+    },
     "f751b8312a80a7c3e6bf9184afbdbbf8cc36db29617a305239f1bf1973ce0e42": {
       "assessment": {
         "gaps": [
@@ -28924,6 +28980,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-02T09:49:11.042552+00:00",
+  "updated_at": "2026-11-02T22:55:52.690105+00:00",
   "version": 3
 }
