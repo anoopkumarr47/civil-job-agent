@@ -1303,26 +1303,27 @@
     "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05": {
       "assessment": {
         "gaps": [
-          "Lack of road/highway alignment design experience",
-          "No evidence of Civil 3D or AutoCAD usage for road projects",
-          "No mention of DPRs, BOQ, or construction supervision in road context"
+          "Chartered status is mentioned; verify whether essential or desirable",
+          "some roles require a degree in process engineering or a related water sector discipline, which may not be an exact match for the candidate's B.Tech in Civil Engineering"
         ],
         "hard_reject": false,
-        "matched": false,
+        "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy is for a Water Engineering role at Arup, with limited evidence of road/highway or transport infrastructure responsibilities. The candidate’s expertise is in highways, roads, and transport infrastructure, which does not align with the water-focused duties described. No clear indication of required civil engineering skills for road design, Civil 3D, or alignment work. Therefore, the role does not match the candidate’s domain profile.",
+        "reason": "The vacancy contains civil-domain evidence such as water engineering, civil engineering, and related disciplines.",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 30,
-        "source": "ai-groq_primary",
-        "strengths": []
+        "score": 80,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: water engineering, civil engineering"
+        ]
       },
       "company": "",
-      "content_hash": "8c4b7669ce0e7c2b59fd31042395d31535e9a437905fbb36a435188c1aca46c7",
+      "content_hash": "0cfe569af94e9ea204a252e398a9845894dca9e77af16c7d51d6a6b69e2c8bda",
       "first_seen": "2026-09-14T01:53:18.713879+00:00",
       "identity_key": "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05",
-      "last_seen": "2026-11-04T09:38:54.283394+00:00",
+      "last_seen": "2026-11-04T20:57:32.375166+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-09-16T18:24:00.911452+00:00",
       "notified_hash": "973fd299f3962e18de0a7ecd11e30c3a7f7512691e50146bf13442f699aba038",
@@ -5220,6 +5221,38 @@
       "title": "System Interface Engineer – ALTO project / Cadence",
       "url": "https://www.systra.com/ireland/job-offers/system-interface-engineer-alto-project-cadence-en-10713"
     },
+    "2b8bf24fe9b4539662d0d51dca5ac1f595f3bd9bcbe2182b05a22803007cd377": {
+      "assessment": {
+        "gaps": [
+          "No demonstrated geotechnical design experience",
+          "No evidence of soil testing, foundation design, or related qualifications",
+          "Candidate’s CV focuses on highways/roads rather than geotechnical projects"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is for a Geotechnical Engineer, which focuses on soil and foundation analysis, a specialization not strongly represented in the candidate’s CV that emphasizes highways, roads, and transport infrastructure design. While the candidate has general civil engineering experience, the lack of explicit geotechnical expertise and the absence of evidence of relevant projects or qualifications in this area reduce the fit.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "7d688b6c0695a89cb880a124432cb3e25e97a437eaf389ba74570274786c4dbd",
+      "first_seen": "2026-11-04T20:57:37.349241+00:00",
+      "identity_key": "2b8bf24fe9b4539662d0d51dca5ac1f595f3bd9bcbe2182b05a22803007cd377",
+      "last_seen": "2026-11-04T20:57:37.349259+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Geotechnical Engineer",
+      "url": "https://www.systra.com/ireland/job-offers/geotechnical-engineer-en-11124"
+    },
     "2c6339bd92c95e29be7208a34cd543cd5151c6775404c6d06e683fd0cc1a90bb": {
       "assessment": {
         "gaps": [],
@@ -6541,6 +6574,36 @@
       "title": "Project Manager – Light Rail",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/so/pm/1/pl/3/opp/9689-Project-Manager-Light-Rail/en-GB"
     },
+    "3a047f8afe18f8869aa7b5a60b817ddb4935fb7352a565a30e206f1cbbe1fb1e": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering duties or tools mentioned; title is generic; insufficient evidence of relevant experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and limited information do not provide evidence of civil engineering responsibilities such as roads, highways, or construction site work. Without explicit civil duties, it cannot be matched to the required civil engineer profile.",
+        "relocation_fit": "low",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "460275feffd95c2cdd22566795219c091c3e0bfcddee4b9800ae6c46892e718d",
+      "first_seen": "2026-11-04T20:57:45.818334+00:00",
+      "identity_key": "3a047f8afe18f8869aa7b5a60b817ddb4935fb7352a565a30e206f1cbbe1fb1e",
+      "last_seen": "2026-11-04T20:57:45.818352+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Dylan Collins Junior Project Manager at Conack Construction",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7522347390633238528?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7522347390633238528&showCommentBox=true&origin=NETWORK_CONVERSATIONS&highlightedUpdateTrackingId=q0wAOW0SR1GflxFbjrcoBg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3Bq0wAOW0SR1GflxFbjrcoBg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1Ck13J-nvGccw1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mw2fwc8j~wr-null-null&eid=uk2z7p-mw2fwc8j-wr&otpToken=MzdmMjQ5NTg5MGU5MzU1MWMxMWE4YTVjYmVmNTRkYWZmMGI4OWQ0MmJhMjc2YjlhNTgwYTc4OWIzZjEyNDIyNmYxODY3ZTFjZjE2NGNhODFjMTQzNzNhN2QxZjJhZWM2NzcxZGQ3NjI0MDQwMWQzOWUwZmVlMjY4MjA4MDFlYTc5ZDBhNTY4ZWRjNWEyNTkyZWIsMiwx"
+    },
     "3a064c5cc919dac4dffafee800d1749e22260686781b5653da781d70f3fd1ccf": {
       "assessment": {
         "gaps": [],
@@ -7575,6 +7638,36 @@
       "source": "LinkedIn",
       "title": "Site Engineer",
       "url": "https://www.linkedin.com/comm/jobs/view/4283795773?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BrZyDhi2jSgOfCQCopGkMOQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0KSYsHZbeOxYs1&trkEmail=eml-email_next_best_action_digest_01-fIrUOGw3TMGib8NJYdBT7Q%3D%3D-0-315C9Va26sqOY6DXyceMFg%3D%3D-null-uk2z7p~muvgehlc~s9-null-null&eid=uk2z7p-muvgehlc-s9&otpToken=OTg0NTdhNzdmYjFiY2ZiOTRiNjFmMWJkYTIyNWNkNWRmZGY4NTc3NjQ3YTI3OWZhMTk0NTFjYzg1NDJiMjAyMWJiY2IyNmY0M2VhOWY1ODM0N2Y3OGYyNjM4NDY1YzQ4NzgxODk0Zjk2YmMxZmZkOWIzNTY4OWE0ZjgyMDQ0ODFjOWI1ZmYzZDkxYmYwNjU1ZTQsMiwx"
+    },
+    "43770ee244831ebf8136e4948cca286cb49e8805e6af2d0c98c5080584994496": {
+      "assessment": {
+        "gaps": [
+          "No evidence of highways/roads/transport infrastructure experience; no Civil 3D or AutoCAD usage; no construction or QA/QC duties."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy focuses on water quality modelling (coastal, river, sewer) rather than highways, roads, transport infrastructure, Civil 3D, alignment design, or construction site supervision. It does not provide evidence of the required civil engineering domain for the candidate’s profile.",
+        "relocation_fit": "medium",
+        "role_family": "engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "AtkinsRéalis",
+      "content_hash": "1bf25bc8fec785ae98f91a94b76e7e7c98d5f31f344535fcc8b61e9a9367786c",
+      "first_seen": "2026-11-04T20:57:19.947498+00:00",
+      "identity_key": "43770ee244831ebf8136e4948cca286cb49e8805e6af2d0c98c5080584994496",
+      "last_seen": "2026-11-04T20:57:19.947515+00:00",
+      "location": "Dublin, Dublin, Ireland, dundalk, Louth, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "AtkinsRealis",
+      "title": "Senior / Principal Engineer (Coastal, River &amp; Urban Water Quality Modelling)",
+      "url": "https://careers.atkinsrealis.com/en/jobs/senior-principal-engineer-coastal-river-urban-water-quality-modelling-r-152116"
     },
     "440039e34d2be01fe3e79ff78303b4df7639a73115ffacea5ab7ccda1f8c75d7": {
       "assessment": {
@@ -13972,27 +14065,26 @@
     "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b": {
       "assessment": {
         "gaps": [
-          "Chartered status is mentioned; verify whether essential or desirable",
-          "some roles require a degree in process engineering or a related water sector discipline, which may not be an exact match for the candidate's B.Tech in Civil Engineering"
+          "No evidence of highways/roads/transport infrastructure experience",
+          "No mention of Civil 3D/AutoCAD alignment design",
+          "No alignment with required civil engineering domain"
         ],
         "hard_reject": false,
-        "matched": true,
-        "permit_path": "unclear",
+        "matched": false,
+        "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "The vacancy contains civil-domain evidence such as water engineering, civil engineering, and related disciplines.",
-        "relocation_fit": "medium",
+        "reason": "The vacancy is for a Water Engineering role with no evidence of highways/roads/transport infrastructure, Civil 3D, alignment design, or related civil engineering duties. It does not match the required domain specificity for a B.Tech Civil Engineer focused on highways and transport infrastructure.",
+        "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 80,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil-domain evidence: water engineering, civil engineering"
-        ]
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "4e9f7d9416581f44db3fc4787903572c1a85c74c03abdc09b90a561384c02994",
+      "content_hash": "a459e76f742c7469d28109216b1d568803527f31ccdb14c9fda2998e3b3cba60",
       "first_seen": "2026-09-14T01:53:18.720893+00:00",
       "identity_key": "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b",
-      "last_seen": "2026-11-04T09:38:53.825501+00:00",
+      "last_seen": "2026-11-04T20:57:28.487373+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-12T09:38:23.585427+00:00",
       "notified_hash": "483cad5b133d38d379a484094dd8ca82af1cd6b499930d08c96cd7dcb4036154",
@@ -22388,23 +22480,23 @@
         "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "reason": "Strong civil-domain evidence, including transport infrastructure, highways, and civil engineering, with a suitable location in Dublin, Ireland",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 89,
-        "source": "ai-groq_primary",
+        "score": 92,
+        "source": "ai-cloudflare",
         "strengths": [
-          "civil-domain evidence: civil engineering, civil engineer, highway, roads",
-          "highway",
-          "roads",
-          "transport infrastructure"
+          "civil engineering",
+          "transport infrastructure",
+          "highways",
+          "roads"
         ]
       },
       "company": "",
-      "content_hash": "70d1781c211ee9d7351ed39d1da5da911a87fe6d1c1c047ffb0e1562a9518b17",
+      "content_hash": "64113999c5fe40ba5142ed28ac5a15c3842764deeccbc95815dcd87718e2ea1f",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-11-04T09:38:43.240771+00:00",
+      "last_seen": "2026-11-04T20:57:24.274503+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -29052,6 +29144,37 @@
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-8a9c415f4b2e/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
+    "fb8d4940bc409cacdcdaa867ff3505aab3c5c231c41e3015292f98f29e7e8c71": {
+      "assessment": {
+        "gaps": [
+          "lack of explicit civil engineering duties",
+          "insufficient information about the role's requirements and responsibilities"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is not explicitly for a civil engineer and lacks specific details about the role's responsibilities and requirements.",
+        "relocation_fit": "low",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "70a40ae973cd687e70fd69c592442c4ecff8c6a128d40d64b0091ee9ce822bda",
+      "first_seen": "2026-11-04T20:57:40.068535+00:00",
+      "identity_key": "fb8d4940bc409cacdcdaa867ff3505aab3c5c231c41e3015292f98f29e7e8c71",
+      "last_seen": "2026-11-04T20:57:40.068551+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Phil Nannery commented on this Dylan Collins Junior Project Manager at Conack Construction Follow Delighted to share that I have graduated from Munster Technological University Cork with a BSc (Hons) in… see more Phil Na",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7522347390633238528?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7522347390633238528&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=q0wAOW0SR1GflxFbjrcoBg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3Bq0wAOW0SR1GflxFbjrcoBg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1Ck13J-nvGccw1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mw2fwc8j~wr-null-null&eid=uk2z7p-mw2fwc8j-wr&otpToken=MzdmMjQ5NTg5MGU5MzU1MWMxMWE4YTVjYmVmNTRkYWZmMGI4OWQ0MmJhMjc2YjlhNTgwYTc4OWIzZjEyNDIyNmYxODY3ZTFjZjE2NGNhODFjMTQzNzNhN2QxZjJhZWM2NzcxZGQ3NjI0MDQwMWQzOWUwZmVlMjY4MjA4MDFlYTc5ZDBhNTY4ZWRjNWEyNTkyZWIsMiwx"
+    },
     "fbeb6d7e256f1d26d525c02a934d61e1c4531f570b28246d2021d3410a4a7f06": {
       "assessment": {
         "gaps": [
@@ -29579,6 +29702,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-04T09:39:17.814960+00:00",
+  "updated_at": "2026-11-04T20:57:45.835648+00:00",
   "version": 3
 }
