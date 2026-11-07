@@ -1371,28 +1371,24 @@
     "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05": {
       "assessment": {
         "gaps": [
-          "Chartered status is mentioned as desirable for some roles, but not essential"
+          "Candidate’s specialization in highways/roads/transport infrastructure is not relevant to water engineering duties."
         ],
         "hard_reject": false,
-        "matched": true,
-        "permit_path": "critical_skills",
+        "matched": false,
+        "permit_path": "unclear",
         "provisional": false,
-        "reason": "Strong evidence of civil engineering and water infrastructure experience, with a degree in Civil Engineering required for the role.",
-        "relocation_fit": "high",
+        "reason": "The vacancy is for a Water Engineering role, which focuses on water sector duties rather than highways/roads/transport infrastructure. The candidate’s expertise is in highway alignment design, Civil 3D, and road construction, which does not align with the water engineering responsibilities described. Therefore, the role does not match the required civil domain specialization.",
+        "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 80,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil engineering",
-          "water infrastructure",
-          "degree in Civil Engineering"
-        ]
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "e14bd6f44319287e2c70d20cd46f21adca891a4133d1ede405c71c04c4fe30d1",
+      "content_hash": "26effc2b6dc23d33d7ae675c900f0f49dbec9dfa507ce8ac1873a1c6875269f1",
       "first_seen": "2026-09-14T01:53:18.713879+00:00",
       "identity_key": "097a404d28719b4bb9f5aa7a07d7c57839937b959fcc4650088eb51aa3204c05",
-      "last_seen": "2026-11-07T09:05:16.044653+00:00",
+      "last_seen": "2026-11-07T19:02:40.881853+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-09-16T18:24:00.911452+00:00",
       "notified_hash": "973fd299f3962e18de0a7ecd11e30c3a7f7512691e50146bf13442f699aba038",
@@ -14550,24 +14546,27 @@
     "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b": {
       "assessment": {
         "gaps": [
-          "No civil infrastructure evidence; role focuses on water engineering rather than highways or roads"
+          "Chartered status is mentioned in some job postings; verify whether essential or desirable",
+          "some job postings require a degree in Process Engineering or a related water sector discipline, which may not be an exact match for the candidate's background"
         ],
         "hard_reject": false,
-        "matched": false,
-        "permit_path": "not_eligible",
+        "matched": true,
+        "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy is for a Water Engineering role with no evidence of highways/roads/transport infrastructure, Civil 3D, alignment design, or related civil engineering duties. It does not match the required civil infrastructure domain.",
-        "relocation_fit": "low",
+        "reason": "The job posting mentions Water Engineering and Civil Engineering, which aligns with the candidate's background in civil engineering and highways/roads/transport infrastructure.",
+        "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 0,
-        "source": "ai-groq_primary",
-        "strengths": []
+        "score": 80,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil-domain evidence: civil engineering, water engineering"
+        ]
       },
       "company": "",
-      "content_hash": "41272e610afd49ff18e0d93c9e7c7c6495d89844f2c7a69bae26bd099c79174c",
+      "content_hash": "ebf8722224a67949473c58088503c9a6a283e540f23639faa61c62afd4c926d0",
       "first_seen": "2026-09-14T01:53:18.720893+00:00",
       "identity_key": "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b",
-      "last_seen": "2026-11-07T09:05:16.044278+00:00",
+      "last_seen": "2026-11-07T19:02:36.879880+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-12T09:38:23.585427+00:00",
       "notified_hash": "483cad5b133d38d379a484094dd8ca82af1cd6b499930d08c96cd7dcb4036154",
@@ -23175,28 +23174,25 @@
     },
     "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
       "assessment": {
-        "gaps": [],
+        "gaps": [
+          "No detailed civil engineering responsibilities or required skills provided"
+        ],
         "hard_reject": false,
-        "matched": true,
+        "matched": false,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "Strong civil-domain evidence, including transport infrastructure, highways, and civil engineering, with a suitable location in Dublin, Ireland",
+        "reason": "The vacancy description lacks specific civil engineering duties or evidence of alignment with the candidate’s expertise in highways, roads, transport infrastructure, Civil 3D, and related tasks. Therefore, it cannot be confidently matched.",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 92,
-        "source": "ai-cloudflare",
-        "strengths": [
-          "civil engineering",
-          "highways",
-          "transport infrastructure",
-          "roads"
-        ]
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
       },
       "company": "",
-      "content_hash": "6930bcc4e7c830c73f3f1e796c80a63c3b44cf0422f0b4f88650a9492c659c9a",
+      "content_hash": "3a4bbb12ee6fe14c3dd19e56d7a3c0c0f74af04abfc7fedb8ee43bae6b419c4a",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-11-07T09:05:16.044161+00:00",
+      "last_seen": "2026-11-07T19:02:32.425012+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -24624,6 +24620,39 @@
       "source": "LinkedIn",
       "title": "Shubham Vishwakarma NHAI Project Manager Dedicated to…",
       "url": "https://in.linkedin.com/comm/in/shubham-vishwakarma-a2011313a?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BG%2B0JNrtOSXas8SZTblmlow%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0k9hcLiSYGbIs1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mu8pn4vw~fl-null-null&eid=uk2z7p-mu8pn4vw-fl&otpToken=OWZlYjUwN2NhMjYyOWU0MTUwOTM0NzE3ZDA5MTlmNWNiNzhmYmQ0M2Q0MWExM2U3Yjk2NWI3ZjA0MGYwMTVlNjZmNjRmN2M2MDcxZjg2MTM5YmE5ZGEyZjk3OWZiOGI5ZGRjY2Y0NDIxNmQ1YmIwNzlkZDI0OTExODcxZjFhNWFlMGEzN2Y4MmVkNWE2ZjVjNGQsMiwx"
+    },
+    "d04dd6cb8bd69a7b382d4affce927787a722c6eb038b4dadae3744d0060fb357": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of technical skills like Civil 3D, AutoCAD, alignment design, DPRs, etc."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title Clerk of Works is potentially relevant but lacks explicit civil domain evidence and requires further adjudication.",
+        "relocation_fit": "medium",
+        "role_family": "clerk_of_works",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "12691393a595cf7e8de3946d026fa422da2b22880944e388306b4513693f6845",
+      "first_seen": "2026-11-07T19:02:50.463798+00:00",
+      "identity_key": "d04dd6cb8bd69a7b382d4affce927787a722c6eb038b4dadae3744d0060fb357",
+      "last_seen": "2026-11-07T19:02:50.463813+00:00",
+      "location": "Longford, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Clerk of Works",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-bb0c08d0fe0b/candidate/so/pm/1/pl/3/opp/10336-Clerk-of-Works/en-GB"
     },
     "d07abc437a4ff73463c284c777e602d4b5779f158b112f79463aab35fe99dc53": {
       "assessment": {
@@ -30627,6 +30656,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-07T09:05:32.610454+00:00",
+  "updated_at": "2026-11-07T19:02:50.500427+00:00",
   "version": 3
 }
