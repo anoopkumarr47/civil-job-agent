@@ -23585,6 +23585,36 @@
       "title": "Senior Engineer - Wicklow County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-885d703fec5a/candidate/so/pm/1/pl/3/opp/7461-Senior-Engineer-Wicklow-County-Council/en-GB"
     },
+    "c6c6d49eed5022a489bbf6becc6c584221a9925c8aeeafdc6a82ed41def21ce6": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering or road/highway design experience indicated"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description focus on power supply traction engineering, an electrical/energy domain, with no evidence of civil engineering, road/highway, or infrastructure design responsibilities. It does not meet the civil domain criteria required for a civil infrastructure engineer role.",
+        "relocation_fit": "low",
+        "role_family": "other",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "dc7341385afc15b96e6ebd3b618d7ef266b20df434f80bdcb37357cfc4e5a840",
+      "first_seen": "2026-11-08T19:00:28.441836+00:00",
+      "identity_key": "c6c6d49eed5022a489bbf6becc6c584221a9925c8aeeafdc6a82ed41def21ce6",
+      "last_seen": "2026-11-08T19:00:28.441850+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Lead Power Supply Traction Engineer",
+      "url": "https://www.systra.com/ireland/job-offers/lead-power-supply-traction-engineer-en-11350"
+    },
     "c6d06526e174f1bd31b77109281fb37a1e11ac5d5fc13c28df22a7113404272b": {
       "assessment": {
         "gaps": [
@@ -29264,6 +29294,39 @@
       "title": "Engineer- Alignment",
       "url": "https://www.systra.com/ireland/job-offers/alignment-design-engineer-track-en-9656"
     },
+    "f4f3f8fe8f4553c6990c8e7761ca9ddcf147f12c3fc60a8e434901e7fdffcaf4": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of technical skills like Civil 3D, AutoCAD, alignment design, DPRs, etc."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title Clerk of Works is potentially relevant but lacks explicit civil engineering domain evidence and requires further adjudication.",
+        "relocation_fit": "medium",
+        "role_family": "clerk_of_works",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "12691393a595cf7e8de3946d026fa422da2b22880944e388306b4513693f6845",
+      "first_seen": "2026-11-08T19:00:32.969955+00:00",
+      "identity_key": "f4f3f8fe8f4553c6990c8e7761ca9ddcf147f12c3fc60a8e434901e7fdffcaf4",
+      "last_seen": "2026-11-08T19:00:32.969969+00:00",
+      "location": "Longford, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Clerk of Works",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f20ddf2d3696/candidate/so/pm/1/pl/3/opp/10336-Clerk-of-Works/en-GB"
+    },
     "f5a7d0618b0378eba07a7d816de8cfb521ea620cdeea9c556a3b3848a1f2f53a": {
       "assessment": {
         "gaps": [
@@ -30686,6 +30749,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-08T09:21:42.728696+00:00",
+  "updated_at": "2026-11-08T19:00:33.006132+00:00",
   "version": 3
 }
