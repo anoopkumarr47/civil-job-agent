@@ -7787,6 +7787,37 @@
       "title": "Head of Operations Engineering",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1505a6f8a649/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
+    "3fc18e79a635926dda24cd413a4c18824387e34470ffe027eeb7b282eca52065": {
+      "assessment": {
+        "gaps": [
+          "job title mismatch",
+          "lack of civil engineering evidence"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The job title is Engineer (Mechanical) which does not match the required civil engineering background.",
+        "relocation_fit": "low",
+        "role_family": "not_civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "d4fa1d40ad3bd9055225a25646e7a8b042f1c31e55995b4568df4e025372fb2f",
+      "first_seen": "2026-11-11T21:34:46.513057+00:00",
+      "identity_key": "3fc18e79a635926dda24cd413a4c18824387e34470ffe027eeb7b282eca52065",
+      "last_seen": "2026-11-11T21:34:46.513070+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Engineer (Mechanical)",
+      "url": "https://www.systra.com/ireland/job-offers/engineer-mechanical-en-11273"
+    },
     "4071e5b86100fc03cb59143b7de4e553e63a232ece03028e30fb3f4d580b7e0f": {
       "assessment": {
         "gaps": [
@@ -27174,6 +27205,36 @@
       "title": "Senior Engineer – Bridges (Steel Structure)",
       "url": "https://www.systra.com/ireland/job-offers/senior-engineer-bridges-steel-structure-en-9343"
     },
+    "e03e787c5315192faa24e7c3ce816339f9b98d1b4f8e79659cf5e4915695ab93": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities; no highway/road design or construction experience; no Civil 3D/AutoCAD usage indicated"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The role is focused on building services and estate management, not civil engineering of roads/highways or transport infrastructure. No evidence of Civil 3D, alignment design, or highway construction duties.",
+        "relocation_fit": "low",
+        "role_family": "Buildings Services Engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "278cb532bdb133e8d588e3c4c4ca7b79b00f2167cb25abcc530812a0cdac1ecc",
+      "first_seen": "2026-11-11T21:34:52.540404+00:00",
+      "identity_key": "e03e787c5315192faa24e7c3ce816339f9b98d1b4f8e79659cf5e4915695ab93",
+      "last_seen": "2026-11-11T21:34:52.540419+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Buildings Services Engineer, Buildings & Estates, Grade 5, 1 FTE, Permanent",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-6ebe00c7c098/candidate/so/pm/1/pl/3/opp/10500-Buildings-Services-Engineer-Buildings-Estates-Grade-5-1-FTE-Permanent/en-GB"
+    },
     "e0a7c6101668975b59306ea53be3e7a8a72830d2e679e46729917fa373903bb4": {
       "assessment": {
         "gaps": [
@@ -27751,6 +27812,43 @@
       "source": "AtkinsRealis",
       "title": "Project Engineer",
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-r-162864"
+    },
+    "e650b6ffbffd680f8116dc9177c349eeda6649906a8de4c32f3ef6c1e2cf9234": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "utilities_engineer",
+        "score": 100,
+        "source": "deterministic",
+        "strengths": [
+          "civil-domain evidence: civil engineering, civil engineer, civil works, highway",
+          "highway",
+          "roads",
+          "road design",
+          "transport infrastructure",
+          "resident engineer",
+          "road safety",
+          "drainage"
+        ]
+      },
+      "company": "",
+      "content_hash": "de2e0d4cc2bd71ee5c96316a3858171f481d8783a30f71528696007e55cd6dcf",
+      "first_seen": "2026-11-11T21:34:44.035494+00:00",
+      "identity_key": "e650b6ffbffd680f8116dc9177c349eeda6649906a8de4c32f3ef6c1e2cf9234",
+      "last_seen": "2026-11-11T21:34:44.035500+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-11T21:34:53.565537+00:00",
+      "notified_hash": "de2e0d4cc2bd71ee5c96316a3858171f481d8783a30f71528696007e55cd6dcf",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Senior Utilities Engineer- Wet",
+      "url": "https://www.systra.com/ireland/job-offers/senior-utilities-engineer-wet-en-11419"
     },
     "e688c7bf2fdb6f1ec5fba8044d9b48f6a794d370e426682240321828ddfdfd2c": {
       "assessment": {
@@ -29707,6 +29805,36 @@
       "title": "Clerk of Works",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f20ddf2d3696/candidate/so/pm/1/pl/3/opp/10336-Clerk-of-Works/en-GB"
     },
+    "f5157361f7474b6a342bea6ef3a7b687ead6b905df7744b369e949475ba7553c": {
+      "assessment": {
+        "gaps": [
+          "No evidence of civil engineering tasks (roads/highways, alignment design, Civil 3D, construction supervision, QA/QC, transport infrastructure)"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy description lacks specific civil engineering duties such as highway/road design, Civil 3D/AutoCAD usage, alignment design, DPRs, BOQ, construction supervision, QA/QC, or transport infrastructure responsibilities. It appears to be a generic engineering role with broad environmental and consultancy focus, not meeting the required civil domain evidence.",
+        "relocation_fit": "low",
+        "role_family": "engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "ebb61c1ce827a49005a3600d8a6ab9c5f6f9095e71cab7efaa252d629cdfb5b6",
+      "first_seen": "2026-11-11T21:34:44.019276+00:00",
+      "identity_key": "f5157361f7474b6a342bea6ef3a7b687ead6b905df7744b369e949475ba7553c",
+      "last_seen": "2026-11-11T21:34:44.019292+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Principal Engineer (PRAMS)",
+      "url": "https://www.systra.com/ireland/job-offers/principal-engineer-prams-en-9459"
+    },
     "f5a7d0618b0378eba07a7d816de8cfb521ea620cdeea9c556a3b3848a1f2f53a": {
       "assessment": {
         "gaps": [
@@ -31200,6 +31328,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-11T09:45:19.423030+00:00",
+  "updated_at": "2026-11-11T21:34:53.565558+00:00",
   "version": 3
 }
