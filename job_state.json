@@ -4072,6 +4072,36 @@
       "title": "Nitin singh Highway Engineer at RRSM INFRA PRIVATE LIMITED",
       "url": "https://www.linkedin.com/comm/feed/update/share:7511315211119923200?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3B6m0uYaANRQiFG1V2fniECA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=0N57eSq6tOvcs1&trkEmail=eml-email_next_best_action_digest_01-network_post-0-actor_card-null-uk2z7p~musliro3~ee-null-null&eid=uk2z7p-musliro3-ee&otpToken=OTJhNTZmZTFmMDY0YjA0NTNlYzFhNWExYTY2MGQ4ZGNjYWYwNjk2OWRmNmFiNjBiNWFiNWRkNjZkZTRhNzMwY2Y0ZjQxZjhiNDJiMWQxMjZhNTRjN2IwYzAwYjkyZjM0MGJiYjhhZmFmOTUwODhiOTQwMzhiMzBkZDM1MzQyM2ZhZWYzZmE3MGNhZGRlZDYxY2IsMiwx"
     },
+    "217c3b85ae385e061f17ae7bd809e0fb4a8e0529621468387917f831b54e3259": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities; no highway/road design or construction duties; no Civil 3D/AutoCAD usage; no alignment or DPR work"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The role is focused on building services and estate management, not civil engineering of roads/highways or transport infrastructure. No evidence of Civil 3D, alignment design, or highway-related duties. Therefore it does not match the required civil domain.",
+        "relocation_fit": "medium",
+        "role_family": "Buildings Services Engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "278cb532bdb133e8d588e3c4c4ca7b79b00f2167cb25abcc530812a0cdac1ecc",
+      "first_seen": "2026-11-13T21:01:16.500019+00:00",
+      "identity_key": "217c3b85ae385e061f17ae7bd809e0fb4a8e0529621468387917f831b54e3259",
+      "last_seen": "2026-11-13T21:01:16.500035+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Buildings Services Engineer, Buildings & Estates, Grade 5, 1 FTE, Permanent",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-b7cbefb19362/candidate/so/pm/1/pl/3/opp/10500-Buildings-Services-Engineer-Buildings-Estates-Grade-5-1-FTE-Permanent/en-GB"
+    },
     "21864d72dbd56f0f9047191ce5fa75cac2c705ae7198bb2a733c1e3f46e64b85": {
       "assessment": {
         "gaps": [
@@ -4128,10 +4158,10 @@
         ]
       },
       "company": "",
-      "content_hash": "ac186d7b72d42d105588911b3cd87b582eea305f47e8446911ec174aaa419c4e",
+      "content_hash": "11f14c498f4d25449c3379952a1769d66f142fbae53b22c729c2b1dd81bc7734",
       "first_seen": "2026-10-05T21:38:32.740220+00:00",
       "identity_key": "21938ca2d0beb872433a675f8f122143e15a622a3541de1c89ff9fbf69780312",
-      "last_seen": "2026-11-13T09:52:59.590318+00:00",
+      "last_seen": "2026-11-13T21:00:52.063001+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-05T21:40:08.806597+00:00",
       "notified_hash": "7847873d52b1520cb492630fca5aa80576a30e5460c373e430b454f690e82233",
@@ -14415,6 +14445,41 @@
       "title": "Executive Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-885d703fec5a/candidate/so/pm/1/pl/3/opp/8904-Executive-Engineer/en-GB"
     },
+    "7f5f45c92c9e3295812904818496c64851164c1c768b172e52da1b353136d931": {
+      "assessment": {
+        "gaps": [
+          "lecturing experience",
+          "potential additional qualifications"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Role requires civil engineering expertise and has a permanent position, but may require additional qualifications for lecturing.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_educator",
+        "score": 85,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil engineering",
+          "permanent role",
+          "education sector"
+        ]
+      },
+      "company": "",
+      "content_hash": "51631cf335acc9fc41703eba0f570eaea63ca4efc1904d0ff935f6676d7509c7",
+      "first_seen": "2026-11-13T21:01:11.026089+00:00",
+      "identity_key": "7f5f45c92c9e3295812904818496c64851164c1c768b172e52da1b353136d931",
+      "last_seen": "2026-11-13T21:01:11.026108+00:00",
+      "location": "Carlow, Ireland",
+      "notified_at": "2026-11-13T21:01:17.694814+00:00",
+      "notified_hash": "51631cf335acc9fc41703eba0f570eaea63ca4efc1904d0ff935f6676d7509c7",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "042765 – Assistant Lecturer/Lecturer in Civil Engineering (Permanent)",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-b7cbefb19362/candidate/so/pm/1/pl/3/opp/10591-042765-Assistant-Lecturer-Lecturer-in-Civil-Engineering-Permanent/en-GB"
+    },
     "803a829152f91d2b05971494add8795da82d37d74ac68a4f7ea7d005561575b1": {
       "assessment": {
         "gaps": [],
@@ -14987,24 +15052,24 @@
     "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b": {
       "assessment": {
         "gaps": [
-          "No civil engineering responsibilities or tools mentioned; no alignment or road design experience; no construction or QA/QC duties; no evidence of Civil 3D or AutoCAD usage."
+          "No evidence of civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision."
         ],
         "hard_reject": false,
         "matched": false,
         "permit_path": "not_eligible",
         "provisional": false,
-        "reason": "The vacancy lacks specific civil engineering duties such as roads, highways, transport infrastructure, Civil 3D/AutoCAD usage, alignment design, or construction supervision. It appears to be a generic water engineering role with no evidence of the required civil domain expertise.",
+        "reason": "The vacancy title and available evidence indicate a generic water engineering role with no specific mention of civil engineering, roads/highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, or related construction duties. The role appears to be more aligned with water sector consulting rather than the required civil infrastructure focus. Consequently, it does not meet the domain precision criteria for a civil infrastructure engineer vacancy.",
         "relocation_fit": "low",
         "role_family": "civil_infrastructure_engineer",
-        "score": 0,
+        "score": 20,
         "source": "ai-groq_primary",
         "strengths": []
       },
       "company": "",
-      "content_hash": "178311e54b5c621f4732571924b6e7682996908db4b601c7d9d20fb80e3f6332",
+      "content_hash": "0e4c4a94321adbd03dc36fc0c134685349ccda98484fcf4890b14c65e44a14b3",
       "first_seen": "2026-09-14T01:53:18.720893+00:00",
       "identity_key": "83969875a14657614d37919013c06276a48cf689e65682beb9c828fce2a6a94b",
-      "last_seen": "2026-11-13T09:52:59.590746+00:00",
+      "last_seen": "2026-11-13T21:01:07.933743+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-12T09:38:23.585427+00:00",
       "notified_hash": "483cad5b133d38d379a484094dd8ca82af1cd6b499930d08c96cd7dcb4036154",
@@ -20354,34 +20419,33 @@
     "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14": {
       "assessment": {
         "gaps": [
-          "No explicit mention of Irish consultancy experience or familiarity with Irish design standards",
-          "Chartered status not confirmed (may be desirable but not mandatory)",
-          "No evidence of experience with Irish statutory processes or TII publications"
+          "No explicit mention of Irish work permit or sponsorship",
+          "Chartered status not confirmed as mandatory",
+          "Duration of contract and critical skills visa requirement unclear"
         ],
         "hard_reject": false,
         "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy requires civil engineering experience in road design, alignment, drainage, and construction supervision, matching the candidate’s background in highways/roads/transport infrastructure. No explicit sponsorship requirement is stated, so permit eligibility remains unclear.",
+        "reason": "The vacancy explicitly requires civil engineering experience in road design, Civil 3D/AutoCAD, and alignment work, matching the candidate’s background. No clear evidence of Irish work permit or sponsorship is provided, so permit status remains unclear.",
         "relocation_fit": "medium",
         "role_family": "highway_engineer",
-        "score": 90,
+        "score": 100,
         "source": "ai-groq_primary",
         "strengths": [
           "Civil engineering degree",
-          "6.5+ years experience in highways/roads",
+          "6.5+ years of road/highway design experience",
           "Proficiency in Civil 3D and AutoCAD",
-          "Experience with alignment design, drainage, pavement, and road geometry",
-          "DPR preparation and tender documentation",
-          "Construction site supervision and QA/QC",
-          "Coordination with contractors and consultants"
+          "Experience with geometric, drainage, and pavement design",
+          "Knowledge of Irish road design standards",
+          "Project delivery and QA/QC responsibilities"
         ]
       },
       "company": "",
-      "content_hash": "03d8dc80344fda3674cdc02006d2ca85428d4c719a639b732e14d23da1a18cd5",
+      "content_hash": "68d88bab61bf77a7bdf8fb6c00a69c8ab43a6c5f1ae44b776d32148290cfa1e8",
       "first_seen": "2026-10-06T19:43:55.982271+00:00",
       "identity_key": "a9b4209eb011661d2751f33b1108e6e185704092a0c4e2c4dc71b2d22dfebe14",
-      "last_seen": "2026-11-13T09:52:59.590535+00:00",
+      "last_seen": "2026-11-13T21:00:59.417660+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-06T19:45:03.744600+00:00",
       "notified_hash": "e3b8ff7e621606dd6733013c170ab4f1ac1c095ff9ca9d41b9281b12155a2422",
@@ -23879,30 +23943,28 @@
     },
     "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe": {
       "assessment": {
-        "gaps": [
-          "no mention of highways/roads/transport infrastructure",
-          "no mention of Civil 3D/AutoCAD",
-          "no detail on design, DPRs, BOQ, QA/QC or site supervision"
-        ],
+        "gaps": [],
         "hard_reject": false,
-        "matched": false,
+        "matched": true,
         "permit_path": "unclear",
         "provisional": false,
-        "reason": "The posting lists a generic Civil Engineering role in Dublin with no specific duties or required skills disclosed. While the title suggests a civil domain, the absence of detailed responsibilities (e.g., highways, roads, Civil 3D, alignment design) makes it uncertain whether it aligns with the candidate’s specialty. The location is Ireland, so relocation is possible but the role’s fit is unclear.",
+        "reason": "Strong civil-domain evidence, including transport infrastructure, highways, and civil engineering, aligns with the candidate's skills and experience.",
         "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 55,
-        "source": "ai-groq_primary",
+        "score": 92,
+        "source": "ai-cloudflare",
         "strengths": [
-          "generic civil engineering title",
-          "location in Ireland"
+          "civil engineering",
+          "highways",
+          "transport infrastructure",
+          "roads"
         ]
       },
       "company": "",
-      "content_hash": "628a39507b09dd4a39ec3855ba79be2aa4d7caf7a2e698f26c0bbb62612b582f",
+      "content_hash": "51f45e34b43c9075018c7b46893c3166f3b1eb72ba88ec8879f15e36ed9a32e3",
       "first_seen": "2026-10-06T19:44:00.098429+00:00",
       "identity_key": "c321b416aef4671db9054cee082272373630b2730c1a4fc08d70291e798addbe",
-      "last_seen": "2026-11-13T09:52:59.590639+00:00",
+      "last_seen": "2026-11-13T21:01:05.109879+00:00",
       "location": "Dublin, Ireland",
       "notified_at": "2026-10-08T09:21:24.424838+00:00",
       "notified_hash": "33ccaf5af7b1b12d759925f05bbe851a165658a2c569c8e983616ea774d57efa",
@@ -31724,6 +31786,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-13T09:53:50.007162+00:00",
+  "updated_at": "2026-11-13T21:01:17.694839+00:00",
   "version": 3
 }
