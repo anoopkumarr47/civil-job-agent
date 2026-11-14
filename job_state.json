@@ -641,6 +641,38 @@
       "title": "Principal Civil Engineer",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000151311870-principal-civil-engineer?oga=true"
     },
+    "04ddc0b371d7ad2152393b4d5498a0508519f3b2bde61b6b54c0b0aeaa3c3735": {
+      "assessment": {
+        "gaps": [
+          "Academic teaching experience",
+          "University teaching qualifications",
+          "Research publication record"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for an academic teaching position (Assistant Lecturer/Lecturer in Civil Engineering) at a university, which does not align with the candidate’s professional experience in highways, roads, and transport infrastructure design and construction. The role requires teaching and research duties rather than the civil‑engineering project work the candidate has performed. Therefore, the position is not a suitable match.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "51631cf335acc9fc41703eba0f570eaea63ca4efc1904d0ff935f6676d7509c7",
+      "first_seen": "2026-11-14T19:24:18.481270+00:00",
+      "identity_key": "04ddc0b371d7ad2152393b4d5498a0508519f3b2bde61b6b54c0b0aeaa3c3735",
+      "last_seen": "2026-11-14T19:24:18.481285+00:00",
+      "location": "Carlow, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "042765 – Assistant Lecturer/Lecturer in Civil Engineering (Permanent)",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-d4404a55c08e/candidate/so/pm/1/pl/3/opp/10591-042765-Assistant-Lecturer-Lecturer-in-Civil-Engineering-Permanent/en-GB"
+    },
     "050ab3167117dde6c2aa25f8bab8f0435cc0fd1a64ffd57a735a6c296582d581": {
       "assessment": {
         "gaps": [
@@ -3141,6 +3173,36 @@
       "source": "PublicJobs",
       "title": "Clerk of Works",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-b2ae0538b522/candidate/so/pm/1/pl/3/opp/10336-Clerk-of-Works/en-GB"
+    },
+    "1aa14c0257dd77842917abcbc4db14d0b784bb9ae932807b0fa63518fb16dc2d": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "civil_engineer",
+        "score": 92,
+        "source": "deterministic",
+        "strengths": [
+          "civil-domain evidence: civil engineer"
+        ]
+      },
+      "company": "",
+      "content_hash": "2979389af9a218b4ba5af5e4a4a6755675d4ebe772d841de0c9af94328db3602",
+      "first_seen": "2026-11-14T19:24:23.360494+00:00",
+      "identity_key": "1aa14c0257dd77842917abcbc4db14d0b784bb9ae932807b0fa63518fb16dc2d",
+      "last_seen": "2026-11-14T19:24:23.360496+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-14T19:24:29.540275+00:00",
+      "notified_hash": "2979389af9a218b4ba5af5e4a4a6755675d4ebe772d841de0c9af94328db3602",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Pravin Borde Civil Engineer | Civil Construction &…",
+      "url": "https://ae.linkedin.com/comm/in/pravin-borde-48469310b?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BYx1QxS9WSI6fuEtHxE0UVg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=3Ul1VBnw0Gqsw1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mwgqavei~2k-null-null&eid=uk2z7p-mwgqavei-2k&otpToken=OWMxY2JkYjlhNmVmZmU4OGJhODI5NzA0ZWJlNzhmOWE0NmQ5ZjY2ZTY2MjJiNWFiNmJmNWM2YjBhODk0ZDc4MWI0YzA2OTY4M2Y1MTE2ZTNmYTVmZWVmNDAzZjE0NzU1YjgzNTY1Y2I2M2JlNDMwNTZlMzVlYTI4OGYzNDAwNThkZmUyYzZhN2M4MTI0ZWM2NWYsMiwx"
     },
     "1ae47582aa322962d18e05c59d5aea3a2fb4beeff1847f32736035e78a318e2b": {
       "assessment": {
@@ -6011,6 +6073,37 @@
       "source": "PublicJobs",
       "title": "Network Management Support Engineer - Kerry County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/so/pm/1/pl/3/opp/8979-Network-Management-Support-Engineer-Kerry-County-Council/en-GB"
+    },
+    "30bf70bb38ea3a4fe1b9327b41b4a864be434845a32339d299165142eb96bf38": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "site_engineer",
+        "score": 98,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "civil-domain evidence: highway",
+          "highway"
+        ]
+      },
+      "company": "",
+      "content_hash": "d114e00fc716badf9467014911e144bbaa5b90371e6d3f3311edbcf864801b90",
+      "first_seen": "2026-11-14T19:24:26.845449+00:00",
+      "identity_key": "30bf70bb38ea3a4fe1b9327b41b4a864be434845a32339d299165142eb96bf38",
+      "last_seen": "2026-11-14T19:24:26.845460+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-14T19:24:29.540143+00:00",
+      "notified_hash": "d114e00fc716badf9467014911e144bbaa5b90371e6d3f3311edbcf864801b90",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Saniul Alam Site Engineer at National Highway…",
+      "url": "https://in.linkedin.com/comm/in/saniul-alam-188b5425?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BYx1QxS9WSI6fuEtHxE0UVg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=3Ul1VBnw0Gqsw1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mwgqavei~2k-null-null&eid=uk2z7p-mwgqavei-2k&otpToken=OWMxY2JkYjlhNmVmZmU4OGJhODI5NzA0ZWJlNzhmOWE0NmQ5ZjY2ZTY2MjJiNWFiNmJmNWM2YjBhODk0ZDc4MWI0YzA2OTY4M2Y1MTE2ZTNmYTVmZWVmNDAzZjE0NzU1YjgzNTY1Y2I2M2JlNDMwNTZlMzVlYTI4OGYzNDAwNThkZmUyYzZhN2M4MTI0ZWM2NWYsMiwx"
     },
     "31185ade7044710dc267c18fe45c8997fe16961d3221f4787ad2241bfeed715e": {
       "assessment": {
@@ -9590,6 +9683,37 @@
       "source": "JobsIreland",
       "title": "Job Details",
       "url": "https://jobsireland.ie/en-US/job-Details?id=2476956"
+    },
+    "51f58f0322081acf6984d004b86292364dac0981630e106bef5dea61f37970ca": {
+      "assessment": {
+        "gaps": [
+          "role is not related to civil engineering",
+          "lack of evidence of highways/roads/transport infrastructure experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The role is a Buildings Services Engineer, which is not a civil engineering role related to highways/roads/transport infrastructure.",
+        "relocation_fit": "low",
+        "role_family": "non_civil_engineering_role",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "278cb532bdb133e8d588e3c4c4ca7b79b00f2167cb25abcc530812a0cdac1ecc",
+      "first_seen": "2026-11-14T19:24:23.359382+00:00",
+      "identity_key": "51f58f0322081acf6984d004b86292364dac0981630e106bef5dea61f37970ca",
+      "last_seen": "2026-11-14T19:24:23.359399+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Buildings Services Engineer, Buildings & Estates, Grade 5, 1 FTE, Permanent",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-d4404a55c08e/candidate/so/pm/1/pl/3/opp/10500-Buildings-Services-Engineer-Buildings-Estates-Grade-5-1-FTE-Permanent/en-GB"
     },
     "521c2870c72e8e8e8925c697d5393867ded366a8c763d42afbee88b2774dd786": {
       "assessment": {
@@ -16059,6 +16183,36 @@
       "source": "PublicJobs",
       "title": "Road Safety Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/so/pm/1/pl/3/opp/9330-Road-Safety-Engineer/en-GB"
+    },
+    "8b63028b15d0d61e279d5ca5bcdd06bdf6bb78b9af03ec622c4fb1f2b4c19bfe": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "Fit combines verified civil-domain evidence, role/CV alignment and Ireland employment-permit feasibility.",
+        "relocation_fit": "high",
+        "role_family": "civil_engineer",
+        "score": 92,
+        "source": "deterministic",
+        "strengths": [
+          "civil-domain evidence: civil engineer"
+        ]
+      },
+      "company": "",
+      "content_hash": "a7df72b6465976817242beb3d889f950a02fd6e37beb5d9199cde42580e6b9af",
+      "first_seen": "2026-11-14T19:24:23.360827+00:00",
+      "identity_key": "8b63028b15d0d61e279d5ca5bcdd06bdf6bb78b9af03ec622c4fb1f2b4c19bfe",
+      "last_seen": "2026-11-14T19:24:23.360828+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-14T19:24:29.540223+00:00",
+      "notified_hash": "a7df72b6465976817242beb3d889f950a02fd6e37beb5d9199cde42580e6b9af",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Luana Viana Civil Engineer | Quality Engineer |…",
+      "url": "https://br.linkedin.com/comm/in/luanacviana?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BYx1QxS9WSI6fuEtHxE0UVg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=3Ul1VBnw0Gqsw1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mwgqavei~2k-null-null&eid=uk2z7p-mwgqavei-2k&otpToken=OWMxY2JkYjlhNmVmZmU4OGJhODI5NzA0ZWJlNzhmOWE0NmQ5ZjY2ZTY2MjJiNWFiNmJmNWM2YjBhODk0ZDc4MWI0YzA2OTY4M2Y1MTE2ZTNmYTVmZWVmNDAzZjE0NzU1YjgzNTY1Y2I2M2JlNDMwNTZlMzVlYTI4OGYzNDAwNThkZmUyYzZhN2M4MTI0ZWM2NWYsMiwx"
     },
     "8b890d728f2b5713b7ac1e6a443e2b22f8a9d67c896d5d7bb553c856a327e55d": {
       "assessment": {
@@ -31851,6 +32005,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-14T09:16:56.062083+00:00",
+  "updated_at": "2026-11-14T19:24:29.540278+00:00",
   "version": 3
 }
