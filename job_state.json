@@ -1624,6 +1624,45 @@
       "title": "Network Management Support Engineer - Kerry County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-56b68d2cd204/candidate/so/pm/1/pl/3/opp/8979-Network-Management-Support-Engineer-Kerry-County-Council/en-GB"
     },
+    "0a5f20a2fe16d62a48a1058c07e1e1469b5272bcd795992ae36eec33f06e57d1": {
+      "assessment": {
+        "gaps": [
+          "rail track alignment experience",
+          "OpenRoads proficiency",
+          "experience level exceeding 10+ years"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Candidate lacks specific rail track alignment experience required for the Track Alignment Engineer role; evidence focuses on highways and road design rather than rail infrastructure.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 60,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "civil engineering",
+          "highways",
+          "roads",
+          "civil 3d",
+          "road design",
+          "alignment design"
+        ]
+      },
+      "company": "",
+      "content_hash": "3e247fa3c29d2fcddeb32d890fd10ab1260fef2d8357a1dfd64572501b78d5df",
+      "first_seen": "2026-11-15T19:57:51.583446+00:00",
+      "identity_key": "0a5f20a2fe16d62a48a1058c07e1e1469b5272bcd795992ae36eec33f06e57d1",
+      "last_seen": "2026-11-15T19:57:51.583460+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Track Alignment Engineer (Design), Dammam",
+      "url": "https://www.systra.com/ireland/job-offers/track-alignment-engineer-design-dammam-en-8200"
+    },
     "0aacc5724f7b74c6c6edf9fa62470f03a542574a9a3f38ddccb1a9eb8f14bc02": {
       "assessment": {
         "gaps": [],
@@ -4690,6 +4729,36 @@
       "source": "PublicJobs",
       "title": "Regional Road Safety Engineer - Kerry County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-4b38affb8ff7/candidate/so/pm/1/pl/3/opp/6851-Regional-Road-Safety-Engineer-Kerry-County-Council/en-GB"
+    },
+    "23f6198fb99404a33c9a6e54e45980b6acc915954deab63061bfe1875464c6e0": {
+      "assessment": {
+        "gaps": [
+          "No evidence of civil engineering responsibilities (e.g., road design, Civil 3D, alignment design, DPRs, construction supervision of civil works)."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Buildings Services Engineer in the Buildings & Estates department, which focuses on building services rather than civil engineering infrastructure such as roads, highways, or transport projects. The duties and required skills do not align with the civil engineering domain specified in the user’s profile.",
+        "relocation_fit": "medium",
+        "role_family": "non_civil_engineering_role",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "278cb532bdb133e8d588e3c4c4ca7b79b00f2167cb25abcc530812a0cdac1ecc",
+      "first_seen": "2026-11-15T19:57:59.966034+00:00",
+      "identity_key": "23f6198fb99404a33c9a6e54e45980b6acc915954deab63061bfe1875464c6e0",
+      "last_seen": "2026-11-15T19:57:59.966047+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Buildings Services Engineer, Buildings & Estates, Grade 5, 1 FTE, Permanent",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-c54615bb28c3/candidate/so/pm/1/pl/3/opp/10500-Buildings-Services-Engineer-Buildings-Estates-Grade-5-1-FTE-Permanent/en-GB"
     },
     "2445945677851f96fbd39f42ea7c105319d112998a59219a85f89897f9149a3d": {
       "assessment": {
@@ -18201,6 +18270,41 @@
       "title": "Head of Operations Engineering",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-5a161798fdd4/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
+    "9913df39b4c872afe1dcd70a1a282fbeb231ca241dad65f38d0ac2d16e031db7": {
+      "assessment": {
+        "gaps": [
+          "potential lack of teaching experience",
+          "unclear about sponsorship"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "Role requires civil engineering expertise and has a permanent position, but may require additional qualifications for education sector.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_educator",
+        "score": 85,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil engineering",
+          "permanent role",
+          "education sector"
+        ]
+      },
+      "company": "",
+      "content_hash": "51631cf335acc9fc41703eba0f570eaea63ca4efc1904d0ff935f6676d7509c7",
+      "first_seen": "2026-11-15T19:57:55.397856+00:00",
+      "identity_key": "9913df39b4c872afe1dcd70a1a282fbeb231ca241dad65f38d0ac2d16e031db7",
+      "last_seen": "2026-11-15T19:57:55.397871+00:00",
+      "location": "Carlow, Ireland",
+      "notified_at": "2026-11-15T19:58:02.000305+00:00",
+      "notified_hash": "51631cf335acc9fc41703eba0f570eaea63ca4efc1904d0ff935f6676d7509c7",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "042765 – Assistant Lecturer/Lecturer in Civil Engineering (Permanent)",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-c54615bb28c3/candidate/so/pm/1/pl/3/opp/10591-042765-Assistant-Lecturer-Lecturer-in-Civil-Engineering-Permanent/en-GB"
+    },
     "99150bb88e92bdd07018f0c9a30dadcdaeb83e5cfef365f68c2e6687df47f3bb": {
       "assessment": {
         "gaps": [
@@ -22074,7 +22178,7 @@
       "content_hash": "8e55f75168f48ed5bcbd49d8f4818ce71a19035ef70cacca5f9e33254099a9a4",
       "first_seen": "2026-10-29T19:51:09.709785+00:00",
       "identity_key": "b3bc952bad2612ce66bde19dc3da4e5e35432543935a3f59e1526cce1368c74a",
-      "last_seen": "2026-11-09T10:04:31.439009+00:00",
+      "last_seen": "2026-11-15T19:57:44.065438+00:00",
       "location": "Dublin, Dublin, Ireland, Cork, Ireland, Galway, Galway, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -29391,7 +29495,7 @@
       "content_hash": "dd98be9f17bf5c31e586ba884f9df9b8c5c5587c2c52d27a5622e4af0fb84dcf",
       "first_seen": "2026-10-29T19:51:01.149622+00:00",
       "identity_key": "ebbf21b4a16f02a9dcb5ea1f33745346f4e9220ea85b614774db53fa9009f0ff",
-      "last_seen": "2026-11-09T10:04:31.438824+00:00",
+      "last_seen": "2026-11-15T19:57:44.065202+00:00",
       "location": "Dublin, Dublin, Ireland, Cork, Ireland, Galway, Galway, Ireland, dundalk, Louth, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -32070,6 +32174,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-15T09:45:43.221660+00:00",
+  "updated_at": "2026-11-15T19:58:02.000326+00:00",
   "version": 3
 }
