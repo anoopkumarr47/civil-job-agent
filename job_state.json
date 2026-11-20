@@ -1488,7 +1488,7 @@
       "content_hash": "c2807b157d024714c52c8845db5cfa95133f4f4a80a59a659daf32fa85cdf871",
       "first_seen": "2026-11-12T21:35:39.681415+00:00",
       "identity_key": "08ba0c99bd0f106199abe0ab7f48dd77a8acec2f673237cda656efd0f01ff434",
-      "last_seen": "2026-11-16T10:03:32.270393+00:00",
+      "last_seen": "2026-11-20T21:59:50.659075+00:00",
       "location": "Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -4299,6 +4299,37 @@
       "source": "PublicJobs",
       "title": "Senior Engineer - Kilkenny County Council",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-831310ea11b0/candidate/so/pm/1/pl/3/opp/5280-Senior-Engineer-Kilkenny-County-Council/en-GB"
+    },
+    "1f8ba20c16f337e74e1a26cd792f936c5d411bd668a5d8872bdca9ba2594af93": {
+      "assessment": {
+        "gaps": [
+          "lack of specific job details",
+          "Chartered status mentioned, potentially mandatory"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy text is incomplete and lacks specific details about the job requirements and duties, making it difficult to determine a match.",
+        "relocation_fit": "low",
+        "role_family": "engineer",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "e2f7363dd42475ef49edf316ea754f22735a242f64b5c1782af3c07f5e08f585",
+      "first_seen": "2026-11-20T21:59:53.461334+00:00",
+      "identity_key": "1f8ba20c16f337e74e1a26cd792f936c5d411bd668a5d8872bdca9ba2594af93",
+      "last_seen": "2026-11-20T21:59:53.461344+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Suggested for you Nagabhushan Moudgalya C R CEng MICE I Senior Engineer at Tony Gee and Partners Follow I’m delighted to share that I’ve successfully passed my Chartered Professional Review with the Institution of… see m",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7526990572415520768?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7526990572415520768&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3B6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=27lA5X0IPJyIw1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mwpaxyde~ex-null-null&eid=uk2z7p-mwpaxyde-ex&otpToken=OTU1ZTUwZTFkNmRhMDZmNDI5M2U4OTUyYmRjMTg5OTg0M2U4YmI3Y2VjOTZiMzBhYjZiMDBkZjNlOTE1MmY1N2Q0NjY0ZWU2YTQ2NTg0YWNhYzk5MDE1ZWU3MzBhMTg5ZTgwZmZlOTdhYTcyMjhlZTgzMjMyZmJkOWQ2ODZkYTA5YTliNWNjNjhkMjI0ZmQ4NGYsMiwx"
     },
     "1fbda7a6a6aa54e68c9f62e2ea7a4c7012c967edaf7c097dd6f6478c2c7afbe4": {
       "assessment": {
@@ -15468,6 +15499,36 @@
       "title": "Head of Operations Engineering",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f3cc50c7b103/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
+    "7ae0c8bf3a1a29a2645994e65f0fd356b46062356c7e5a190de00e26b8c75f82": {
+      "assessment": {
+        "gaps": [
+          "absence of civil engineering responsibilities in the vacancy description"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "No explicit evidence of civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision. The title suggests a rail role, which does not meet the required civil domain criteria.",
+        "relocation_fit": "medium",
+        "role_family": "rail_engineer",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "cdc49f53a912d3331281d6e58d5c3fef3c97b02a0ac2238c65a6ae4ea0c0878d",
+      "first_seen": "2026-11-20T22:00:07.647212+00:00",
+      "identity_key": "7ae0c8bf3a1a29a2645994e65f0fd356b46062356c7e5a190de00e26b8c75f82",
+      "last_seen": "2026-11-20T22:00:07.647225+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Joe Walsh Snr Assistant Engineer - Irish Rail",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7527049010969227266?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7527049010969227266&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3B6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=27lA5X0IPJyIw1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mwpaxyde~ex-null-null&eid=uk2z7p-mwpaxyde-ex&otpToken=OTU1ZTUwZTFkNmRhMDZmNDI5M2U4OTUyYmRjMTg5OTg0M2U4YmI3Y2VjOTZiMzBhYjZiMDBkZjNlOTE1MmY1N2Q0NjY0ZWU2YTQ2NTg0YWNhYzk5MDE1ZWU3MzBhMTg5ZTgwZmZlOTdhYTcyMjhlZTgzMjMyZmJkOWQ2ODZkYTA5YTliNWNjNjhkMjI0ZmQ4NGYsMiwx"
+    },
     "7b8c1bc0c1b027a10a057de6a5c5a4e0ed4fcd5f5973885caeef17b6da6af07a": {
       "assessment": {
         "gaps": [
@@ -17394,6 +17455,39 @@
       "title": "Host Railway Engineer – ALTO",
       "url": "https://www.systra.com/ireland/job-offers/host-railway-engineer-alto-en-10334"
     },
+    "8a0c5d676961efd8cc0585170cdfc8ddcb61665052943ab340db2d5bdfc19051": {
+      "assessment": {
+        "gaps": [
+          "civil engineering experience",
+          "highway/road design",
+          "Civil 3D/AutoCAD usage",
+          "transport infrastructure duties"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy is for a Principal Fire Engineer, which is a fire safety/engineering role and does not involve civil engineering, roads, highways, or transport infrastructure. It lacks any civil-domain evidence required for a civil infrastructure engineer position.",
+        "relocation_fit": "low",
+        "role_family": "fire_engineering",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "d99e964640f44ba546ecad519367ed29841a961b00d5d8d8b7c93ba27a8df327",
+      "first_seen": "2026-11-20T21:59:33.852582+00:00",
+      "identity_key": "8a0c5d676961efd8cc0585170cdfc8ddcb61665052943ab340db2d5bdfc19051",
+      "last_seen": "2026-11-20T21:59:33.852595+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Principal Fire Engineer",
+      "url": "https://www.systra.com/ireland/job-offers/senior-principal-fire-engineer-en-8040"
+    },
     "8a2292057115ee01eceeb53ded9d2fb25f32d704833ea203fe703026f0b127c3": {
       "assessment": {
         "gaps": [
@@ -18790,6 +18884,36 @@
       "source": "SYSTRA",
       "title": "Structural Bridge Engineer",
       "url": "https://www.systra.com/ireland/job-offers/structural-bridge-engineer-en-7932"
+    },
+    "9459b12e256ccfc5cddf5b1485a4ae2e0e29bc689f4d3bbb69ffea99a4720a41": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities or tools mentioned; unclear if role involves infrastructure work"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title is generic and the job description does not provide any evidence of civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision. Therefore it cannot be confidently matched to the required civil engineering profile.",
+        "relocation_fit": "medium",
+        "role_family": "assistant_engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "f1f99284426742a937ed75a2a30c15adc61fec01cde9bf55dff344ed0c7f32db",
+      "first_seen": "2026-11-20T21:59:50.658862+00:00",
+      "identity_key": "9459b12e256ccfc5cddf5b1485a4ae2e0e29bc689f4d3bbb69ffea99a4720a41",
+      "last_seen": "2026-11-20T21:59:50.658876+00:00",
+      "location": "Meath, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-9af8037cc465/candidate/so/pm/1/pl/3/opp/10645-Assistant-Engineer/en-GB"
     },
     "948b8e3b189bdafd47cebbe7e2190cafa635ed3a3979a6d6294b4b3eaf8f794b": {
       "assessment": {
@@ -24162,6 +24286,36 @@
       "source": "LinkedIn",
       "title": "Site Engineer",
       "url": "https://www.linkedin.com/comm/widgets/promo?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BHJeaNT06QC21SYC%2BSgHFvA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1AzvoQFb89fYs1&trkEmail=eml-email_pymk_02-widget~promo~v1-0-footer~link-null-uk2z7p~muczyool~7w-null-null&eid=uk2z7p-muczyool-7w&otpToken=MjIxMDQ3ZjI4MjQyNmU1YjNiYTM1MzE3MzdhMGU5NDUwYWVkOWY1M2RhNDdmY2FiZTZlYmUyY2UzZjNkMjhiOGJkMDBmMzg5NzcwMDExZTEwODk3MzdjMDk5OTAzZWFmYmNlNGU2Mzg5MGM1NGUxMTBmMGM5NTA3ZGU3MjUwMWUwYmY5MTdkMDk1M2ViM2YzZjAsMiwx"
+    },
+    "b548c250b945da6a4722b4a106a760ed192b0c8c523d243fb81a72540f5c9b59": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities (highways/roads/transport), no mention of Civil 3D/AutoCAD, alignment design, DPRs, BOQ, QA/QC, or site supervision."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is for a Senior Project Manager overseeing education construction projects, with no explicit civil engineering duties such as highways, roads, or transport infrastructure. The role focuses on project delivery, procurement, and contract management rather than civil design or construction expertise. Therefore it does not match the required civil engineering profile.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "AECOM",
+      "content_hash": "570a97e9333b1ec4c788fd89f204a8ac8c447112ddb6c8537323903bf6b7f763",
+      "first_seen": "2026-11-20T21:59:42.299694+00:00",
+      "identity_key": "b548c250b945da6a4722b4a106a760ed192b0c8c523d243fb81a72540f5c9b59",
+      "last_seen": "2026-11-20T21:59:42.299706+00:00",
+      "location": "Dublin, 1 BURLINGTON PLAZA, ie",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "AECOM",
+      "title": "Senior Project Manager",
+      "url": "https://jobs.smartrecruiters.com/AECOM2/744000162750869-senior-project-manager?oga=true"
     },
     "b5a674b781d2ae9ed1e6b8764d53763d80e7d5b07d01758c192cd2d749a4537b": {
       "assessment": {
@@ -30239,6 +30393,39 @@
       "title": "Assistant Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-f7c5853460c7/candidate/so/pm/1/pl/3/opp/9489-Assistant-Engineer/en-GB"
     },
+    "e0ac1e334654c15c988ae50719f83378e02cb8f80d5e299b3089c67179fab8f1": {
+      "assessment": {
+        "gaps": [
+          "lack of explicit mention of highways/roads, Civil 3D, or AutoCAD"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "critical_skills",
+        "provisional": false,
+        "reason": "The role is a senior assistant engineer position at Irish Rail, which is a transport infrastructure company, and the job title suggests a strong civil engineering component.",
+        "relocation_fit": "high",
+        "role_family": "rail_civil_engineer",
+        "score": 80,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "rail transport infrastructure",
+          "senior role"
+        ]
+      },
+      "company": "",
+      "content_hash": "c2dda6219b40f2af9499fdef95c4f1e635fd2723ba7076fe27a0fb289964af44",
+      "first_seen": "2026-11-20T22:00:03.000733+00:00",
+      "identity_key": "e0ac1e334654c15c988ae50719f83378e02cb8f80d5e299b3089c67179fab8f1",
+      "last_seen": "2026-11-20T22:00:03.000746+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-20T22:00:09.101521+00:00",
+      "notified_hash": "c2dda6219b40f2af9499fdef95c4f1e635fd2723ba7076fe27a0fb289964af44",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Suggested for you Joe Walsh Snr Assistant Engineer - Irish Rail Follow In early September I reached the 25-year milestone of working for Iarnród Éireann/Irish Rail. In October, I… see more 153 · 44 Comments Read more",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7527049010969227266?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7527049010969227266&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3B6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=27lA5X0IPJyIw1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mwpaxyde~ex-null-null&eid=uk2z7p-mwpaxyde-ex&otpToken=OTU1ZTUwZTFkNmRhMDZmNDI5M2U4OTUyYmRjMTg5OTg0M2U4YmI3Y2VjOTZiMzBhYjZiMDBkZjNlOTE1MmY1N2Q0NjY0ZWU2YTQ2NTg0YWNhYzk5MDE1ZWU3MzBhMTg5ZTgwZmZlOTdhYTcyMjhlZTgzMjMyZmJkOWQ2ODZkYTA5YTliNWNjNjhkMjI0ZmQ4NGYsMiwx"
+    },
     "e110a84013ca3044e6daa1268c74a475c131cf69d501fc20884d8cbd08698cef": {
       "assessment": {
         "gaps": [
@@ -30570,6 +30757,38 @@
       "source": "LinkedIn",
       "title": "Jenn Dinan BSc Science and Engineering Talent Expert…",
       "url": "https://ie.linkedin.com/comm/in/jenn-dinan-bsc-46b2902b?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3Bp76znvgBRsK%2FcgsOvuM%2FkQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1V52F47_q4Mcs1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mv9w0rb2~uy-null-null&eid=uk2z7p-mv9w0rb2-uy&otpToken=NjI4MjFhMmVhY2IyNGU2MTZkZTg0MTNlODAyMDRhY2E2NDk2M2JjNGRhMmQyNGI5YjlmYzg1YTA5M2UxNzgxN2RkYTk4MDVmZGY4MjM0NTVjZWJmNmIwNmVmYzNhNzU2ZDg1ODI3NzAwNDc5MzFkYmRlMmQ0NmI4ZGFkNzQ4ZTE2Mjk1MzZjMWM2MjUyMzQyMWMsMiwx"
+    },
+    "e38473561fe014adf091cc89d0889eb5a0ab6e54fb56d53eb194aba6b810c926": {
+      "assessment": {
+        "gaps": [
+          "lack of explicit civil engineering duties",
+          "Chartered status may be required",
+          "no clear evidence of highways/roads/transport infrastructure experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The role is a project management position with no explicit civil engineering duties, and the company description is too broad to confirm a strong civil engineering focus.",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "AECOM",
+      "content_hash": "9bbf1d914da69d2f375725122bb73608992ab1db82485188d7d0df856676512c",
+      "first_seen": "2026-11-20T21:59:45.957939+00:00",
+      "identity_key": "e38473561fe014adf091cc89d0889eb5a0ab6e54fb56d53eb194aba6b810c926",
+      "last_seen": "2026-11-20T21:59:45.957951+00:00",
+      "location": "Cork, ie",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "AECOM",
+      "title": "Senior Project Manager",
+      "url": "https://jobs.smartrecruiters.com/AECOM2/744000162714619-senior-project-manager?oga=true"
     },
     "e38f331dca0d93258f836a1c602b38faf52a60a6844350a84e22e630133d870a": {
       "assessment": {
@@ -31208,27 +31427,34 @@
     "e8a317d00db804880231239441560c5a1d24bb5197c51248328bbc7359567094": {
       "assessment": {
         "gaps": [
-          "No explicit civil engineering responsibilities or tools listed; generic survey role; no mention of road/highway or transport infrastructure tasks."
+          "explicit highway/road design experience",
+          "specific mention of Civil 3D/AutoCAD skills"
         ],
         "hard_reject": false,
-        "matched": false,
-        "permit_path": "not_eligible",
+        "matched": true,
+        "permit_path": "unclear",
         "provisional": false,
-        "reason": "The vacancy title and provided evidence do not contain sufficient civil‑engineering specific duties or qualifications (e.g., road/highway design, Civil 3D, alignment work). The role appears generic and lacks the required civil‑infrastructure evidence, making it ineligible for this assessment.",
-        "relocation_fit": "low",
+        "reason": "Fit combines verified civil-domain evidence and role/CV alignment, despite lack of explicit highway/road design experience in the job description.",
+        "relocation_fit": "medium",
         "role_family": "civil_infrastructure_engineer",
-        "score": 0,
-        "source": "ai-groq_primary",
-        "strengths": []
+        "score": 90,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "civil engineering",
+          "highways and drainage",
+          "infrastructure engineering",
+          "civil engineering services",
+          "drainage & flood risk"
+        ]
       },
       "company": "",
-      "content_hash": "14f990cc9f3d38dfe5b07ec76a72ad547bb879c8723a729115e85a664b5003d5",
+      "content_hash": "a948fd402fcc00bc94b612d553f5ab7456f30784592b97f9cadf90263aa8d952",
       "first_seen": "2026-10-16T18:21:11.972151+00:00",
       "identity_key": "e8a317d00db804880231239441560c5a1d24bb5197c51248328bbc7359567094",
-      "last_seen": "2026-10-16T18:21:11.972169+00:00",
+      "last_seen": "2026-11-20T21:59:37.707893+00:00",
       "location": "Ireland",
-      "notified_at": null,
-      "notified_hash": null,
+      "notified_at": "2026-11-20T22:00:09.101251+00:00",
+      "notified_hash": "a948fd402fcc00bc94b612d553f5ab7456f30784592b97f9cadf90263aa8d952",
       "policy_version": "2026-09-14.3",
       "profile_version": "2026-09-14.2",
       "source": "SYSTRA",
@@ -32119,6 +32345,36 @@
       "source": "AECOM",
       "title": "Senior Civil Engineer – Renewables & Transmission & Distribution",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000158477678-senior-civil-engineer-renewables-transmission-distribution?oga=true"
+    },
+    "eceab164dea5e3abd5309ad2b341b203aeb19b3c19ec0e2196608d4e3296c63e": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering duties or tools mentioned; generic engineer title only"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The job title and description lack explicit civil engineering responsibilities such as roads, highways, transport infrastructure, Civil 3D/AutoCAD usage, or construction site supervision. No evidence of relevant civil domain skills or duties is present, making it unlikely to match the required civil engineering profile.",
+        "relocation_fit": "low",
+        "role_family": "engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "2e375e2afec779bc5076cd1480e23c8d7751b395d495d783c5253052691a82b0",
+      "first_seen": "2026-11-20T21:59:59.116449+00:00",
+      "identity_key": "eceab164dea5e3abd5309ad2b341b203aeb19b3c19ec0e2196608d4e3296c63e",
+      "last_seen": "2026-11-20T21:59:59.116462+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Nagabhushan Moudgalya C R CEng MICE I Senior Engineer at Tony Gee and Partners",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7526990572415520768?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7526990572415520768&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3B6Gx%2B4LWmTjeQSSgHyqR3Eg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=27lA5X0IPJyIw1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mwpaxyde~ex-null-null&eid=uk2z7p-mwpaxyde-ex&otpToken=OTU1ZTUwZTFkNmRhMDZmNDI5M2U4OTUyYmRjMTg5OTg0M2U4YmI3Y2VjOTZiMzBhYjZiMDBkZjNlOTE1MmY1N2Q0NjY0ZWU2YTQ2NTg0YWNhYzk5MDE1ZWU3MzBhMTg5ZTgwZmZlOTdhYTcyMjhlZTgzMjMyZmJkOWQ2ODZkYTA5YTliNWNjNjhkMjI0ZmQ4NGYsMiwx"
     },
     "ed125ee1a7b6f56ee85e312bd99c10ee54357658e8f6df15544e17f3c7fe4290": {
       "assessment": {
@@ -34721,6 +34977,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-20T10:19:34.726432+00:00",
+  "updated_at": "2026-11-20T22:00:09.101527+00:00",
   "version": 3
 }
