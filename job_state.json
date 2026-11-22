@@ -2770,10 +2770,10 @@
         ]
       },
       "company": "",
-      "content_hash": "f34a6b898381e4b135177915374b44adb75c64c338a3eb83cd6d25e5b5b11bcc",
+      "content_hash": "ca42b0cf019fe5113709a6ce23e26cd45de2658c21fa893c8db765b0ebc9189b",
       "first_seen": "2026-11-22T10:04:29.989918+00:00",
       "identity_key": "12ab2b68cb1c107d1b63180d404c56fd791273d288db7f88aa4322463bb56d6d",
-      "last_seen": "2026-11-22T10:04:29.989923+00:00",
+      "last_seen": "2026-11-22T20:52:16.064791+00:00",
       "location": "Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -16232,6 +16232,36 @@
       "title": "Executive Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-885d703fec5a/candidate/so/pm/1/pl/3/opp/8904-Executive-Engineer/en-GB"
     },
+    "7f2c8f5c9f6ddfab1ee37baf8b4a3596c186c85c39daa64c3777382934ea9fee": {
+      "assessment": {
+        "gaps": [
+          "No explicit civil engineering duties or tools mentioned; lack of detail on alignment design, DPRs, or construction supervision."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title is generic and the job description does not provide sufficient evidence of civil engineering responsibilities such as roads, highways, or Civil 3D usage. Therefore it is unclear whether the role aligns with the required civil domain.",
+        "relocation_fit": "medium",
+        "role_family": "assistant_engineer",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "154ace7d7005f308132a53530f965bcef186581f49a2423620d17dcb69b08dd4",
+      "first_seen": "2026-11-22T20:52:21.395794+00:00",
+      "identity_key": "7f2c8f5c9f6ddfab1ee37baf8b4a3596c186c85c39daa64c3777382934ea9fee",
+      "last_seen": "2026-11-22T20:52:21.395807+00:00",
+      "location": "Roscommon, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-96a47ac2a538/candidate/so/pm/1/pl/3/opp/10732-Assistant-Engineer/en-GB"
+    },
     "7f5f45c92c9e3295812904818496c64851164c1c768b172e52da1b353136d931": {
       "assessment": {
         "gaps": [
@@ -23521,6 +23551,36 @@
       "title": "Rohit pastor Project Manager | Geotechnical Engineering Specialist…",
       "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7516484067484200960?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7516484067484200960&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3Bf%2FDJRS1oQN%2BSJnRJww1avg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2hCGgQmSMGUIs1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mvifqehm~nu-null-null&eid=uk2z7p-mvifqehm-nu&otpToken=YWE4YThiODE4MmExOGNlZTU5ZjQxNWJmNjU1ZWIyZDIzOGYxZTkyYTRmNGEzNjgxNTNhMTkxN2YwZmVlODMxMmIwYzcxMDNhNzdkNDVhZjBkMjBhYWRlNjkzMWI2ODcxOTlkYjIxNmYzODY4ODdkYzNiNzI2YThlNGM2ZjY5NGQyNjk5MGJjYjdiNmQ2Mjk3ZjcsMiwx"
     },
+    "adcfa8af5f77038de5bc82d873ee9d30f6cd47ee4fb4b6512854de3040fff437": {
+      "assessment": {
+        "gaps": [
+          "No mention of civil engineering responsibilities or tools (Civil 3D, AutoCAD, alignment design, DPRs, BOQ, QA/QC, site supervision)."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description lack explicit civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision. No evidence of required civil domain skills is present.",
+        "relocation_fit": "medium",
+        "role_family": "assistant_engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "f1f99284426742a937ed75a2a30c15adc61fec01cde9bf55dff344ed0c7f32db",
+      "first_seen": "2026-11-22T20:52:29.846662+00:00",
+      "identity_key": "adcfa8af5f77038de5bc82d873ee9d30f6cd47ee4fb4b6512854de3040fff437",
+      "last_seen": "2026-11-22T20:52:29.846676+00:00",
+      "location": "Meath, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-96a47ac2a538/candidate/so/pm/1/pl/3/opp/10645-Assistant-Engineer/en-GB"
+    },
     "ae3076cafb4bef0582eeadf336a60a6eddf2632c610003bf0b05a7f55c94e060": {
       "assessment": {
         "gaps": [
@@ -30296,6 +30356,36 @@
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ca3d91dd4f76/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
+    "dd2ff2813b2b60e14791cdd4c7bd233aad96e5819e0110e4e9f58bfb8321315c": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering duties or tools mentioned; role is IT/engineering integration rather than civil infrastructure."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description focus on systems integration and digital solutions rather than civil engineering tasks such as highway/road design, Civil 3D, AutoCAD, alignment design, DPRs, construction supervision, QA/QC, or contractor coordination. No evidence of civil‑engineering responsibilities is present, so it does not match the required civil domain. The role is therefore not eligible for a civil engineer with the specified background.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 10,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "7ddb228d7147e31c5dbc2ec5a8368caf5bece1adbb4dac2e5eae83ae7f3562d2",
+      "first_seen": "2026-11-22T20:52:13.036888+00:00",
+      "identity_key": "dd2ff2813b2b60e14791cdd4c7bd233aad96e5819e0110e4e9f58bfb8321315c",
+      "last_seen": "2026-11-22T20:52:13.036902+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Systems Integration Engineer (Saudi National)",
+      "url": "https://www.systra.com/ireland/job-offers/power-supply-engineer-saudi-national-en-11708"
+    },
     "dd40870a87e6d585d73cc6d24f09ed7dc6421581ff90c1b2fc7a8b6f97a8fc50": {
       "assessment": {
         "gaps": [
@@ -34763,6 +34853,40 @@
       "title": "Head of Operations Engineering",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-36fa44f7e873/candidate/so/pm/1/pl/3/opp/8970-Head-of-Operations-Engineering/en-GB"
     },
+    "fa5bb289e3a2ad0add037e5fe564ff3a155abdb776f9ceed6b9fa97806184b90": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit; AI review required",
+          "lack of specific mention of highways/roads/transport infrastructure"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The role is a construction project manager which is closely related to civil engineering and may involve highways/roads/transport infrastructure, but the vacancy does not provide enough evidence to confirm this.",
+        "relocation_fit": "medium",
+        "role_family": "construction_project_manager",
+        "score": 80,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "construction project management",
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "f1e4aa098db1d8f1c7b16b3aaf5552bc4807d35cea679b85a0fabd3bb2a3864d",
+      "first_seen": "2026-11-22T20:52:27.979352+00:00",
+      "identity_key": "fa5bb289e3a2ad0add037e5fe564ff3a155abdb776f9ceed6b9fa97806184b90",
+      "last_seen": "2026-11-22T20:52:27.979367+00:00",
+      "location": "Longford, Ireland",
+      "notified_at": "2026-11-22T20:52:31.224173+00:00",
+      "notified_hash": "f1e4aa098db1d8f1c7b16b3aaf5552bc4807d35cea679b85a0fabd3bb2a3864d",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Executive Construction Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-96a47ac2a538/candidate/so/pm/1/pl/3/opp/10857-Executive-Construction-Project-Manager/en-GB"
+    },
     "faaba3af50e9d4076e4fbad5656548fc66e448ec56d0b182974c1503c7896f67": {
       "assessment": {
         "gaps": [
@@ -35514,6 +35638,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-22T10:04:49.634626+00:00",
+  "updated_at": "2026-11-22T20:52:31.224191+00:00",
   "version": 3
 }
