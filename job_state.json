@@ -1934,6 +1934,36 @@
       "title": "Senior Water Engineer",
       "url": "https://jobs.arup.com/jobs/senior-water-engineer-33464"
     },
+    "0c2423cc3986a9ec206bf5731e67f50b532ef51e8bf15d7931604716ca408520": {
+      "assessment": {
+        "gaps": [
+          "No explicit civil engineering tasks or tools mentioned; generic description; no evidence of required civil domain skills."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy description lacks specific civil engineering duties such as highway/road design, Civil 3D/AutoCAD usage, alignment design, DPRs, BOQ, construction supervision, QA/QC, or transport infrastructure responsibilities. The title alone does not provide sufficient evidence of a civil engineering role, and the content is largely generic and unrelated to the required civil domain. Consequently, it does not meet the criteria for a civil engineering position for an India-based B.Tech Civil Engineer with 6.5+ years of experience.",
+        "relocation_fit": "low",
+        "role_family": "resident_engineer",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "29c1cd2df516ba57afe81eca8c5f04ad343423f994601bc738a7b77aed0bc5cb",
+      "first_seen": "2026-11-24T12:50:07.159103+00:00",
+      "identity_key": "0c2423cc3986a9ec206bf5731e67f50b532ef51e8bf15d7931604716ca408520",
+      "last_seen": "2026-11-24T12:50:07.159121+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Resident Engineer (Tracks), Dammam",
+      "url": "https://www.systra.com/ireland/job-offers/resident-engineer-tracks-dammam-en-8453"
+    },
     "0c3924c967df4343d2e0a934853140e525a0b4523c85ea4452fada9abb407fd1": {
       "assessment": {
         "gaps": [],
@@ -6737,6 +6767,37 @@
       "title": "Project Manager – Light Rail",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-ffdde892db61/candidate/so/pm/1/pl/3/opp/9689-Project-Manager-Light-Rail/en-GB"
     },
+    "2cb5f65c0c922f33e2ea1a42ce5706c1f47b70a6b2d501c67dfa550b6a179170": {
+      "assessment": {
+        "gaps": [
+          "lack of civil-domain evidence",
+          "mismatched job title and required skills"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The job title 'Engineer- Telecom' and the provided evidence do not match the required civil infrastructure engineering role, with a focus on highways/roads/transport infrastructure, Civil 3D, AutoCAD, and other relevant skills.",
+        "relocation_fit": "low",
+        "role_family": "not_civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "b0fd136a113ef01a79294e20a00fe809019d0d40c4454fcca876be5f46eae853",
+      "first_seen": "2026-11-24T12:50:11.706729+00:00",
+      "identity_key": "2cb5f65c0c922f33e2ea1a42ce5706c1f47b70a6b2d501c67dfa550b6a179170",
+      "last_seen": "2026-11-24T12:50:11.706741+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Engineer- Telecom",
+      "url": "https://www.systra.com/ireland/job-offers/engineer-telecom-en-11873"
+    },
     "2d1ca0765d1266fb07bf973940f12b799e4d1558e98fe76fede2869da141706f": {
       "assessment": {
         "gaps": [
@@ -7131,6 +7192,37 @@
       "source": "AECOM",
       "title": "Associate: Project Manager",
       "url": "https://jobs.smartrecruiters.com/AECOM2/744000151783865-associate-project-manager?oga=true"
+    },
+    "3146cd23a90d64d587e0a3a8e0bd4655cf343094e56e55d8a5e619958494b9f0": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of evidence of civil engineering duties"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title is not explicitly civil and the job description lacks evidence of civil engineering duties",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 20,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "d0977d99367f382aaf596ac0984df81ea0eeac164eb4c643f87c3dc64e772054",
+      "first_seen": "2026-11-24T12:50:18.875764+00:00",
+      "identity_key": "3146cd23a90d64d587e0a3a8e0bd4655cf343094e56e55d8a5e619958494b9f0",
+      "last_seen": "2026-11-24T12:50:18.875781+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Project Manager - Turas, Grade 5, 1 FTE, SPC, 012047",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1f0ed9e98739/candidate/so/pm/1/pl/3/opp/10839-Project-Manager-Turas-Grade-5-1-FTE-SPC-012047/en-GB"
     },
     "31661aa1b7ae361c7ec2c01cfbadd3c4c673b65384da323baff6f8bb528ad401": {
       "assessment": {
@@ -11748,6 +11840,40 @@
       "title": "Project Manager - BlueMission Atlantic and Arctic 2030",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-423dd989250d/candidate/so/pm/1/pl/3/opp/9304-Project-Manager-BlueMission-Atlantic-and-Arctic-2030/en-GB"
     },
+    "5bef4baab2d7b6d5b9ab147fb1025f5f6fc68e221753cd23a22666eb5aaec05f": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of information on specific civil engineering duties"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The role involves construction project management which is relevant to civil engineering, but the vacancy does not provide enough evidence to confirm the permit path.",
+        "relocation_fit": "medium",
+        "role_family": "construction_project_manager",
+        "score": 80,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "construction project management",
+          "permanent role"
+        ]
+      },
+      "company": "",
+      "content_hash": "f1e4aa098db1d8f1c7b16b3aaf5552bc4807d35cea679b85a0fabd3bb2a3864d",
+      "first_seen": "2026-11-24T12:50:27.580456+00:00",
+      "identity_key": "5bef4baab2d7b6d5b9ab147fb1025f5f6fc68e221753cd23a22666eb5aaec05f",
+      "last_seen": "2026-11-24T12:50:27.580473+00:00",
+      "location": "Longford, Ireland",
+      "notified_at": "2026-11-24T12:50:29.559010+00:00",
+      "notified_hash": "f1e4aa098db1d8f1c7b16b3aaf5552bc4807d35cea679b85a0fabd3bb2a3864d",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Executive Construction Project Manager",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1f0ed9e98739/candidate/so/pm/1/pl/3/opp/10857-Executive-Construction-Project-Manager/en-GB"
+    },
     "5c305feb7e6231549585c8eb9845bed8dbb273ed822b837701e5b10c4b539b77": {
       "assessment": {
         "gaps": [
@@ -14006,6 +14132,43 @@
       "source": "SYSTRA",
       "title": "Mechanical and HVAC Engineer",
       "url": "https://www.systra.com/ireland/job-offers/mechanical-and-hvac-engineer-en-9259"
+    },
+    "6d397080ed9396dc8488862ef1d08d5aee7cd7922000d23ff44d7e6d8b796515": {
+      "assessment": {
+        "gaps": [
+          "No explicit mention of civil design tools or road/highway design experience",
+          "No clear requirement for civil engineering degree or specific civil project experience",
+          "Permit eligibility not specified"
+        ],
+        "hard_reject": false,
+        "matched": true,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is for a senior QA/QC Engineer within SYSTRA Ireland, a firm that provides civil engineering services including highways, drainage, and infrastructure projects. The role description references civil engineering, infrastructure engineering, and QA/QC responsibilities typical of civil projects, indicating a strong civil domain fit. However, the job posting does not explicitly state the need for a civil engineering background or mention specific civil design tools (e.g., Civil 3D, AutoCAD) or road/highway design experience, so the permit eligibility remains unclear.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 90,
+        "source": "ai-groq_primary",
+        "strengths": [
+          "QA/QC responsibilities in civil projects",
+          "mentions civil engineering and infrastructure services",
+          "includes highways, drainage, and transport infrastructure",
+          "senior level indicates experience requirement"
+        ]
+      },
+      "company": "",
+      "content_hash": "7210990432aa751d0d99cfc76c2cfea8a771ca99397b1803deb6db9f17a83a54",
+      "first_seen": "2026-11-24T12:50:15.698443+00:00",
+      "identity_key": "6d397080ed9396dc8488862ef1d08d5aee7cd7922000d23ff44d7e6d8b796515",
+      "last_seen": "2026-11-24T12:50:15.698459+00:00",
+      "location": "Ireland",
+      "notified_at": "2026-11-24T12:50:29.558908+00:00",
+      "notified_hash": "7210990432aa751d0d99cfc76c2cfea8a771ca99397b1803deb6db9f17a83a54",
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "QA/QC Engineer – Senior -Depot",
+      "url": "https://www.systra.com/ireland/job-offers/qa-qc-bridges-engineer-lead-section-1-en-7413"
     },
     "6d6326f50a79cf464cf33556e892e2d2ca85942b5984f947da30d33f72985c01": {
       "assessment": {
@@ -25329,6 +25492,36 @@
       "title": "Site Engineer",
       "url": "https://www.linkedin.com/comm/widgets/promo?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3BZTmFJqcmToyO7HnYVg2Ghg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1Ya5BKm3BaiIs1&trkEmail=eml-email_pymk_02-widget~promo~v1-0-footer~link-null-uk2z7p~mufuuefq~r5-null-null&eid=uk2z7p-mufuuefq-r5&otpToken=NzYxZDg1ZjA5MTg1YjdiMDAwZjA4MjA3MjI0ZThiYzQ4N2ExMTQxNWE4YTI1MWZlMDE3Y2RiNGY1MmFhYmNiMDFkMjZjMmRlMWI1M2NmZWNiOTYxMjJmOWQ2NzIyNWQwODZjMjZjNjcyMTY2YzZkZGY1ZTQzYWNkZDdhZWQxYWI1NTM2YmYwMjZmM2M4Zjk5YjYsMiwx"
     },
+    "b748dd1414f6881a4aafdd2f0a444bcce99bc512d93485725b4fd401e7b43d45": {
+      "assessment": {
+        "gaps": [
+          "No explicit civil engineering duties or tools mentioned; unclear if role involves roads/highways or related infrastructure"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title is generic and the job description does not provide sufficient evidence of civil engineering responsibilities such as road/highway design, Civil 3D usage, or construction supervision. Without clear civil domain duties, the role cannot be confidently matched.",
+        "relocation_fit": "medium",
+        "role_family": "assistant_engineer",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "154ace7d7005f308132a53530f965bcef186581f49a2423620d17dcb69b08dd4",
+      "first_seen": "2026-11-24T12:50:24.408449+00:00",
+      "identity_key": "b748dd1414f6881a4aafdd2f0a444bcce99bc512d93485725b4fd401e7b43d45",
+      "last_seen": "2026-11-24T12:50:24.408466+00:00",
+      "location": "Roscommon, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Engineer",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-1f0ed9e98739/candidate/so/pm/1/pl/3/opp/10732-Assistant-Engineer/en-GB"
+    },
     "b7c7e819e8413a85e0760550e9a0e11d31800d60936b43fa4ee8de183f843c67": {
       "assessment": {
         "gaps": [
@@ -35916,6 +36109,6 @@
       "url": "https://careers.atkinsrealis.com/en/jobs/project-engineer-transportation-r-163800"
     }
   },
-  "updated_at": "2026-11-24T01:52:23.081753+00:00",
+  "updated_at": "2026-11-24T12:50:29.559014+00:00",
   "version": 3
 }
