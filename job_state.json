@@ -50,7 +50,7 @@
       "content_hash": "d0977d99367f382aaf596ac0984df81ea0eeac164eb4c643f87c3dc64e772054",
       "first_seen": "2026-11-21T20:41:55.398061+00:00",
       "identity_key": "00515ffad500c8ae767e06126276bf64d090c3b47ef90415ec1aafc355f6c146",
-      "last_seen": "2026-11-24T01:52:13.355532+00:00",
+      "last_seen": "2026-11-27T22:54:49.468516+00:00",
       "location": "Galway, Ireland",
       "notified_at": null,
       "notified_hash": null,
@@ -7399,6 +7399,34 @@
       "title": "Civil Engineering Technician Grade I, Flood Risk Management Services",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-89ee6eb4eed5/candidate/so/pm/1/pl/3/opp/9139-Civil-Engineering-Technician-Grade-I-Flood-Risk-Management-Services/en-GB"
     },
+    "3062040665c79f823d58ec5ca8775319941341e1b7f0976bc5299fa94234d9c6": {
+      "assessment": {
+        "gaps": [],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy title and description indicate a Verification & Validation Engineer role focused on software and systems engineering rather than civil engineering. No evidence of civil‑engineering duties such as road/highway design, Civil 3D, AutoCAD, or construction supervision is present. Therefore it does not match the required civil domain criteria.",
+        "relocation_fit": "low",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "277d00c8245fba86c51e619fa94b5e7403327a00cbe37f21a1adaf5e2fce5dfb",
+      "first_seen": "2026-11-27T22:54:32.591396+00:00",
+      "identity_key": "3062040665c79f823d58ec5ca8775319941341e1b7f0976bc5299fa94234d9c6",
+      "last_seen": "2026-11-27T22:54:32.591411+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "SYSTRA",
+      "title": "Verification & Validation (V & V) Engineer",
+      "url": "https://www.systra.com/ireland/job-offers/verification-validation-v-v-senior-specialist-en-8082"
+    },
     "3082c9b94f40f296eadbe141ef47bf3d93797f7c6cd3f132bb611c3d882392e4": {
       "assessment": {
         "gaps": [
@@ -9332,6 +9360,38 @@
       "source": "LinkedIn",
       "title": "Suggested for you Saad Khan Civil & Project Engineer | Mega-Project Delivery (HS2)… Follow Understanding Road Pavement Layers A well-constructed road pavement is not simply a combination of… see more 7 · 1 Comment Read m",
       "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7514176760478023680?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7514176760478023680&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3B%2BnDztt63SWaZVg4nhNuVdQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=1Z_HgWMIgaNIs1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mvbaj653~to-null-null&eid=uk2z7p-mvbaj653-to&otpToken=OGEzNWNlMzE2ODE3ODM0NTVlZDA1MjAwOWRjYjlkNmNjZWJiZDUwODE3NDAyNTBhZGI1NDNmOGU0ZmI3MTk1MjBkYTZmNjM1NTIyYmUyN2M4MmM5NzU2MGE1NDA1ODhmZjVkMTU5OGViODM3NWJkYmJmNWE2MzVjMWM2NDE5MGMwYzdlYjZmZTBjZDFiMzg4MGQsMiwx"
+    },
+    "3d5b9361bf90cc1332382a92df354dd12f25b7de2e36d182dd91da37063c47d5": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of specific role responsibilities",
+          "insufficient information about the company and job details"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The title is potentially relevant but lacks explicit civil domain evidence and requires more specific information about the role's responsibilities",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 40,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "f5a4c4b9f6739cb6b5d4fd50a2ac6c97fb68d18c78b837c6c68a8613314a1aa6",
+      "first_seen": "2026-11-27T22:54:52.428072+00:00",
+      "identity_key": "3d5b9361bf90cc1332382a92df354dd12f25b7de2e36d182dd91da37063c47d5",
+      "last_seen": "2026-11-27T22:54:52.428088+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Suggested for you Vidyashree Shetty Engineer at Arup Follow November 11th marked my last working day at AtkinsRéalis, bringing an end to an incredible journey of 5… see more 627 · 9 Comments Read more",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7530607463201452032?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7530607463201452032&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=ciluXXxeQLaHzE3qSW8wyA%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BciluXXxeQLaHzE3qSW8wyA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2NeBvovY5aIIw1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mwzb0x7z~nz-null-null&eid=uk2z7p-mwzb0x7z-nz&otpToken=MmFhY2Q3MmNiN2RjMGYzOGVjZDA1MmVmZGIwNjlhZWFmMGM1MGM1ZjBjNjA3M2JjNGM4MTE0NmQwZTlmZTI5ZDVjNzg0ZDBkMTU0MWM4MzE0YjhlNzE4N2FmOWYyYjI5OWY2N2NiY2I2MWQ3MDk4NzU1ZWFmMjhmY2RkZDBjY2U2NWYyYzgyN2E2MTY5OTU2YTAsMiwx"
     },
     "3d78fc00ab1eeee95607bf4375146e6d13d9ed3b1b53393d0bb5c7c7e9e3ea1d": {
       "assessment": {
@@ -18074,6 +18134,37 @@
       "title": "Project Manager - BlueMission Atlantic and Arctic 2030",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-461d6d2ffae0/candidate/so/pm/1/pl/3/opp/9304-Project-Manager-BlueMission-Atlantic-and-Arctic-2030/en-GB"
     },
+    "818c69561cb3460f606262e9883ec1b88cc3c011d15488f40851a013e22dd7e5": {
+      "assessment": {
+        "gaps": [
+          "lack of civil engineering evidence",
+          "non-civil title"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The vacancy text does not contain sufficient evidence of a civil engineering role, and the title 'Engineering Systems leader' suggests a non-civil domain.",
+        "relocation_fit": "low",
+        "role_family": "non_civil_engineering_role",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "5fc8a7f40ec111b11b91d443ab50b9e7ca9b27e91426d256889908ade345e375",
+      "first_seen": "2026-11-27T22:55:00.689500+00:00",
+      "identity_key": "818c69561cb3460f606262e9883ec1b88cc3c011d15488f40851a013e22dd7e5",
+      "last_seen": "2026-11-27T22:55:00.689515+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Suggested for you Fraser Greenwood Engineering Systems leader Follow Despite what LinkedIn might have claimed, today IS a work anniversary for me - 26 years at AtkinsRéalis !!… see more 338 · 36 Comments Read more",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7529443202169331713?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7529443202169331713&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=ciluXXxeQLaHzE3qSW8wyA%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BciluXXxeQLaHzE3qSW8wyA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2NeBvovY5aIIw1&trkEmail=eml-email_network_conversations_01-network~post-0-wrapper~link-null-uk2z7p~mwzb0x7z~nz-null-null&eid=uk2z7p-mwzb0x7z-nz&otpToken=MmFhY2Q3MmNiN2RjMGYzOGVjZDA1MmVmZGIwNjlhZWFmMGM1MGM1ZjBjNjA3M2JjNGM4MTE0NmQwZTlmZTI5ZDVjNzg0ZDBkMTU0MWM4MzE0YjhlNzE4N2FmOWYyYjI5OWY2N2NiY2I2MWQ3MDk4NzU1ZWFmMjhmY2RkZDBjY2U2NWYyYzgyN2E2MTY5OTU2YTAsMiwx"
+    },
     "818d99b8bd7020eb17e5183470b2cfa472f120f94db4606d6dbf6b10d369374f": {
       "assessment": {
         "gaps": [
@@ -18669,6 +18760,36 @@
       "source": "PublicJobs",
       "title": "Project Manager",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-52276dba2aa4/candidate/so/pm/1/pl/3/opp/10125-Project-Manager/en-GB"
+    },
+    "84f35c590715658e19d74d82cbeebe638a3d596ab4157140344b4dac3559c260": {
+      "assessment": {
+        "gaps": [
+          "role is in electrical engineering, not civil engineering"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The role is an Assistant Lecturer in Industrial Electrical Engineering, which is not related to civil engineering or highways/roads/transport infrastructure.",
+        "relocation_fit": "low",
+        "role_family": "non_civil_engineering_role",
+        "score": 0,
+        "source": "ai-cloudflare",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "eef2716c24c2c49ebaa5513ba6e52da2fc187619f04e5dfc62b3f40856b3278b",
+      "first_seen": "2026-11-27T22:54:43.636826+00:00",
+      "identity_key": "84f35c590715658e19d74d82cbeebe638a3d596ab4157140344b4dac3559c260",
+      "last_seen": "2026-11-27T22:54:43.636840+00:00",
+      "location": "Donegal, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Lecturer Industrial Electrical Engineering",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-a642b1f27fc2/candidate/so/pm/1/pl/3/opp/11049-Assistant-Lecturer-Industrial-Electrical-Engineering/en-GB"
     },
     "85542787769584a42d0450dd4178a9e863084006fc5532a89b7bfadb4528ae8c": {
       "assessment": {
@@ -21309,6 +21430,36 @@
       "title": "Sai Kiran Jetty Site Engineer // MSc International…",
       "url": "https://in.linkedin.com/comm/in/sai-kiran-jetty-5059a9315?lipi=urn%3Ali%3Apage%3Aemail_email_pymk_02%3B3yI704SvQVm5b2vQIl5KQQ%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=3KexHWAvWGkIw1&trkEmail=eml-email_pymk_02-pymk_card-0-profile_link-null-uk2z7p~mwb0jh6o~vb-null-null&eid=uk2z7p-mwb0jh6o-vb&otpToken=ZDE5MTkwMTUzMzA0MTZjNGJjMTc2MTc2NDYxOTM3NTIyM2FlYzM4OTgxNWI4NmNkOTMyNzI3OGYyN2NkNzVkYzZlNWRkY2ZlMzI1OTcxMGVhNDRmYTA3ZGU2OTYwY2UwMzQ2MWY1NzM4MTE5OTgyNTM0MTI3ODk5NzRmZTYxMWI2Y2Q3ODNkNDZjY2ViZDZjNzEsMiwx"
     },
+    "95a9750b124dcdc25e7bd4210fe9fd96e81f74f3045f89ffff1e1267584531a9": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities; no mention of roads, highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, DPRs, construction site work, QA/QC, or contractor coordination."
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "not_eligible",
+        "provisional": false,
+        "reason": "The position is an academic staff officer in a faculty of engineering and computing, with no explicit civil engineering duties such as road/highway design, Civil 3D, or construction supervision. It does not match the required civil infrastructure domain.",
+        "relocation_fit": "low",
+        "role_family": "academic_engineering_role",
+        "score": 20,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "633ef12c69fd4abe2be3dae0e160af7766aa0ffd73967f35d1e42160f7cb3c3d",
+      "first_seen": "2026-11-27T22:54:40.977891+00:00",
+      "identity_key": "95a9750b124dcdc25e7bd4210fe9fd96e81f74f3045f89ffff1e1267584531a9",
+      "last_seen": "2026-11-27T22:54:40.977905+00:00",
+      "location": "Galway, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Staff Officer - Faculty of Engineering & Computing",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-a642b1f27fc2/candidate/so/pm/1/pl/3/opp/11050-Assistant-Staff-Officer-Faculty-of-Engineering-Computing/en-GB"
+    },
     "95e619b9ee8bc6b1c3afe40f19516c7ccd8fe1b1195f4744c2dccbfb177186cc": {
       "assessment": {
         "gaps": [
@@ -22943,6 +23094,42 @@
       "source": "PublicJobs",
       "title": "Executive Engineer",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-423dd989250d/candidate/so/pm/1/pl/3/opp/8865-Executive-Engineer/en-GB"
+    },
+    "9e426b17fd887aa92c0bf2e0481c346edb28dc2f93aaa342e5de3da5caf73fca": {
+      "assessment": {
+        "gaps": [
+          "civil domain is not explicit",
+          "lack of specific civil engineering duties",
+          "Chartered status may be required"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The role is not explicitly civil and lacks specific civil engineering duties",
+        "relocation_fit": "medium",
+        "role_family": "project_manager",
+        "score": 60,
+        "source": "ai-cloudflare",
+        "strengths": [
+          "infrastructure consulting",
+          "project delivery",
+          "tender"
+        ]
+      },
+      "company": "AECOM",
+      "content_hash": "b115fc659a360cee4f43b8cb12352e9caa6c7aa9d943529ffd7d6ff1f444a649",
+      "first_seen": "2026-11-27T22:54:35.692488+00:00",
+      "identity_key": "9e426b17fd887aa92c0bf2e0481c346edb28dc2f93aaa342e5de3da5caf73fca",
+      "last_seen": "2026-11-27T22:54:35.692503+00:00",
+      "location": "Cork, ie",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "AECOM",
+      "title": "Associate: Project Manager",
+      "url": "https://jobs.smartrecruiters.com/AECOM2/744000164060643-associate-project-manager?oga=true"
     },
     "9e9ef7f939c37ad9fbca78e4b07ec8ead39809742283f402d7fb9a96ddf8106f": {
       "assessment": {
@@ -32934,6 +33121,36 @@
       "title": "042765 – Assistant Lecturer/Lecturer in Civil Engineering (Permanent)",
       "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/so/pm/1/pl/3/opp/10591-042765-Assistant-Lecturer-Lecturer-in-Civil-Engineering-Permanent/en-GB"
     },
+    "ddeb6dfd9d34d8aaf8efd102791b1559a6cd285b85261f5815cbd4e414605642": {
+      "assessment": {
+        "gaps": [
+          "Academic teaching role does not match civil infrastructure project experience"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy is for an Assistant Lecturer in Civil Engineering, an academic teaching role, which does not align with the candidate’s experience in highways, roads, transport infrastructure design, construction supervision, and related civil engineering duties. The role lacks the required civil‑engineering project responsibilities and therefore does not match the specified civil domain criteria.",
+        "relocation_fit": "medium",
+        "role_family": "civil_infrastructure_engineer",
+        "score": 0,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "77ca301368051f98f50a08bb3686ed0d24bef9915328db2118d25059655dfa70",
+      "first_seen": "2026-11-27T22:54:49.468371+00:00",
+      "identity_key": "ddeb6dfd9d34d8aaf8efd102791b1559a6cd285b85261f5815cbd4e414605642",
+      "last_seen": "2026-11-27T22:54:49.468386+00:00",
+      "location": "Sligo, Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "PublicJobs",
+      "title": "Assistant Lecturer in Civil Engineering",
+      "url": "https://publicjobs.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/xf-a642b1f27fc2/candidate/so/pm/1/pl/3/opp/11046-Assistant-Lecturer-in-Civil-Engineering/en-GB"
+    },
     "de8da2edc175fff595fec99d99bf1001e1b757fb550aa61345386c13ddc2a464": {
       "assessment": {
         "gaps": [
@@ -34171,6 +34388,38 @@
       "title": "Senior Utilities Engineer- Wet",
       "url": "https://www.systra.com/ireland/job-offers/senior-utilities-engineer-wet-en-11419"
     },
+    "e65519786f50af279eb2e5b9910e382f42c86cb35d85257e46676dacae5388a8": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering responsibilities mentioned",
+          "No reference to roads/highways or transport infrastructure",
+          "No mention of Civil 3D/AutoCAD or construction site work"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The job title and description lack explicit civil engineering duties such as road/highway design, Civil 3D usage, or construction supervision. No evidence of alignment design, DPRs, or infrastructure-specific tasks. Therefore it does not meet the civil match criteria.",
+        "relocation_fit": "medium",
+        "role_family": "ambiguous_engineering_role",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "4b321defd7902d083e52a7bb792a163a504fd305db57e41068548cbed724188f",
+      "first_seen": "2026-11-27T22:55:06.364280+00:00",
+      "identity_key": "e65519786f50af279eb2e5b9910e382f42c86cb35d85257e46676dacae5388a8",
+      "last_seen": "2026-11-27T22:55:06.364295+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Fraser Greenwood Engineering Systems leader",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7529443202169331713?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7529443202169331713&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=ciluXXxeQLaHzE3qSW8wyA%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BciluXXxeQLaHzE3qSW8wyA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2NeBvovY5aIIw1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mwzb0x7z~nz-null-null&eid=uk2z7p-mwzb0x7z-nz&otpToken=MmFhY2Q3MmNiN2RjMGYzOGVjZDA1MmVmZGIwNjlhZWFmMGM1MGM1ZjBjNjA3M2JjNGM4MTE0NmQwZTlmZTI5ZDVjNzg0ZDBkMTU0MWM4MzE0YjhlNzE4N2FmOWYyYjI5OWY2N2NiY2I2MWQ3MDk4NzU1ZWFmMjhmY2RkZDBjY2U2NWYyYzgyN2E2MTY5OTU2YTAsMiwx"
+    },
     "e664edd1b0905ce8f1ad78a0faa49a498ee76d36f248ee24a3180f6701bbaa10": {
       "assessment": {
         "gaps": [
@@ -34462,6 +34711,36 @@
       "source": "SYSTRA",
       "title": "HSE Engineer – Junior – Section 5",
       "url": "https://www.systra.com/ireland/job-offers/hse-engineer-junior-section-5-en-10105"
+    },
+    "e8514898a89df578aeb57d622522a55bcdb07206820f8a1912084b52ae0b47ef": {
+      "assessment": {
+        "gaps": [
+          "No civil engineering domain evidence; generic engineer title; no mention of relevant tools or infrastructure projects"
+        ],
+        "hard_reject": false,
+        "matched": false,
+        "permit_path": "unclear",
+        "provisional": false,
+        "reason": "The vacancy title and description provide no evidence of civil engineering duties such as roads, highways, transport infrastructure, Civil 3D, AutoCAD, alignment design, or construction supervision. Without explicit civil responsibilities, the role cannot be confidently matched to the candidate’s civil engineering profile.",
+        "relocation_fit": "low",
+        "role_family": "ambiguous_engineering_role",
+        "score": 30,
+        "source": "ai-groq_primary",
+        "strengths": []
+      },
+      "company": "",
+      "content_hash": "a46d4e0561214b84a558650ca85fe292b8b9140c68640f7658fa22fa394a8b2a",
+      "first_seen": "2026-11-27T22:54:57.916562+00:00",
+      "identity_key": "e8514898a89df578aeb57d622522a55bcdb07206820f8a1912084b52ae0b47ef",
+      "last_seen": "2026-11-27T22:54:57.916576+00:00",
+      "location": "Ireland",
+      "notified_at": null,
+      "notified_hash": null,
+      "policy_version": "2026-09-14.3",
+      "profile_version": "2026-09-14.2",
+      "source": "LinkedIn",
+      "title": "Vidyashree Shetty Engineer at Arup",
+      "url": "https://www.linkedin.com/comm/feed/update/urn:li:activity:7530607463201452032?highlightedUpdateUrn=urn%3Ali%3Aactivity%3A7530607463201452032&highlightedUpdateType=NETWORK_CONVERSATIONS&showCommentBox=true&origin=EMAIL&highlightedUpdateTrackingId=ciluXXxeQLaHzE3qSW8wyA%3D%3D&lipi=urn%3Ali%3Apage%3Aemail_email_network_conversations_01%3BciluXXxeQLaHzE3qSW8wyA%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2NeBvovY5aIIw1&trkEmail=eml-email_network_conversations_01-network_post-0-actor_card-null-uk2z7p~mwzb0x7z~nz-null-null&eid=uk2z7p-mwzb0x7z-nz&otpToken=MmFhY2Q3MmNiN2RjMGYzOGVjZDA1MmVmZGIwNjlhZWFmMGM1MGM1ZjBjNjA3M2JjNGM4MTE0NmQwZTlmZTI5ZDVjNzg0ZDBkMTU0MWM4MzE0YjhlNzE4N2FmOWYyYjI5OWY2N2NiY2I2MWQ3MDk4NzU1ZWFmMjhmY2RkZDBjY2U2NWYyYzgyN2E2MTY5OTU2YTAsMiwx"
     },
     "e8831352ccf5f711267cbcb5a8dba5746cf057f5219f49f990e6e3d04d2a15c0": {
       "assessment": {
@@ -38454,6 +38733,6 @@
       "url": "https://www.linkedin.com/comm/feed/update/share:7522979865353179137?lipi=urn%3Ali%3Apage%3Aemail_email_next_best_action_digest_01%3BAvzHvPssQ6aelmqZ1Ndawg%3D%3D&midToken=AQHZHDIxGFU-Kw&midSig=2Zh0lUaREOHcw1&trkEmail=eml-email_next_best_action_digest_01-network_post-0-actor_card-null-uk2z7p~mwxraseg~ht-null-null&eid=uk2z7p-mwxraseg-ht&otpToken=OGRlNTEwNWEwZjQ2ZDcyZTNmN2E0YzNlZTRkMTQ0YTNlMzQwNDJmM2U3NmExZTVjMzYxNmUwNzhhNDhkOWY4NWE3YTlkZjEwZDA0NzFlYTU5ZmU2MjE0MjhjMmNmNzBiZWM1MDkwNTU3NmQ2MmU2YzZmNjIyMzIwZjVlZjA4YzE5YzI4ZjM5OTk5NWQzNWQ4NzIsMiwx"
     }
   },
-  "updated_at": "2026-11-27T11:10:27.299155+00:00",
+  "updated_at": "2026-11-27T22:55:06.394338+00:00",
   "version": 3
 }
